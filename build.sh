@@ -51,7 +51,7 @@ fi
 printf 'Would you like to push to GU domains? (y/n)? '
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then 
-     rsync -alvr --delete _site/* morrisge@morris.georgetown.domains:/home/public_html/
+    rsync -alvr --delete _site/* morrisge@morris.georgetown.domains:/home/morrisge/public_html/
 else
-     echo NOT PUSHING TO GU DOMAINS!
+    echo NOT PUSHING TO GU DOMAINS!
 fi
