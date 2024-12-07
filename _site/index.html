@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sean Morris – DSAN-5000: Project</title>
+<title>Overview – Sean Morris</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -68,6 +88,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -79,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">DSAN-5000: Project</span>
+    <span class="navbar-title">Sean Morris</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -151,7 +200,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting Started</a></li>
+  <li><a href="#purpose-and-scope" id="toc-purpose-and-scope" class="nav-link active" data-scroll-target="#purpose-and-scope">Purpose and Scope</a></li>
+  <li><a href="#about-me" id="toc-about-me" class="nav-link" data-scroll-target="#about-me">About Me</a></li>
+  <li><a href="#final-project-literature-review" id="toc-final-project-literature-review" class="nav-link" data-scroll-target="#final-project-literature-review">Final Project: Literature Review</a>
+  <ul class="collapse">
+  <li><a href="#incorporating-topic-membership-in-review-rating-prediction-from-unsructured-data-a-gradient-boosting-approach" id="toc-incorporating-topic-membership-in-review-rating-prediction-from-unsructured-data-a-gradient-boosting-approach" class="nav-link" data-scroll-target="#incorporating-topic-membership-in-review-rating-prediction-from-unsructured-data-a-gradient-boosting-approach">Incorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach</a></li>
+  <li><a href="#a-gpt-based-approach-for-sentiment-analysis-and-bakery-rating-prediction" id="toc-a-gpt-based-approach-for-sentiment-analysis-and-bakery-rating-prediction" class="nav-link" data-scroll-target="#a-gpt-based-approach-for-sentiment-analysis-and-bakery-rating-prediction">A GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction</a></li>
+  <li><a href="#machine-learning-based-new-approach-to-films-review" id="toc-machine-learning-based-new-approach-to-films-review" class="nav-link" data-scroll-target="#machine-learning-based-new-approach-to-films-review">Machine learning-based new approach to films review</a></li>
+  </ul></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a></li>
   <li><a href="#what-to-include-on-this-page" id="toc-what-to-include-on-this-page" class="nav-link" data-scroll-target="#what-to-include-on-this-page">What to Include on This Page</a>
   <ul class="collapse">
   <li><a href="#create-an-about-you-page" id="toc-create-an-about-you-page" class="nav-link" data-scroll-target="#create-an-about-you-page">Create an “About You” Page</a></li>
@@ -167,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Sean Morris</h1>
+<h1 class="title">Overview</h1>
 </div>
 
 
@@ -184,6 +241,38 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="purpose-and-scope" class="level2">
+<h2 class="anchored" data-anchor-id="purpose-and-scope">Purpose and Scope</h2>
+<p>This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Anlytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please head over <a href="./report/report.html">here</a>.</p>
+</section>
+<section id="about-me" class="level2">
+<h2 class="anchored" data-anchor-id="about-me">About Me</h2>
+<p><img src="xtra/multiclass-portfolio-website/images/my_photo.png" class="img-fluid" width="400"></p>
+<p>Hi, I’m Sean Morris — a data science graduate student at Georgetown University with a passion for blending analytics and creativity to solve complex problems. My background spans economics, software development and data science, and blockchain technology. I thrive at the intersection of technology and innovation, having developed tools like the Python packages and predictive models for Formula One races.</p>
+<p>Previously, I co-founded Georgetown Blockchain, revitalizing the organization into a vibrant hub for tech enthusiasts. Currently, I’m delving into natural language processing, probabilistic modeling, and novel ways to value blockchain ecosystems though the lens of economics.</p>
+<p>When I’m not coding or exploring new tech, you might find me running, fishing with my family down in florida, or searching for the next meme coin fad. Whether it’s optimizing workflows or brainstorming product-translatable ideas, I’m driven to turn concepts into impactful solutions.</p>
+</section>
+<section id="final-project-literature-review" class="level2">
+<h2 class="anchored" data-anchor-id="final-project-literature-review">Final Project: Literature Review</h2>
+<section id="incorporating-topic-membership-in-review-rating-prediction-from-unsructured-data-a-gradient-boosting-approach" class="level3">
+<h3 class="anchored" data-anchor-id="incorporating-topic-membership-in-review-rating-prediction-from-unsructured-data-a-gradient-boosting-approach">Incorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach</h3>
+<p>Authors Yang et al.&nbsp;leverage a bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat<span class="citation" data-cites="yang2023"><sup><a href="#ref-yang2023" role="doc-biblioref">1</a></sup></span>. This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predicting amazon customer review scores across. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are using extracting semantic information form a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as predictors in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores<span class="citation" data-cites="yang2023"><sup><a href="#ref-yang2023" role="doc-biblioref">1</a></sup></span>.</p>
+</section>
+<section id="a-gpt-based-approach-for-sentiment-analysis-and-bakery-rating-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="a-gpt-based-approach-for-sentiment-analysis-and-bakery-rating-prediction">A GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction</h3>
+<p>Magdelano et al.&nbsp;take adopt an intruiging angle in their approach to modeling sentiment analysis in text. In the study, they work with bakery reviews collected from Google Places data. In their approach, they construct a model that uses OpenAI’s GPT-3.5-Turbo model as a “linguistic component” that takes on the task of labelling sentiments for each text input<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">2</a></sup></span>. From there, the authors feed the outputs into a multilayer perceptron (in laymans, “a neural network that can be used to perform regression”)<span class="citation" data-cites="MLPDefinintion"><sup><a href="#ref-MLPDefinintion" role="doc-biblioref">3</a></sup></span> used to offer a final star-based prediction on a given review. The authors use the popular 5-point Likert Scale (Excellent, Good, Neutral, Bad, Horrible) within the context of their assigned dataset categories: Flavor (F), Variety (V), Freshness of Bread (FoB), Customer Service (CS), and Price (P)<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">2</a></sup></span>. The authors note their initial struggles with high polarity in the data. In orther words, they encountered a disproportionate amount of five-star ratings in comparison to others. In order to account for these imbalances, the researchers used an approach called undersampling in which they selectively remove observations with the overpresent characteristic before training and testing the model<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">2</a></sup></span>. In their conclusion, they do not cite any notable differences in model performance between the full and filtered samples. Finally the reasearchers consistently identified the computational costs of including both a LLM and MLP layer in their model.</p>
+</section>
+<section id="machine-learning-based-new-approach-to-films-review" class="level3">
+<h3 class="anchored" data-anchor-id="machine-learning-based-new-approach-to-films-review">Machine learning-based new approach to films review</h3>
+<p>In this report, the authors set forth with the goal to develop a supervised learning model that accurately classifies the sentiment of a given set of movie reviews as either positive or negative. They source around 50,000 reviews from an IMDB dataset, where the amount of positive and negative sentiment-labelled records are approximately equal. For their feature extraction process, the authors elect use term frequency (TF) and term frequency-inverse document frequency (TF-IDF), where “term-frequency” refers to the number of appearances a given word or term has in a document and “inverse document frequency” is calculated by taking the log of the ratio between the total number of documents analyzed and the number of documents containing the given term. Finally, TF-IDF is the product of these two metrics<span class="citation" data-cites="TFIDF"><sup><a href="#ref-TFIDF" role="doc-biblioref">4</a></sup></span>.</p>
+<p>In equation form: <span class="math display">\[
+\text{TF}(t,d) = \frac{\text{Number of times term t appears in document d}}{\text{Total number of terms in document d}}
+\]</span> <span class="math display">\[
+\text{IDF}(t,D) = log_{e}\frac{\text{Total number of documents D in corpus}}{\text{Number of documents containing term t}}
+\]</span> <span class="math display">\[
+\text{TF-IDF} = TF(t,d) \cdot IDF(t,D)
+\]</span></p>
+<p>From there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accurary (88.33%)<span class="citation" data-cites="Jassim2023"><sup><a href="#ref-Jassim2023" role="doc-biblioref">5</a></sup></span></p>
 <p><strong>Audio instructions:</strong></p>
 <p>If you want, you can listen to the instructions:</p>
 <audio controls="">
@@ -191,6 +280,8 @@ ul.task-list li input[type="checkbox"] {
 </audio>
 <p><sup> <strong>Source</strong>: Text-to-speech conversion done with Amazon Polly on AWS </sup></p>
 <p><code>Note</code>: These audio instructions should not be included in your final submission or repository, once you are done wiht them, please delete the files and remove them from the website.</p>
+</section>
+</section>
 <section id="getting-started" class="level2">
 <h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
 <p>To begin the project, first read the instruction document (<a href="./instructions/overview.html">click here</a>). This document is also accessible from the navigation bar.</p>
@@ -270,9 +361,26 @@ Use tools like NotebookLM or other AI-based text digesters to ask specific, targ
 </ul>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-yang2023" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Yang, J. &amp; Korfiatis, N. et al. Incorporating topic membership in review rating prediction from unstructured data. <em>Annals of Operations Research</em> <strong>339</strong>, 631–662 (2023).</div>
+</div>
+<div id="ref-Magdelano2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Magdaleno, D., Montes, M., Estrada, B. &amp; Ochoa-Zezzatti, A. A GPT-based approach for sentiment analysis and bakery rating prediction. in <em>Advances in computational intelligence. MICAI 2023 international workshops</em> (eds. Calvo, H. et al.) 61–76 (Springer Nature Switzerland, 2024).</div>
+</div>
+<div id="ref-MLPDefinintion" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline"><a href="https://learn.flucoma.org/reference/mlpregressor/">MLPRegressor</a>.</div>
+</div>
+<div id="ref-TFIDF" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline"><a href="https://www.activeloop.ai/resources/glossary/term-frequency-inverse-document-frequency-tf-idf/#:~:text=The%20TF%20is%20calculated%20by,of%20documents%20containing%20the%20term">Term frequency-inverse document frequency (TF-IDF)</a>.</div>
+</div>
+<div id="ref-Jassim2023" class="csl-entry" role="listitem">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">Jassim, A., M. A. Machine learning-based new approach to films review. <em>Social Network Analysis and Mining</em> <strong>13</strong>, (2023).</div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

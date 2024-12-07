@@ -8,7 +8,7 @@ project:
     - "!xtra"
 
 website:
-  title: "DSAN-5000: Project"
+  title: "Sean Morris"
   favicon: "assets/gu-logo.png"
   navbar:
     left:

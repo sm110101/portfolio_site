@@ -1,6 +1,61 @@
 ---
-title: Sean Morris
+title: Overview
 ---
+
+## Purpose and Scope
+
+This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Anlytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please head over [here](report/report.qmd).
+
+
+## About Me 
+
+![](xtra/multiclass-portfolio-website/images/my_photo.png){width="400px"} 
+
+Hi, I’m Sean Morris — a data science graduate student at Georgetown University with a passion for blending analytics and creativity to solve complex problems. My background spans economics, software development and data science, and blockchain technology. I thrive at the intersection of technology and innovation, having developed tools like the Python packages and predictive models for Formula One races.
+
+Previously, I co-founded Georgetown Blockchain, revitalizing the organization into a vibrant hub for tech enthusiasts. Currently, I’m delving into natural language processing, probabilistic modeling, and novel ways to value blockchain ecosystems though the lens of economics.
+
+When I’m not coding or exploring new tech, you might find me running, fishing with my family down in florida, or searching for the next meme coin fad. Whether it's optimizing workflows or brainstorming product-translatable ideas, I’m driven to turn concepts into impactful solutions.
+
+
+
+
+## Final Project: Literature Review
+
+
+### Incorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach
+
+Authors Yang et al. leverage a bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat [@yang2023]. This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predicting amazon customer review scores across. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are using extracting semantic information form a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as predictors in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores [@yang2023]. 
+
+
+### A GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction
+
+Magdelano et al. take adopt an intruiging angle in their approach to modeling sentiment analysis in text. In the study, they work with bakery reviews collected from Google Places data. In their approach, they construct a model that uses OpenAI's GPT-3.5-Turbo model as a "linguistic component" that takes on the task of labelling sentiments for each text input [@Magdelano2024]. From there, the authors feed the outputs into a multilayer perceptron (in laymans, "a neural network that can be used to perform regression")[@MLPDefinintion] used to offer a final star-based prediction on a given review. The authors use the popular 5-point Likert Scale (Excellent, Good, Neutral, Bad, Horrible) within the context of their assigned dataset categories: Flavor (F), Variety (V), Freshness of Bread (FoB), Customer Service (CS), and Price (P)[@Magdelano2024]. The authors note their initial struggles with high polarity in the data. In orther words, they encountered a disproportionate amount of five-star ratings in comparison to others. In order to account for these imbalances, the researchers used an approach called undersampling in which they selectively remove observations with the overpresent characteristic before training and testing the model[@Magdelano2024]. In their conclusion, they do not cite any notable differences in model performance between the full and filtered samples. Finally the reasearchers consistently identified the computational costs of including both a LLM and MLP layer in their model.
+
+
+### Machine learning-based new approach to films review
+
+In this report, the authors set forth with the goal to develop a supervised learning model that accurately classifies the sentiment of a given set of movie reviews as either positive or negative. They source around 50,000 reviews from an IMDB dataset, where the amount of positive and negative sentiment-labelled records are approximately equal. For their feature extraction process, the authors elect use term frequency (TF) and term frequency-inverse document frequency (TF-IDF), where "term-frequency" refers to the number of appearances a given word or term has in a document and "inverse document frequency" is calculated by taking the log of the ratio between the total number of documents analyzed and the number of documents containing the given term. Finally, TF-IDF is the product of these two metrics[@TFIDF].
+
+In equation form: 
+$$
+\text{TF}(t,d) = \frac{\text{Number of times term t appears in document d}}{\text{Total number of terms in document d}}
+$$
+$$
+\text{IDF}(t,D) = log_{e}\frac{\text{Total number of documents D in corpus}}{\text{Number of documents containing term t}}
+$$
+$$
+\text{TF-IDF} = TF(t,d) \cdot IDF(t,D)
+$$
+
+From there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accurary (88.33%)[@Jassim2023]
+
+
+
+
+
+
+
 
 **Audio instructions:**
 

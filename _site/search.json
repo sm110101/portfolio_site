@@ -856,28 +856,49 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Sean Morris",
+    "title": "Overview",
     "section": "",
-    "text": "Audio instructions:\nIf you want, you can listen to the instructions:\nSource: Text-to-speech conversion done with Amazon Polly on AWS\nNote: These audio instructions should not be included in your final submission or repository, once you are done wiht them, please delete the files and remove them from the website."
+    "text": "This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Anlytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please head over here."
+  },
+  {
+    "objectID": "index.html#purpose-and-scope",
+    "href": "index.html#purpose-and-scope",
+    "title": "Overview",
+    "section": "",
+    "text": "This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Anlytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please head over here."
+  },
+  {
+    "objectID": "index.html#about-me",
+    "href": "index.html#about-me",
+    "title": "Overview",
+    "section": "About Me",
+    "text": "About Me\n\nHi, I’m Sean Morris — a data science graduate student at Georgetown University with a passion for blending analytics and creativity to solve complex problems. My background spans economics, software development and data science, and blockchain technology. I thrive at the intersection of technology and innovation, having developed tools like the Python packages and predictive models for Formula One races.\nPreviously, I co-founded Georgetown Blockchain, revitalizing the organization into a vibrant hub for tech enthusiasts. Currently, I’m delving into natural language processing, probabilistic modeling, and novel ways to value blockchain ecosystems though the lens of economics.\nWhen I’m not coding or exploring new tech, you might find me running, fishing with my family down in florida, or searching for the next meme coin fad. Whether it’s optimizing workflows or brainstorming product-translatable ideas, I’m driven to turn concepts into impactful solutions."
+  },
+  {
+    "objectID": "index.html#final-project-literature-review",
+    "href": "index.html#final-project-literature-review",
+    "title": "Overview",
+    "section": "Final Project: Literature Review",
+    "text": "Final Project: Literature Review\n\nIncorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach\nAuthors Yang et al. leverage a bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat1. This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predicting amazon customer review scores across. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are using extracting semantic information form a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as predictors in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores1.\n\n\nA GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction\nMagdelano et al. take adopt an intruiging angle in their approach to modeling sentiment analysis in text. In the study, they work with bakery reviews collected from Google Places data. In their approach, they construct a model that uses OpenAI’s GPT-3.5-Turbo model as a “linguistic component” that takes on the task of labelling sentiments for each text input2. From there, the authors feed the outputs into a multilayer perceptron (in laymans, “a neural network that can be used to perform regression”)3 used to offer a final star-based prediction on a given review. The authors use the popular 5-point Likert Scale (Excellent, Good, Neutral, Bad, Horrible) within the context of their assigned dataset categories: Flavor (F), Variety (V), Freshness of Bread (FoB), Customer Service (CS), and Price (P)2. The authors note their initial struggles with high polarity in the data. In orther words, they encountered a disproportionate amount of five-star ratings in comparison to others. In order to account for these imbalances, the researchers used an approach called undersampling in which they selectively remove observations with the overpresent characteristic before training and testing the model2. In their conclusion, they do not cite any notable differences in model performance between the full and filtered samples. Finally the reasearchers consistently identified the computational costs of including both a LLM and MLP layer in their model.\n\n\nMachine learning-based new approach to films review\nIn this report, the authors set forth with the goal to develop a supervised learning model that accurately classifies the sentiment of a given set of movie reviews as either positive or negative. They source around 50,000 reviews from an IMDB dataset, where the amount of positive and negative sentiment-labelled records are approximately equal. For their feature extraction process, the authors elect use term frequency (TF) and term frequency-inverse document frequency (TF-IDF), where “term-frequency” refers to the number of appearances a given word or term has in a document and “inverse document frequency” is calculated by taking the log of the ratio between the total number of documents analyzed and the number of documents containing the given term. Finally, TF-IDF is the product of these two metrics4.\nIn equation form: \\[\n\\text{TF}(t,d) = \\frac{\\text{Number of times term t appears in document d}}{\\text{Total number of terms in document d}}\n\\] \\[\n\\text{IDF}(t,D) = log_{e}\\frac{\\text{Total number of documents D in corpus}}{\\text{Number of documents containing term t}}\n\\] \\[\n\\text{TF-IDF} = TF(t,d) \\cdot IDF(t,D)\n\\]\nFrom there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accurary (88.33%)5\nAudio instructions:\nIf you want, you can listen to the instructions:\n\n\n\n Source: Text-to-speech conversion done with Amazon Polly on AWS \nNote: These audio instructions should not be included in your final submission or repository, once you are done wiht them, please delete the files and remove them from the website."
   },
   {
     "objectID": "index.html#getting-started",
     "href": "index.html#getting-started",
-    "title": "Sean Morris",
+    "title": "Overview",
     "section": "Getting Started",
     "text": "Getting Started\nTo begin the project, first read the instruction document (click here). This document is also accessible from the navigation bar.\nOnce you’ve completed that, you can proceed with the instructions found throughout the website."
   },
   {
     "objectID": "index.html#what-to-include-on-this-page",
     "href": "index.html#what-to-include-on-this-page",
-    "title": "Sean Morris",
+    "title": "Overview",
     "section": "What to Include on This Page",
     "text": "What to Include on This Page\nThis is the landing page for your project. Content from this page can be reused in sections of your final report.\n\nCreate an “About You” Page\n\nDevelop your “About You” page. You can reuse content from previous assignments.\nYou can include the content here or on a separate page.\n\nIt’s recommended to create one “About You” page for all DSAN projects, with links to your various class projects.\n\n\n\n\nCreate a Landing Page for Your Project\n\nSummarize your topic, its significance, related work, and the questions you plan to explore.\nDraft an introduction with at least 5 research questions. These may evolve as your project progresses, since data science is an iterative process.\nInclude your data science questions on this page.\n\n\n\nLiterature review\nOnce you decide on a topic, you should ALWAYS START WITH A LITERATURE REVIEW, this is particularly important for academic projects.\nThe literature review is the most important part of most projects.\nIt allows you to;\n\n\nDetermine what is already known and what has already been tried, so that you don't re-invent the wheel.\n\n\nIt makes you more of a subject matter expert, allowing you to ask the right questions, target impactful projects, and communicate with other professionals.\n\n\n\nDoing a project that you think will change the world, only to find at the end that a very similar version of your project was already done in the 1980’s, isn’t a great use of time.\n\nIn this section, please do a literature review and cite at least 3 academic publications per group member, and include internal academic citations.\nOptional: Consider using LLM tools to 10X your literature review, e.g. instead of focusing on 3 papers, aim for 30 or more\nBy following these steps, you can 10X the efficiency of your literature review process, gaining more insights while minimizing the time spent on manual reading.\n\nExpand Your Literature Search\nAim to gather a larger pool of papers. Use academic databases (Google Scholar, arXiv, etc.) to find relevant studies and ensure a broad scope.\nSkim the Abstracts\nRead the abstracts of each paper to quickly understand their focus and identify those most relevant to your topic. Prioritize these papers for deeper analysis.\nUse LLM Tools for Summarization\nUpload the selected papers to an LLM tool capable of text summarization. Have it condense the main points of each paper into a concise, manageable summary (e.g., condense hundreds of pages into a 10-page summary). Carefully review this summary to absorb the key insights.\nLeverage Interactive LLM Tools\nUse tools like NotebookLM or other AI-based text digesters to ask specific, targeted questions about the papers:\n\nExample questions:\n\n“In the papers uploaded, did any of them explore XYZ?”\n“Which paper is most closely related to the following project idea: [explain idea]?” These tools will help you quickly extract relevant information without re-reading entire papers."
   },
   {
     "objectID": "index.html#additional-ideas-for-things-to-include",
     "href": "index.html#additional-ideas-for-things-to-include",
-    "title": "Sean Morris",
+    "title": "Overview",
     "section": "Additional Ideas for things to include",
     "text": "Additional Ideas for things to include\n\nAudience: Who is this for? Data professionals, businesses, researchers, or curious readers.\nHeadline: A captivating title introducing the data science theme (e.g., “Unlocking Insights Through Data Stories”).\nIntroduction: A brief, engaging overview of what the website offers (e.g., data-driven stories, insights, or case studies).\nQuestions You Are Addressing: What do you hope to learn?\nMotivation: Explain why this topic matters, highlighting the importance of data in solving real-world problems.\nKey Topics: List the main focus areas (e.g., machine learning, data visualization, predictive modeling).\nUse Cases/Examples: A brief teaser of compelling stories or case studies you’ve worked on.\nCall to Action: Invite visitors to explore the content, follow along, or contact you for more information.\nVisual/Infographic: Add a simple graphic or visual element to make the page more dynamic."
   },
@@ -886,27 +907,13 @@
     "href": "technical-details/progress-log.html",
     "title": "Progress log",
     "section": "",
-    "text": "Use this page to track your progress and keep a log of your contributions to the project, please update this each time you work on your project, it is generally a good habit to adopt.\nIf you are working as a team, at the end, you can duplicate the project and add it to your individual portfolio websites. If you do, you MUST retain attribution to your teammates. Removing attribution would constitute plagiarism."
+    "text": "This page serves as a progress log for my DSAN5000 final project"
   },
   {
-    "objectID": "technical-details/progress-log.html#to-do",
-    "href": "technical-details/progress-log.html#to-do",
+    "objectID": "technical-details/progress-log.html#member-1-sean",
+    "href": "technical-details/progress-log.html#member-1-sean",
     "title": "Progress log",
-    "section": "To-do",
-    "text": "To-do\n\nExplore possible topics by brainstorming with GPT\nwrite a technical methods sections for K-means\nwrite a technical methods sections for PCA\n\n… etc"
-  },
-  {
-    "objectID": "technical-details/progress-log.html#member-1",
-    "href": "technical-details/progress-log.html#member-1",
-    "title": "Progress log",
-    "section": "Member-1:",
-    "text": "Member-1:\nProvide their name, a link to their “About Me” page.\nAlso, describe a log of their project roles.\nWeekly project contribution log:\nT: 10-15-2024\n\nCoordinate with team member to set up weekly meeting time\n\nM: 10-14-2024\n\nDo a first draft of the project landing page"
-  },
-  {
-    "objectID": "technical-details/progress-log.html#member-2",
-    "href": "technical-details/progress-log.html#member-2",
-    "title": "Progress log",
-    "section": "Member-2",
-    "text": "Member-2\nProvide their name, a link to their “About Me” page.\nAlso, describe a log of their project roles.\nWeekly project contribution log:\nW: 10-16-2024\n\nAttend first group meeting"
+    "section": "Member-1: Sean",
+    "text": "Member-1: Sean\nWeekly project contribution log:\n12-7-2024\n\nFinish Supervised learning page\nFinish Unsupervised Learning page\nFinish EDA page\n\n12-6-2024\n\nFinish Data Cleaning page\nFinish Data Collection page\nFinish literature review\n\n12-5-2024\n\nFix problems with GU Domains publishing\n\n10-16-2024\n\nDownload Amazon reviews Corpus\nExplore initial topics and brainstorm methods"
   }
 ]
