@@ -1,4 +1,4 @@
-git pull
+git pull origin main || git branch --set-upstream-to=origin/main main
 # DEFINE PATH
 dir1=${PWD}
 
