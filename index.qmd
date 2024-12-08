@@ -1,13 +1,16 @@
 ---
-title: Overview
+title: Welcome!
 ---
 
-## Purpose and Scope
+<br>
+<br>
+
+# Purpose and Scope
 
 This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Anlytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please head over [here](report/report.qmd).
 
 
-## 🔍 About Me 
+# 🔍 About Me 
 
 ![](xtra/multiclass-portfolio-website/images/my_photo.png){width="400px"} 
 
@@ -18,9 +21,16 @@ Previously, I co-founded Georgetown Blockchain, revitalizing the organization in
 When I’m not coding or exploring new tech, you might find me running, fishing with my family down in florida, or searching for the next meme coin fad. Whether it's optimizing workflows or brainstorming product-translatable ideas, I’m driven to turn concepts into impactful solutions.
 
 
+# 📊 Final Project
+## Observing and Predicting the Relationship Between Customer Reviews and Ratings on Amazon
 
 
-## 📚 Final Project: Literature Review
+- Summarize your topic, its significance, related work, and the questions you plan to explore.
+- Draft an introduction with at least **5 research questions**. These may evolve as your project progresses, since data science is an iterative process.
+- Include your data science questions on this page.
+
+
+## Literature Review
 
 
 ### A GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction
@@ -32,7 +42,7 @@ Magdelano et al. take adopt an intruiging angle in their approach to modeling se
 
 In this report, the authors set forth with the goal to develop a supervised learning model that accurately classifies the sentiment of a given set of movie reviews as either positive or negative. They source around 50,000 reviews from an IMDB dataset, where the amount of positive and negative sentiment-labelled records are approximately equal. For their feature extraction process, the authors elect use term frequency (TF) and term frequency-inverse document frequency (TF-IDF), where "term-frequency" refers to the number of appearances a given word or term has in a document and "inverse document frequency" is calculated by taking the log of the ratio between the total number of documents analyzed and the number of documents containing the given term. Finally, TF-IDF is the product of these two metrics[@TFIDF].
 
-In equation form: 
+In equation form[@TFIDF]: 
 $$
 \text{TF}(t,d) = \frac{\text{Number of times term t appears in document d}}{\text{Total number of terms in document d}}
 $$
@@ -52,76 +62,6 @@ Authors Yang et al. leverage a bayesian network called Latent Dirichlet Allocati
 
 
 
-
-
-
-
-**Audio instructions:**
-
-If you want, you can listen to the instructions:
-
-<audio controls><source src="audio/landing-page-instructions.mp3" type="audio/mpeg"></audio>
-
-<sup> **Source**: Text-to-speech conversion done with Amazon Polly on AWS </sup>
-
-`Note`: These audio instructions should not be included in your final submission or repository, once you are done wiht them, please delete the files and remove them from the website. 
-
-## Getting Started
-
-To begin the project, first read the instruction document ([click here](instructions/overview.qmd)). This document is also accessible from the navigation bar.
-
-Once you’ve completed that, you can proceed with the instructions found throughout the website.
-
-## What to Include on This Page
-
-This is the landing page for your project. Content from this page can be reused in sections of your final report.
-
-### Create an "About You" Page  
-
-- Develop your "About You" page. You can reuse content from previous assignments.
-- You can include the content here or on a separate page.
-   - It’s recommended to create one "About You" page for all DSAN projects, with links to your various class projects.
-
-### Create a Landing Page for Your Project  
-
-- Summarize your topic, its significance, related work, and the questions you plan to explore.
-- Draft an introduction with at least **5 research questions**. These may evolve as your project progresses, since data science is an iterative process.
-- Include your data science questions on this page.
-
-### Literature review
-
-Once you decide on a topic, you should `ALWAYS START WITH A LITERATURE REVIEW`, this is particularly important for academic projects.
-
-The literature review is the most important part of most projects. 
-
-It allows you to; 
-
-* 1. Determine what is already known and what has already been tried, so that you `don't re-invent the wheel`.
-* 2. It makes you more of a subject matter expert, allowing you to `ask the right questions`, `target impactful projects`, and `communicate with other professionals`.
-
-> Doing a project that you think will change the world, only to find at the end that a very similar version of your project was already done in the 1980's, isn't a great use of time.
-
-In this section, please do a literature review and cite at least **3 academic publications** per group member, and include **internal academic citations**.
-
-**Optional**: Consider using LLM tools to 10X your literature review, e.g. instead of focusing on 3 papers, aim for 30 or more
-
-By following these steps, you can 10X the efficiency of your literature review process, gaining more insights while minimizing the time spent on manual reading.
-
-1. **Expand Your Literature Search**  
-   Aim to gather a larger pool of papers. Use academic databases (Google Scholar, arXiv, etc.) to find relevant studies and ensure a broad scope.
-
-2. **Skim the Abstracts**  
-   Read the abstracts of each paper to quickly understand their focus and identify those most relevant to your topic. Prioritize these papers for deeper analysis.
-
-3. **Use LLM Tools for Summarization**  
-   Upload the selected papers to an LLM tool capable of text summarization. Have it condense the main points of each paper into a concise, manageable summary (e.g., condense hundreds of pages into a 10-page summary). Carefully review this summary to absorb the key insights.
-
-4. **Leverage Interactive LLM Tools**  
-   Use tools like NotebookLM or other AI-based text digesters to ask specific, targeted questions about the papers:
-   - Example questions:
-     - "In the papers uploaded, did any of them explore XYZ?"
-     - "Which paper is most closely related to the following project idea: [explain idea]?"
-   These tools will help you quickly extract relevant information without re-reading entire papers.
 
 
 ## Additional Ideas for things to include 
