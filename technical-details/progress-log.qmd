@@ -8,15 +8,19 @@ This page serves as a progress log for my DSAN5000 final project
 
 **Weekly project contribution log:**
 
-**12-7-2024**
+**12-8-2024
 
 * [ ] Finish Supervised learning page
 * [ ] Finish Unsupervised Learning page
 * [ ] Finish EDA page
 
+**12-7-2024**
+
+* [ ] Re-download data using webscraping method via requests libary
+* [X] Finish Data Cleaning page
+
 **12-6-2024**
 
-* [ ] Finish Data Cleaning page
 * [X] Finish Data Collection page
 * [X] Finished literature reviews for articles
 
