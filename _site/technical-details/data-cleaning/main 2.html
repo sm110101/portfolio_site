@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -191,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-collection-process" id="toc-data-collection-process" class="nav-link active" data-scroll-target="#data-collection-process">Data Collection Process</a>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link active" data-scroll-target="#data-cleaning">Data Cleaning</a>
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   </ul></li>
@@ -204,6 +224,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#importing-packages" id="toc-importing-packages" class="nav-link" data-scroll-target="#importing-packages">Importing Packages</a></li>
   <li><a href="#loading-raw-data" id="toc-loading-raw-data" class="nav-link" data-scroll-target="#loading-raw-data">Loading raw data</a></li>
+  <li><a href="#dropping-unnecessary-columns" id="toc-dropping-unnecessary-columns" class="nav-link" data-scroll-target="#dropping-unnecessary-columns">Dropping Unnecessary Columns</a></li>
+  <li><a href="#checking-for-missing-values" id="toc-checking-for-missing-values" class="nav-link" data-scroll-target="#checking-for-missing-values">Checking for missing values</a></li>
+  <li><a href="#checking-data-types" id="toc-checking-data-types" class="nav-link" data-scroll-target="#checking-data-types">Checking data types</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -232,12 +255,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <!-- After digesting the instructions, you can delete this cell, these are assignment instructions and do not need to be included in your final submission.  -->
-<section id="data-collection-process" class="level1">
-<h1>Data Collection Process</h1>
+<section id="data-cleaning" class="level1">
+<h1>Data Cleaning</h1>
 <p><br> <br></p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>This page will cover the process of cleaning the raw data collected in the <a href="../../technical-details/data-collection/main.html">data collection</a></p>
+<p>This page will cover the process of cleaning the raw data gathered in the <a href="../../technical-details/data-collection/main.html">data collection</a> section.</p>
 </section>
 </section>
 <section id="instructions" class="level1">
@@ -321,13 +344,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip <span class="co"># For unzipping the raw data</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd <span class="co"># Using pandas for easier data manipulation</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk <span class="co"># Using nltk for its list of stopwords</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string <span class="co"># string.punctuation will be used for text cleaning</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string <span class="co"># string.punctuation will be used for text cleaning</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings <span class="co"># Turning off warnings for cleaner output</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="loading-raw-data" class="level3">
 <h3 class="anchored" data-anchor-id="loading-raw-data">Loading raw data</h3>
 <p>Now we can load in the processed CSV we constructed in the previous section.</p>
-<div id="cell-5" class="cell" data-execution_count="4">
+<div id="cell-5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pathway to raw data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> <span class="st">"../../data/raw-data/book_reviews.csv.gz"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -338,11 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few lines</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>reviews_raw.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/jc/_mbv6sp94sgb99sdqyw6l3l40000gn/T/ipykernel_43537/1278757534.py:7: DtypeWarning: Columns (1) have mixed types. Specify dtype option on import or set low_memory=False.
-  reviews_raw = pd.read_csv(f)</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -446,13 +469,128 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>Here is our first look at the raw dataframe - we can observe 12 columns containing the following variables:</p>
+<ul>
+<li><code>overall</code>: Rating</li>
+<li><code>vote</code>: Amount of community votes given to the review. Users will often vote when they find a review helpful</li>
+<li><code>verified</code>: Boolean variable that indicates whether an account is verified or not</li>
+<li><code>reviewTime</code>: Time of the review (raw)</li>
+<li><code>reviewerID</code>: ID of the reviewer</li>
+<li><code>asin</code>: Id of the product</li>
+<li><code>style</code>: Key-value object. In this case, it describes the format of the book (e.g.&nbsp;Paperback, Hardcover, Kindle, etc.)</li>
+<li><code>reviewerName</code>: Name of the reviewer</li>
+<li><code>reviewText</code>: Raw, unprocessed text contents of the review</li>
+<li><code>summary</code>: The title of the user’s review</li>
+<li><code>unixReviewTime</code>: Time of the review in unix time (Measures time “based by the number of non-leap seconds that have elapsed since 00:00:00 UTC”)<span class="citation" data-cites="UnixTime"><sup><a href="#ref-UnixTime" role="doc-biblioref">1</a></sup></span>.</li>
+<li><code>image</code>: Image path (if any)</li>
+</ul>
+</section>
+<section id="dropping-unnecessary-columns" class="level3">
+<h3 class="anchored" data-anchor-id="dropping-unnecessary-columns">Dropping Unnecessary Columns</h3>
+<p>First, lets drop the <code>unixReviewTime</code> and <code>image</code> columns, since they will not be used in our analysis</p>
+<div id="cell-8" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list of columns to drop</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>drop_cols <span class="op">=</span> [<span class="st">'unixReviewTime'</span>, <span class="st">'image'</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># dropping columns</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>reviews_raw <span class="op">=</span> reviews_raw.drop(columns<span class="op">=</span>drop_cols)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ensuring correct columns were dropped</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reviews_raw.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Index(['overall', 'vote', 'verified', 'reviewTime', 'reviewerID', 'asin',
+       'style', 'reviewerName', 'reviewText', 'summary'],
+      dtype='object')</code></pre>
+</div>
+</div>
+</section>
+<section id="checking-for-missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="checking-for-missing-values">Checking for missing values</h3>
+<p>Now lets check to see if our dataset contains any NA values</p>
+<div id="cell-10" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reviews_raw.isnull().<span class="bu">sum</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>overall               0
+vote            5790916
+verified              0
+reviewTime            0
+reviewerID            0
+asin                  0
+style           3192170
+reviewerName       1472
+reviewText         1640
+summary             875
+dtype: int64</code></pre>
+</div>
+</div>
+<p>It looks like our most important column, <code>reviewText</code>, has 1640 null values, so let’s get rid of them.</p>
+<div id="cell-12" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking only rows or reviews_raw where reviewText is not null</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>reviews_raw <span class="op">=</span> reviews_raw[reviews_raw[<span class="st">'reviewText'</span>].notna()]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lets make sure this works</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of NULL values in reviewText Column: </span><span class="sc">{</span>reviews_raw[<span class="st">'reviewText'</span>]<span class="sc">.</span>isnull()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of NULL values in reviewText Column: 0</code></pre>
+</div>
+</div>
+</section>
+<section id="checking-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="checking-data-types">Checking data types</h3>
+<p>Before moving forward, let’s ensure that each of our column data types are appropriate</p>
+<div id="cell-14" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reviews_raw.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>overall         float64
+vote             object
+verified           bool
+reviewTime       object
+reviewerID       object
+asin             object
+style            object
+reviewerName     object
+reviewText       object
+summary          object
+dtype: object</code></pre>
+</div>
+</div>
+<p>Lets make the following changes:</p>
+<ul>
+<li>Convert <code>vote</code> to an int object, where NA values are replaced by 0</li>
+</ul>
+<div id="cell-16" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting 'vote' to integer, while dropping columns from strings and replacing NA with 0 </span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>reviews_raw[<span class="st">'vote'</span>] <span class="op">=</span> reviews_raw[<span class="st">'vote'</span>].replace({<span class="st">','</span>: <span class="st">''</span>}, regex<span class="op">=</span><span class="va">True</span>).fillna(<span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Vote column data type: </span><span class="sc">{</span>reviews_raw[<span class="st">'vote'</span>]<span class="sc">.</span>dtype<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of NULL values in vote Column: </span><span class="sc">{</span>reviews_raw[<span class="st">'vote'</span>]<span class="sc">.</span>isnull()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Vote column data type: int64
+Number of NULL values in vote Column: 0</code></pre>
+</div>
+</div>
+<div id="cell-17" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>array(["{'Format:': ' Hardcover'}", "{'Format:': ' Kindle Edition'}",
+       "{'Format:': ' Paperback'}", ...,
+       '{\'Size:\': \' 5/16" - 5FT\', \'Color:\': \' Red\'}',
+       '{\'Size:\': \' 1" - 3FT\', \'Color:\': \' Red\'}',
+       '{\'Size:\': \' 3/4" - 5FT\', \'Color:\': \' Red\'}'], dtype=object)</code></pre>
+</div>
+</div>
+
 
 
 </section>
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-UnixTime" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline"><a href="https://en.wikipedia.org/wiki/Unix_time">Wikipedia - unix time</a>.</div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

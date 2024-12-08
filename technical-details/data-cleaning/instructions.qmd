@@ -1,12 +1,11 @@
-# Data Collection Process
+# Data Cleaning
 
 <br>
 <br>
-
 
 ## Introduction
 
-This page will cover the process of cleaning the raw data collected in the [data collection](../data-collection/main.ipynb)
+This page will cover the process of cleaning the raw data gathered in the [data collection](../data-collection/main.ipynb) section. 
 
 
 # Instructions 
