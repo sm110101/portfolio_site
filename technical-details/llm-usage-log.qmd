@@ -18,4 +18,4 @@ LLM tools were used in the following way for the tasks below
 
 ## Code: 
 
-* Code commenting and explanatory documentation 
+* On the [Data Cleaning](../technical-details/data-cleaning/main.ipynb) page, I leveraged the use of OpenAI's GPT-4o model to help streamline the execution time of my `clean_review()` function. Below is the formal citation[@gpt4o_textfunc].
