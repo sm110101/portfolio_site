@@ -11,6 +11,7 @@ website:
   title: "Sean Morris"
   favicon: "assets/sm_logo.png"
   navbar:
+    logo: assets/sm_logo.png
     left:
       - href: index.qmd
         text: Home
