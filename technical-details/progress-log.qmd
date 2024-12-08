@@ -17,8 +17,8 @@ This page serves as a progress log for my DSAN5000 final project
 **12-6-2024**
 
 * [ ] Finish Data Cleaning page
-* [ ] Finish Data Collection page
-* [ ] Finish literature review
+* [X] Finish Data Collection page
+* [X] Finished literature reviews for articles
 
 **12-5-2024**
 
