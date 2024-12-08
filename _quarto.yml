@@ -9,7 +9,7 @@ project:
 
 website:
   title: "Sean Morris"
-  favicon: "assets/SM_icon.png"
+  favicon: "assets/sm_logo.png"
   navbar:
     left:
       - href: index.qmd
