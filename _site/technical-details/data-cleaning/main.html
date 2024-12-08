@@ -252,7 +252,13 @@ div.csl-indent {
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>In this section, I continue by cleaning the data gathered in the <a href="../../technical-details/data-collection/main.html">Data Collection</a> section. To begin, I load in the raw data file from the <code>data/raw-data/</code> directory. From there, I drop columns that are not relevant to my <a href="../../technical-details/eda/main.html">EDA</a> and modeling down the line. Throughout this section, I try to consistently reduce the number of NA values until none remain in the final version of the dataset. While cleaning, I also make sure to drop NA values from rows where their removal wouldn’t seriously impact the size of the dataset. The columns that ended up matching this criteria were <code>reviewerName</code> and <code>summary</code>. I also make sure to assign proper data types to the columns - changing number of community votes <code>vote</code> to an integer value, date of review posting <code>reviewTime</code> to datetime. Finally, I run the function <code>clean_review()</code> on the <code>reviewText</code> and <code>summary</code> columns. In the challenges section, I highlight the computational bottleneck faced when trying to run <code>clean_text()</code> on over 12 million entries, and how I improved its performance. The final result of this section yields a clean dataset, ripe for further exploration and modeling.</p>
-<!-- After digesting the instructions, you can delete this cell, these are assignment instructions and do not need to be included in your final submission.  -->
+<ol start="2" type="1">
+<li><strong>Data Collection Methods</strong>
+<ul>
+<li>If you used an API or web scraping, explain the tools (e.g., <code>BeautifulSoup</code>, <code>Selenium</code>) and the process.</li>
+<li>Include links to your code for replicating data collection.</li>
+</ul></li>
+</ol>
 </section>
 <section id="code" class="level2">
 <h2 class="anchored" data-anchor-id="code">Code</h2>
