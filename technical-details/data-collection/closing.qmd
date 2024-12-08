@@ -1,19 +1,7 @@
-# Summary
+## Summary
 
-This section should be written for a **technical audience**, focusing on detailed analysis, factual reporting, and clear presentation of data. The following serves as a guide, but feel free to adjust as needed.
+In this section, I loaded in raw data in JSON form containing a corppus of over 6 million Amazon product reviews under the 'Electronics' category. With the help of custom functions provided in the dataset's source repository, I parsed the data and passed it into a pandas dataframe.
 
 ## Challenges
 
-- Discuss any technical challenges faced during the project, such as data limitations, computational issues, or obstacles encountered during analysis.
-- Explain unexpected results and their technical implications.
-- Identify areas for future work, including potential optimizations, further analysis, or scaling solutions.
-
-## Benchmarks
-
-- Compare your findings to relevant research, industry benchmarks, or intuitive expectations, if applicable.
-
-## Conclusion and Future Steps
-
-- Summarize the key technical points and outcomes of the project.
-- Suggest potential improvements or refinements to this part of the project.
-- Based on the results, provide actionable recommendations for further research or optimization efforts.
+- Due to the massive size of the raw data file, I had to try a bunch of new methods to successfully load it in. In the end, I elected to use a refined version of the `json` package called [`orjson`](https://github.com/ijl/orjson). Where `json` is the base python library for working with JSON formatted files, `orjson` is a third-party library build in Rust, and optimized for procedures that require rapid serialization of large-scale JSON files.

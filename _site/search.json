@@ -254,30 +254,23 @@
   {
     "objectID": "technical-details/data-collection/closing.html",
     "href": "technical-details/data-collection/closing.html",
-    "title": "Summary",
+    "title": "Sean Morris",
     "section": "",
-    "text": "This section should be written for a technical audience, focusing on detailed analysis, factual reporting, and clear presentation of data. The following serves as a guide, but feel free to adjust as needed.\n\n\n\nDiscuss any technical challenges faced during the project, such as data limitations, computational issues, or obstacles encountered during analysis.\nExplain unexpected results and their technical implications.\nIdentify areas for future work, including potential optimizations, further analysis, or scaling solutions.\n\n\n\n\n\nCompare your findings to relevant research, industry benchmarks, or intuitive expectations, if applicable.\n\n\n\n\n\nSummarize the key technical points and outcomes of the project.\nSuggest potential improvements or refinements to this part of the project.\nBased on the results, provide actionable recommendations for further research or optimization efforts."
+    "text": "In this section, I loaded in raw data in JSON form containing a corppus of over 6 million Amazon product reviews under the ‘Electronics’ category. With the help of custom functions provided in the dataset’s source repository, I parsed the data and passed it into a pandas dataframe."
+  },
+  {
+    "objectID": "technical-details/data-collection/closing.html#summary",
+    "href": "technical-details/data-collection/closing.html#summary",
+    "title": "Sean Morris",
+    "section": "",
+    "text": "In this section, I loaded in raw data in JSON form containing a corppus of over 6 million Amazon product reviews under the ‘Electronics’ category. With the help of custom functions provided in the dataset’s source repository, I parsed the data and passed it into a pandas dataframe."
   },
   {
     "objectID": "technical-details/data-collection/closing.html#challenges",
     "href": "technical-details/data-collection/closing.html#challenges",
-    "title": "Summary",
-    "section": "",
-    "text": "Discuss any technical challenges faced during the project, such as data limitations, computational issues, or obstacles encountered during analysis.\nExplain unexpected results and their technical implications.\nIdentify areas for future work, including potential optimizations, further analysis, or scaling solutions."
-  },
-  {
-    "objectID": "technical-details/data-collection/closing.html#benchmarks",
-    "href": "technical-details/data-collection/closing.html#benchmarks",
-    "title": "Summary",
-    "section": "",
-    "text": "Compare your findings to relevant research, industry benchmarks, or intuitive expectations, if applicable."
-  },
-  {
-    "objectID": "technical-details/data-collection/closing.html#conclusion-and-future-steps",
-    "href": "technical-details/data-collection/closing.html#conclusion-and-future-steps",
-    "title": "Summary",
-    "section": "",
-    "text": "Summarize the key technical points and outcomes of the project.\nSuggest potential improvements or refinements to this part of the project.\nBased on the results, provide actionable recommendations for further research or optimization efforts."
+    "title": "Sean Morris",
+    "section": "Challenges",
+    "text": "Challenges\n\nDue to the massive size of the raw data file, I had to try a bunch of new methods to successfully load it in. In the end, I elected to use a refined version of the json package called orjson. Where json is the base python library for working with JSON formatted files, orjson is a third-party library build in Rust, and optimized for procedures that require rapid serialization of large-scale JSON files."
   },
   {
     "objectID": "report/report.html",
@@ -497,81 +490,46 @@
     "text": "Result Interpretation: Interpret the results obtained from the analysis.\nModel Performance Comparison: Compare the performance of different models.\nInsights Gained: Share insights learned from the analysis."
   },
   {
-    "objectID": "technical-details/data-collection/main.html#suggested-page-structure",
-    "href": "technical-details/data-collection/main.html#suggested-page-structure",
+    "objectID": "technical-details/data-collection/main.html#data-source-information",
+    "href": "technical-details/data-collection/main.html#data-source-information",
     "title": "Data Collection",
-    "section": "Suggested page structure",
-    "text": "Suggested page structure\nHere’s one suggested structure for organizing your technical pages. You can adjust this as needed:\nAudience:Remember that these are written for a technical audience. Assume they have completed the DSAN program, but would appreciate refreshers of the important concepts.\n\nIntroduction and Motivation: Briefly outline your plan. What are you doing on this page, and why? Provide context and explain the goals of your analysis.\nOverview of Methods: Give a concise explanation of the methods used. For example, if using K-Means clustering, describe what it is, how it works, the inputs and outputs, and key hyperparameters.\nCode: Include the code you used to implement your workflow.\nSummary and Interpretation of Results: Summarize your findings, interpret the results, and discuss their technical implications.\n\nIn the provide repo, these subsections have been included in the data-collection file as separate .qmd files that can be embedded using the {{&lt; include  &gt;}} tag."
+    "section": "Data Source Information",
+    "text": "Data Source Information\nThe data from this project is open source and available via a github repository. A very big thank you to the repo owner, Jianmo Ni, who is a former UCSD student that compiled over 233.1 million amazon reviews for their paper on recommendation systems1.\nThe repo owner offers this data to the public under one condition - that anyone who uses it cites their original work, which I have included in the references section below. Alternatively, this link will take you directly to the original paper that used this data. The raw data used in this report can be downloaded at the original repo.\nDue to limited storage and computational capacity, I have elected to only conduct my analysis on the “5-core” version of Amazon Book reviews within the repository. The raw data is in json format, and therefore needs to be parsed and stored in a dataframe before any modeling or EDA can be done. For this process, I use the parse() and getDF() functions defined in the repository which is linked above.\nIn case you are not familiar, the term “5-core” is in reference to dense subsets, and in this case it means that the data below has been filtered such that the remaining users and items have 5 reviews each."
   },
   {
-    "objectID": "technical-details/data-collection/main.html#what-to-address",
-    "href": "technical-details/data-collection/main.html#what-to-address",
+    "objectID": "technical-details/data-collection/main.html#code",
+    "href": "technical-details/data-collection/main.html#code",
     "title": "Data Collection",
-    "section": "What to address",
-    "text": "What to address\nThe following is a list of some of the things you should address on this page. This list is not exhaustive, and you should use your judgment to decide what is most relevant to your project.\nOn this page, you will focus on data collection, which is an essential step for future analysis. You should have already selected a specific data-science question that can be addressed in a data-driven way.\nIt is recommended that you focus on one or two of the following data formats, text, tabular, image, geospatial, or network data.\nTabular (e.g. CSV files) and text formats are highly recommended, as these are covered most thoroughly in the course. Deviating from these formats may require additional work on your end. Please avoid timeseries data formats, as these require special methods not covered in the course. You can include as many additional formats as you want. Your project will revolve around the data you gather and will include data collection, analysis, visualization, and storytelling."
+    "section": "Code",
+    "text": "Code\n\nData Collection Code Overview\nHere, we begin the process by loading in our data. as stated above, The initial parse() and getDF() functions are borrowed from the link above as well. However, when initially trying to load and parse this data, I ran into serious memory issues that rendered my machine unable to successfully convert the data into a dataframe. Therefore, I elected to use the orjson library over the traditional json, which cut my import time dramatically. For reference to that repository, please head here.\nImporting Packages and Loading Data\n\n# Importing necessary packages\nimport pandas as pd\nimport gzip\nimport orjson\n\n# Loading in the data\n\n# Defining function that parses the json file\ndef parse_orjson(path):\n    g = gzip.open(path, 'rb')\n    for l in g:\n        yield orjson.loads(l)\n\n# Defining function to load the json data into a pandas dataframe\ndef getDF_orjson(path):\n    i = 0\n    df = {}\n    for d in parse_orjson(path):\n        df[i] = d\n        i += 1\n    return pd.DataFrame.from_dict(df, orient='index')\n\n# Retrieving data\ndf = getDF_orjson('../../data/raw-data/Books.json.gz')\n\nChecking Dimensions\n\nNow that the data has been loaded, let’s check the shape\n\n\n# Printing the data shape\n# df.shape\n\n(6739590, 12)\n\n\n\n6,739,590 reviews, which coincides with the count in the original repository.\n\nZipping Data\n\nWith that out of the way, we can zip up our data and continue on with the process\n\n\ndf.to_csv('../../data/raw-data/book_reviews.csv.gz', index=False, compression='gzip')\n\nMoving Forward\n\nNow that our data has been successfully collected and loaded, we can begin cleaning it in the next section."
   },
   {
-    "objectID": "technical-details/data-collection/main.html#start-collecting-data",
-    "href": "technical-details/data-collection/main.html#start-collecting-data",
+    "objectID": "technical-details/data-collection/main.html#summary",
+    "href": "technical-details/data-collection/main.html#summary",
     "title": "Data Collection",
-    "section": "Start collecting data:",
-    "text": "Start collecting data:\nBegin gathering your data and document the methods and sources on the Data Collection page of your project. Include screenshots or example tables to illustrate the data collection process without displaying entire datasets. Ensure transparency so anyone can replicate your work."
-  },
-  {
-    "objectID": "technical-details/data-collection/main.html#saving-the-raw-data",
-    "href": "technical-details/data-collection/main.html#saving-the-raw-data",
-    "title": "Data Collection",
-    "section": "Saving the raw data",
-    "text": "Saving the raw data\n\nDuring the collection phase, save the collected data locally to the data/raw-data folder, in the root of the project, for later processing. (Do not sync this folder to GitHub.)\nRemember, the “raw data” should typically be left “pristine”, to ensure replicability.\nLater when you clean the data, you should save the cleaned data to the data/processed-data folder, in the root of the project.\nYou should also save files you download manually from online to this folder"
-  },
-  {
-    "objectID": "technical-details/data-collection/main.html#requirements",
-    "href": "technical-details/data-collection/main.html#requirements",
-    "title": "Data Collection",
-    "section": "Requirements:",
-    "text": "Requirements:\n\nYour data must be relevant to the project’s overall goals and help solve your research questions.\nYou must use at least one API to collect your data.\nEnsure you have at least one regression target: a continuous quantity that can be used for regression prediction with other features.\nEnsure you have at least one binary classification target: a two-class (A,B) label that can be predicted using other features.\nEnsure you have at least one multiclass-classification target: a multi-class (A,B,C …) label that can be predicted using other features.\nDo not use a Kaggle topic—this project is meant to simulate a real-world project. Kaggle datasets are typically too clean and have already been prepped for analysis, which doesn’t align with the project’s goals.\n\nFocus on data that tells a compelling story and supports the techniques covered in the class (e.g., clustering, classification, regression)."
-  },
-  {
-    "objectID": "technical-details/data-collection/main.html#data-collection-code-overview",
-    "href": "technical-details/data-collection/main.html#data-collection-code-overview",
-    "title": "Data Collection",
-    "section": "Data Collection Code Overview",
-    "text": "Data Collection Code Overview\nHere, we begin the process by loading in our data. as stated above, The initial parse() and getDF() functions are borrowed from the link above as well. However, when initially trying to load and parse this data, I ran into serious memory issues that rendered my machine unable to successfully convert the data into a dataframe. Therefore, I elected to use the orjson library over the traditional json, which cut my import time dramatically. For reference to that repository, please head here.\nImporting Packages and Loading Data\n\n# Importing necessary packages\nimport pandas as pd\nimport gzip\nimport orjson\n\n# Loading in the data\n\n# Defining function that parses the json file\ndef parse_orjson(path):\n    g = gzip.open(path, 'rb')\n    for l in g:\n        yield orjson.loads(l)\n\n# Defining function to load the json data into a pandas dataframe\ndef getDF_orjson(path):\n    i = 0\n    df = {}\n    for d in parse_orjson(path):\n        df[i] = d\n        i += 1\n    return pd.DataFrame.from_dict(df, orient='index')\n\n# Retrieving data\ndf = getDF_orjson('../../data/raw-data/Electronics.json.gz')\n\nChecking Dimensions\n\nNow that the data has been loaded, let’s check the shape\n\n\n# Printing the data shape\n# df.shape\n\n(6739590, 12)\n\n\n\n6,739,590 reviews, which coincides with the count in the original repository.\n\nZipping Data\n\nWith that out of the way, we can zip up our data and continue on with the process\n\n\ndf.to_csv('../../data/raw-data/electronics_reviews.csv.gz', index=False, compression='gzip')\n\nMoving Forward\n\nNow that our data has been successfully collected and loaded, we can begin cleaning it in the next section."
+    "section": "Summary",
+    "text": "Summary\nIn this section, I loaded in raw data in JSON form containing a corppus of over 6 million Amazon product reviews under the ‘Electronics’ category. With the help of custom functions provided in the dataset’s source repository, I parsed the data and passed it into a pandas dataframe."
   },
   {
     "objectID": "technical-details/data-collection/main.html#challenges",
     "href": "technical-details/data-collection/main.html#challenges",
     "title": "Data Collection",
     "section": "Challenges",
-    "text": "Challenges\n\nDiscuss any technical challenges faced during the project, such as data limitations, computational issues, or obstacles encountered during analysis.\nExplain unexpected results and their technical implications.\nIdentify areas for future work, including potential optimizations, further analysis, or scaling solutions."
-  },
-  {
-    "objectID": "technical-details/data-collection/main.html#benchmarks",
-    "href": "technical-details/data-collection/main.html#benchmarks",
-    "title": "Data Collection",
-    "section": "Benchmarks",
-    "text": "Benchmarks\n\nCompare your findings to relevant research, industry benchmarks, or intuitive expectations, if applicable."
-  },
-  {
-    "objectID": "technical-details/data-collection/main.html#conclusion-and-future-steps",
-    "href": "technical-details/data-collection/main.html#conclusion-and-future-steps",
-    "title": "Data Collection",
-    "section": "Conclusion and Future Steps",
-    "text": "Conclusion and Future Steps\n\nSummarize the key technical points and outcomes of the project.\nSuggest potential improvements or refinements to this part of the project.\nBased on the results, provide actionable recommendations for further research or optimization efforts."
+    "text": "Challenges\n\nDue to the massive size of the raw data file, I had to try a bunch of new methods to successfully load it in. In the end, I elected to use a refined version of the json package called orjson. Where json is the base python library for working with JSON formatted files, orjson is a third-party library build in Rust, and optimized for procedures that require rapid serialization of large-scale JSON files."
   },
   {
     "objectID": "technical-details/data-cleaning/main.html",
     "href": "technical-details/data-cleaning/main.html",
     "title": "Data Cleaning",
     "section": "",
-    "text": "Welcome! This page serves as the first step in my project process"
+    "text": "This page will cover the process of cleaning the raw data collected in the data collection"
   },
   {
-    "objectID": "technical-details/data-cleaning/main.html#section",
-    "href": "technical-details/data-cleaning/main.html#section",
+    "objectID": "technical-details/data-cleaning/main.html#introduction",
+    "href": "technical-details/data-cleaning/main.html#introduction",
     "title": "Data Cleaning",
     "section": "",
-    "text": "Welcome! This page serves as the first step in my project process"
+    "text": "This page will cover the process of cleaning the raw data collected in the data collection"
   },
   {
     "objectID": "technical-details/data-cleaning/main.html#suggested-page-structure",
@@ -593,6 +551,13 @@
     "title": "Data Cleaning",
     "section": "What to address",
     "text": "What to address\nThe following is a list of some of the things you should address on this page. This list is not exhaustive, and you should use your judgment to decide what is most relevant to your project.\nThe Data Cleaning page of your portfolio is where you document the process of transforming your raw data into a usable format. Data cleaning is essential for ensuring the quality of your analysis, and this page should serve as a clear and reproducible guide for anyone reviewing your work. It also provides transparency, allowing others to trace the steps you took to prepare your data.\nThe following is a guide to help you get started with possible thing to address on this page .\n\nDescription of the Data Cleaning Process: Explain the steps you took to clean and preprocess the data.\nCode Documentation: Provide the code used in the data cleaning process (link to GitHub or embed the code directly).\nProvide examples of data before and after cleaning: e.g. with df.head() or df.describe()\nRaw and Cleaned Data Links: Ensure your page links to both the original (raw) dataset and the cleaned dataset. (please keep organized and store the cleaned data in data/processed-data, or similar location which doesn’t get synced to GitHub)\n\nPossible things to include:\nIntroduction to Data Cleaning:\n\nProvide a brief explanation of the data cleaning phase, its importance in preparing the data for further analysis (EDA, modeling), and its iterative nature.\nMention that data cleaning may need to be revisited as the project evolves and analysis goals change.\n\nManaging Missing Data:\n\nIdentify Missing Values: Explain how you identified missing data and where it occurred.\nHandling Missing Data: Describe how missing values were addressed (e.g., imputation, removal of rows/columns).\nVisualize Missing Data: Include visualizations (e.g., heatmaps) showing missing values before and after handling them.\n\nOutlier Detection and Treatment:\n\nIdentify Outliers: Describe the methods you used to detect outliers in the dataset.\nAddressing Outliers: Explain how outliers were treated (e.g., removal, transformation, or retaining them for analysis).\nVisualize Outliers: Use visualizations (e.g., box plots) to show how outliers were managed.\n\nData Type Correction and Formatting:\n\nReview Data Types: Summarize the types of variables (numerical, categorical, date-time, etc.) and ensure they are correctly formatted.\nTransformation: Document any transformations performed, such as converting date formats, handling categorical variables, or encoding labels.\nImpact of Changes: Briefly explain why these changes were necessary for accurate analysis.\n\nNormalization and Scaling:\n\nData Distribution Analysis: Check and discuss the distribution of numerical variables (e.g., skewness).\nNormalization Techniques: Describe any normalization or scaling techniques used (e.g., min-max scaling, z-score normalization).\nBefore-and-After Visualizations: Provide visualizations comparing the data before and after scaling or normalization.\n\nSubsetting the Data:\n\nData Filtering: Explain any subsetting or filtering of the data (e.g., selecting quantitative or qualitative columns).\nRationale: Justify why you chose to work with a particular subset of the data."
+  },
+  {
+    "objectID": "technical-details/data-cleaning/main.html#code",
+    "href": "technical-details/data-cleaning/main.html#code",
+    "title": "Data Cleaning",
+    "section": "Code",
+    "text": "Code\n\nImporting Packages\nFirst, let’s import the necessary packages.\n\n# Packages\nimport gzip # For unzipping the raw data\nimport pandas as pd # Using pandas for easier data manipulation\nimport nltk # Using nltk for its list of stopwords\nimport string # string.punctuation will be used for text cleaning\n\n\n\nLoading raw data\nNow we can load in the processed CSV we constructed in the previous section.\n\n# Pathway to raw data\ndata_path = \"../../data/raw-data/book_reviews.csv.gz\"\n\n# Unzip the CSV file\nwith gzip.open(data_path, 'rb') as f:\n    # Read the CSV file into a dataframe\n    reviews_raw = pd.read_csv(f)\n\n# Display the first few lines\nreviews_raw.head()\n\n/var/folders/jc/_mbv6sp94sgb99sdqyw6l3l40000gn/T/ipykernel_43537/1278757534.py:7: DtypeWarning: Columns (1) have mixed types. Specify dtype option on import or set low_memory=False.\n  reviews_raw = pd.read_csv(f)\n\n\n\n\n\n\n\n\n\noverall\nvote\nverified\nreviewTime\nreviewerID\nasin\nstyle\nreviewerName\nreviewText\nsummary\nunixReviewTime\nimage\n\n\n\n\n0\n5.0\n67\nTrue\n09 18, 1999\nAAP7PPBU72QFM\n0151004714\n{'Format:': ' Hardcover'}\nD. C. Carrad\nThis is the best novel I have read in 2 or 3 y...\nA star is born\n937612800\nNaN\n\n\n1\n3.0\n5\nTrue\n10 23, 2013\nA2E168DTVGE6SV\n0151004714\n{'Format:': ' Kindle Edition'}\nEvy\nPages and pages of introspection, in the style...\nA stream of consciousness novel\n1382486400\nNaN\n\n\n2\n5.0\n4\nFalse\n09 2, 2008\nA1ER5AYS3FQ9O3\n0151004714\n{'Format:': ' Paperback'}\nKcorn\nThis is the kind of novel to read when you hav...\nI'm a huge fan of the author and this one did ...\n1220313600\nNaN\n\n\n3\n5.0\n13\nFalse\n09 4, 2000\nA1T17LMQABMBN5\n0151004714\n{'Format:': ' Hardcover'}\nCaf Girl Writes\nWhat gorgeous language! What an incredible wri...\nThe most beautiful book I have ever read!\n968025600\nNaN\n\n\n4\n3.0\n8\nTrue\n02 4, 2000\nA3QHJ0FXK33OBE\n0151004714\n{'Format:': ' Hardcover'}\nW. Shane Schmidt\nI was taken in by reviews that compared this b...\nA dissenting view--In part.\n949622400\nNaN"
   },
   {
     "objectID": "technical-details/eda/main.html",
@@ -718,14 +683,14 @@
     "href": "technical-details/data-cleaning/instructions.html",
     "title": "Data Collection Process",
     "section": "",
-    "text": "Welcome! This page serves as the first step in my project process"
+    "text": "This page will cover the process of cleaning the raw data collected in the data collection"
   },
   {
-    "objectID": "technical-details/data-cleaning/instructions.html#section",
-    "href": "technical-details/data-cleaning/instructions.html#section",
+    "objectID": "technical-details/data-cleaning/instructions.html#introduction",
+    "href": "technical-details/data-cleaning/instructions.html#introduction",
     "title": "Data Collection Process",
     "section": "",
-    "text": "Welcome! This page serves as the first step in my project process"
+    "text": "This page will cover the process of cleaning the raw data collected in the data collection"
   },
   {
     "objectID": "technical-details/data-cleaning/instructions.html#suggested-page-structure",
@@ -871,15 +836,15 @@
     "objectID": "index.html#about-me",
     "href": "index.html#about-me",
     "title": "Overview",
-    "section": "About Me",
-    "text": "About Me\n\nHi, I’m Sean Morris — a data science graduate student at Georgetown University with a passion for blending analytics and creativity to solve complex problems. My background spans economics, software development and data science, and blockchain technology. I thrive at the intersection of technology and innovation, having developed tools like the Python packages and predictive models for Formula One races.\nPreviously, I co-founded Georgetown Blockchain, revitalizing the organization into a vibrant hub for tech enthusiasts. Currently, I’m delving into natural language processing, probabilistic modeling, and novel ways to value blockchain ecosystems though the lens of economics.\nWhen I’m not coding or exploring new tech, you might find me running, fishing with my family down in florida, or searching for the next meme coin fad. Whether it’s optimizing workflows or brainstorming product-translatable ideas, I’m driven to turn concepts into impactful solutions."
+    "section": "🔍 About Me",
+    "text": "🔍 About Me\n\nHi, I’m Sean Morris — a data science graduate student at Georgetown University with a passion for blending analytics and creativity to solve complex problems. My background spans economics, software development and data science, and blockchain technology. I thrive at the intersection of technology and innovation, having developed tools like the Python packages and predictive models for Formula One races.\nPreviously, I co-founded Georgetown Blockchain, revitalizing the organization into a vibrant hub for tech enthusiasts. Currently, I’m delving into natural language processing, probabilistic modeling, and novel ways to value blockchain ecosystems though the lens of economics.\nWhen I’m not coding or exploring new tech, you might find me running, fishing with my family down in florida, or searching for the next meme coin fad. Whether it’s optimizing workflows or brainstorming product-translatable ideas, I’m driven to turn concepts into impactful solutions."
   },
   {
     "objectID": "index.html#final-project-literature-review",
     "href": "index.html#final-project-literature-review",
     "title": "Overview",
-    "section": "Final Project: Literature Review",
-    "text": "Final Project: Literature Review\n\nIncorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach\nAuthors Yang et al. leverage a bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat1. This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predicting amazon customer review scores across. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are using extracting semantic information form a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as predictors in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores1.\n\n\nA GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction\nMagdelano et al. take adopt an intruiging angle in their approach to modeling sentiment analysis in text. In the study, they work with bakery reviews collected from Google Places data. In their approach, they construct a model that uses OpenAI’s GPT-3.5-Turbo model as a “linguistic component” that takes on the task of labelling sentiments for each text input2. From there, the authors feed the outputs into a multilayer perceptron (in laymans, “a neural network that can be used to perform regression”)3 used to offer a final star-based prediction on a given review. The authors use the popular 5-point Likert Scale (Excellent, Good, Neutral, Bad, Horrible) within the context of their assigned dataset categories: Flavor (F), Variety (V), Freshness of Bread (FoB), Customer Service (CS), and Price (P)2. The authors note their initial struggles with high polarity in the data. In orther words, they encountered a disproportionate amount of five-star ratings in comparison to others. In order to account for these imbalances, the researchers used an approach called undersampling in which they selectively remove observations with the overpresent characteristic before training and testing the model2. In their conclusion, they do not cite any notable differences in model performance between the full and filtered samples. Finally the reasearchers consistently identified the computational costs of including both a LLM and MLP layer in their model.\n\n\nMachine learning-based new approach to films review\nIn this report, the authors set forth with the goal to develop a supervised learning model that accurately classifies the sentiment of a given set of movie reviews as either positive or negative. They source around 50,000 reviews from an IMDB dataset, where the amount of positive and negative sentiment-labelled records are approximately equal. For their feature extraction process, the authors elect use term frequency (TF) and term frequency-inverse document frequency (TF-IDF), where “term-frequency” refers to the number of appearances a given word or term has in a document and “inverse document frequency” is calculated by taking the log of the ratio between the total number of documents analyzed and the number of documents containing the given term. Finally, TF-IDF is the product of these two metrics4.\nIn equation form: \\[\n\\text{TF}(t,d) = \\frac{\\text{Number of times term t appears in document d}}{\\text{Total number of terms in document d}}\n\\] \\[\n\\text{IDF}(t,D) = log_{e}\\frac{\\text{Total number of documents D in corpus}}{\\text{Number of documents containing term t}}\n\\] \\[\n\\text{TF-IDF} = TF(t,d) \\cdot IDF(t,D)\n\\]\nFrom there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accurary (88.33%)5\nAudio instructions:\nIf you want, you can listen to the instructions:\n\n\n\n Source: Text-to-speech conversion done with Amazon Polly on AWS \nNote: These audio instructions should not be included in your final submission or repository, once you are done wiht them, please delete the files and remove them from the website."
+    "section": "📚 Final Project: Literature Review",
+    "text": "📚 Final Project: Literature Review\n\nA GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction\nMagdelano et al. take adopt an intruiging angle in their approach to modeling sentiment analysis in text. In the study, they work with bakery reviews collected from Google Places data. In their approach, they construct a model that uses OpenAI’s GPT-3.5-Turbo model as a “linguistic component” that takes on the task of labelling sentiments for each text input1. From there, the authors feed the outputs into a multilayer perceptron (in laymans, “a neural network that can be used to perform regression”)2 used to offer a final star-based prediction on a given review. The authors use the popular 5-point Likert Scale (Excellent, Good, Neutral, Bad, Horrible) within the context of their assigned dataset categories: Flavor (F), Variety (V), Freshness of Bread (FoB), Customer Service (CS), and Price (P)1. The authors note their initial struggles with high polarity in the data. In orther words, they encountered a disproportionate amount of five-star ratings in comparison to others. In order to account for these imbalances, the researchers used an approach called undersampling in which they selectively remove observations with the overpresent characteristic before training and testing the model1. In their conclusion, they do not cite any notable differences in model performance between the full and filtered samples. Finally the reasearchers consistently identified the computational costs of including both a LLM and MLP layer in their model.\n\n\nMachine learning-based new approach to films review\nIn this report, the authors set forth with the goal to develop a supervised learning model that accurately classifies the sentiment of a given set of movie reviews as either positive or negative. They source around 50,000 reviews from an IMDB dataset, where the amount of positive and negative sentiment-labelled records are approximately equal. For their feature extraction process, the authors elect use term frequency (TF) and term frequency-inverse document frequency (TF-IDF), where “term-frequency” refers to the number of appearances a given word or term has in a document and “inverse document frequency” is calculated by taking the log of the ratio between the total number of documents analyzed and the number of documents containing the given term. Finally, TF-IDF is the product of these two metrics3.\nIn equation form: \\[\n\\text{TF}(t,d) = \\frac{\\text{Number of times term t appears in document d}}{\\text{Total number of terms in document d}}\n\\] \\[\n\\text{IDF}(t,D) = log_{e}\\frac{\\text{Total number of documents D in corpus}}{\\text{Number of documents containing term t}}\n\\] \\[\n\\text{TF-IDF} = TF(t,d) \\cdot IDF(t,D)\n\\]\nFrom there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accurary (88.33%)4\n\n\nIncorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach\nAuthors Yang et al. leverage a bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat5. This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predict amazon customer review scores across six million reviews. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are extracting semantic information from a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as features in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores5.\nAudio instructions:\nIf you want, you can listen to the instructions:\n\n\n\n Source: Text-to-speech conversion done with Amazon Polly on AWS \nNote: These audio instructions should not be included in your final submission or repository, once you are done wiht them, please delete the files and remove them from the website."
   },
   {
     "objectID": "index.html#getting-started",

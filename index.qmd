@@ -7,7 +7,7 @@ title: Overview
 This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Anlytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please head over [here](report/report.qmd).
 
 
-## About Me 
+## 🔍 About Me 
 
 ![](xtra/multiclass-portfolio-website/images/my_photo.png){width="400px"} 
 
@@ -20,12 +20,7 @@ When I’m not coding or exploring new tech, you might find me running, fishing 
 
 
 
-## Final Project: Literature Review
-
-
-### Incorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach
-
-Authors Yang et al. leverage a bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat [@yang2023]. This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predicting amazon customer review scores across. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are using extracting semantic information form a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as predictors in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores [@yang2023]. 
+## 📚 Final Project: Literature Review
 
 
 ### A GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction
@@ -50,6 +45,10 @@ $$
 
 From there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accurary (88.33%)[@Jassim2023]
 
+
+### Incorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach
+
+Authors Yang et al. leverage a bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat [@yang2023]. This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predict amazon customer review scores across six million reviews. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are extracting semantic information from a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as features in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores [@yang2023].
 
 
 

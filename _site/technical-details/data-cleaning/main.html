@@ -20,10 +20,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -67,6 +101,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -156,15 +193,19 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#data-collection-process" id="toc-data-collection-process" class="nav-link active" data-scroll-target="#data-collection-process">Data Collection Process</a>
   <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   </ul></li>
   <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a>
   <ul class="collapse">
   <li><a href="#suggested-page-structure" id="toc-suggested-page-structure" class="nav-link" data-scroll-target="#suggested-page-structure">Suggested page structure</a></li>
   <li><a href="#general-comments" id="toc-general-comments" class="nav-link" data-scroll-target="#general-comments">General comments:</a></li>
   <li><a href="#what-to-address" id="toc-what-to-address" class="nav-link" data-scroll-target="#what-to-address">What to address</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a>
+  <ul class="collapse">
+  <li><a href="#importing-packages" id="toc-importing-packages" class="nav-link" data-scroll-target="#importing-packages">Importing Packages</a></li>
+  <li><a href="#loading-raw-data" id="toc-loading-raw-data" class="nav-link" data-scroll-target="#loading-raw-data">Loading raw data</a></li>
   </ul></li>
-  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -193,9 +234,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- After digesting the instructions, you can delete this cell, these are assignment instructions and do not need to be included in your final submission.  -->
 <section id="data-collection-process" class="level1">
 <h1>Data Collection Process</h1>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
-<p>Welcome! This page serves as the first step in my project process</p>
+<p><br> <br></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This page will cover the process of cleaning the raw data collected in the <a href="../../technical-details/data-collection/main.html">data collection</a></p>
 </section>
 </section>
 <section id="instructions" class="level1">
@@ -269,16 +311,145 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Rationale</strong>: Justify why you chose to work with a particular subset of the data.</li>
 </ul>
 </section>
+<section id="code" class="level2">
+<h2 class="anchored" data-anchor-id="code">Code</h2>
+<section id="importing-packages" class="level3">
+<h3 class="anchored" data-anchor-id="importing-packages">Importing Packages</h3>
+<p>First, let’s import the necessary packages.</p>
+<div id="cell-3" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip <span class="co"># For unzipping the raw data</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd <span class="co"># Using pandas for easier data manipulation</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk <span class="co"># Using nltk for its list of stopwords</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string <span class="co"># string.punctuation will be used for text cleaning</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="code" class="level1">
-<h1>Code</h1>
-<p>Provide the source code used for this section of the project here.</p>
-<p>If you’re using a package for code organization, you can import it at this point. However, make sure that the <strong>actual workflow steps</strong>—including data processing, analysis, and other key tasks—are conducted and clearly demonstrated on this page. The goal is to show the technical flow of your project, highlighting how the code is executed to achieve your results.</p>
-<p>If relevant, link to additional documentation or external references that explain any complex components. This section should give readers a clear view of how the project is implemented from a technical perspective.</p>
-<p>Remember, this page is a technical narrative, NOT just a notebook with a collection of code cells, include in-line Prose, to describe what is going on.</p>
-<p>Test</p>
+<section id="loading-raw-data" class="level3">
+<h3 class="anchored" data-anchor-id="loading-raw-data">Loading raw data</h3>
+<p>Now we can load in the processed CSV we constructed in the previous section.</p>
+<div id="cell-5" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pathway to raw data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> <span class="st">"../../data/raw-data/book_reviews.csv.gz"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Unzip the CSV file</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> gzip.<span class="bu">open</span>(data_path, <span class="st">'rb'</span>) <span class="im">as</span> f:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Read the CSV file into a dataframe</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    reviews_raw <span class="op">=</span> pd.read_csv(f)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few lines</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>reviews_raw.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/jc/_mbv6sp94sgb99sdqyw6l3l40000gn/T/ipykernel_43537/1278757534.py:7: DtypeWarning: Columns (1) have mixed types. Specify dtype option on import or set low_memory=False.
+  reviews_raw = pd.read_csv(f)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
 
 
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">overall</th>
+<th data-quarto-table-cell-role="th">vote</th>
+<th data-quarto-table-cell-role="th">verified</th>
+<th data-quarto-table-cell-role="th">reviewTime</th>
+<th data-quarto-table-cell-role="th">reviewerID</th>
+<th data-quarto-table-cell-role="th">asin</th>
+<th data-quarto-table-cell-role="th">style</th>
+<th data-quarto-table-cell-role="th">reviewerName</th>
+<th data-quarto-table-cell-role="th">reviewText</th>
+<th data-quarto-table-cell-role="th">summary</th>
+<th data-quarto-table-cell-role="th">unixReviewTime</th>
+<th data-quarto-table-cell-role="th">image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>5.0</td>
+<td>67</td>
+<td>True</td>
+<td>09 18, 1999</td>
+<td>AAP7PPBU72QFM</td>
+<td>0151004714</td>
+<td>{'Format:': ' Hardcover'}</td>
+<td>D. C. Carrad</td>
+<td>This is the best novel I have read in 2 or 3 y...</td>
+<td>A star is born</td>
+<td>937612800</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>3.0</td>
+<td>5</td>
+<td>True</td>
+<td>10 23, 2013</td>
+<td>A2E168DTVGE6SV</td>
+<td>0151004714</td>
+<td>{'Format:': ' Kindle Edition'}</td>
+<td>Evy</td>
+<td>Pages and pages of introspection, in the style...</td>
+<td>A stream of consciousness novel</td>
+<td>1382486400</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>5.0</td>
+<td>4</td>
+<td>False</td>
+<td>09 2, 2008</td>
+<td>A1ER5AYS3FQ9O3</td>
+<td>0151004714</td>
+<td>{'Format:': ' Paperback'}</td>
+<td>Kcorn</td>
+<td>This is the kind of novel to read when you hav...</td>
+<td>I'm a huge fan of the author and this one did ...</td>
+<td>1220313600</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>5.0</td>
+<td>13</td>
+<td>False</td>
+<td>09 4, 2000</td>
+<td>A1T17LMQABMBN5</td>
+<td>0151004714</td>
+<td>{'Format:': ' Hardcover'}</td>
+<td>Caf Girl Writes</td>
+<td>What gorgeous language! What an incredible wri...</td>
+<td>The most beautiful book I have ever read!</td>
+<td>968025600</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>3.0</td>
+<td>8</td>
+<td>True</td>
+<td>02 4, 2000</td>
+<td>A3QHJ0FXK33OBE</td>
+<td>0151004714</td>
+<td>{'Format:': ' Hardcover'}</td>
+<td>W. Shane Schmidt</td>
+<td>I was taken in by reviews that compared this b...</td>
+<td>A dissenting view--In part.</td>
+<td>949622400</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

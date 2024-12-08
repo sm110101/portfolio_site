@@ -208,29 +208,13 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction-and-motivation" id="toc-introduction-and-motivation" class="nav-link active" data-scroll-target="#introduction-and-motivation">Introduction and Motivation</a></li>
-  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a>
-  <ul class="collapse">
-  <li><a href="#suggested-page-structure" id="toc-suggested-page-structure" class="nav-link" data-scroll-target="#suggested-page-structure">Suggested page structure</a></li>
-  <li><a href="#what-to-address" id="toc-what-to-address" class="nav-link" data-scroll-target="#what-to-address">What to address</a></li>
-  <li><a href="#start-collecting-data" id="toc-start-collecting-data" class="nav-link" data-scroll-target="#start-collecting-data">Start collecting data:</a></li>
-  <li><a href="#saving-the-raw-data" id="toc-saving-the-raw-data" class="nav-link" data-scroll-target="#saving-the-raw-data">Saving the raw data</a></li>
-  <li><a href="#requirements" id="toc-requirements" class="nav-link" data-scroll-target="#requirements">Requirements:</a></li>
-  </ul></li>
-  <li><a href="#what-do-include-on-this-page" id="toc-what-do-include-on-this-page" class="nav-link" data-scroll-target="#what-do-include-on-this-page">What do include on this page</a></li>
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
-  <li><a href="#data-source-information" id="toc-data-source-information" class="nav-link" data-scroll-target="#data-source-information">Data Source Information</a></li>
+  <li><a href="#data-source-information" id="toc-data-source-information" class="nav-link active" data-scroll-target="#data-source-information">Data Source Information</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a>
   <ul class="collapse">
   <li><a href="#data-collection-code-overview" id="toc-data-collection-code-overview" class="nav-link" data-scroll-target="#data-collection-code-overview">Data Collection Code Overview</a></li>
   </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a>
-  <ul class="collapse">
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
-  <li><a href="#benchmarks" id="toc-benchmarks" class="nav-link" data-scroll-target="#benchmarks">Benchmarks</a></li>
-  <li><a href="#conclusion-and-future-steps" id="toc-conclusion-and-future-steps" class="nav-link" data-scroll-target="#conclusion-and-future-steps">Conclusion and Future Steps</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -256,120 +240,21 @@ div.csl-indent {
 </header>
 
 
-<section id="introduction-and-motivation" class="level1">
-<h1>Introduction and Motivation</h1>
-</section>
-<section id="instructions" class="level1">
-<h1>Instructions</h1>
-<p><code>Note</code>: You should remove these instruction once you have read and understood them. They should not be included in your final submission.</p>
-<p><code>Remember:</code> Exactly what do you put on this page will be specific you your project and data. Some things might “make more sense” on one page rather than another, depending on your workflow. Organize your project in a logical way that makes the most sense to you.</p>
-<section id="suggested-page-structure" class="level2">
-<h2 class="anchored" data-anchor-id="suggested-page-structure">Suggested page structure</h2>
-<p>Here’s one suggested structure for organizing your technical pages. You can adjust this as needed:</p>
-<p><code>Audience</code>:Remember that these are written for a technical audience. Assume they have completed the DSAN program, but would appreciate refreshers of the important concepts.</p>
-<ul>
-<li><strong>Introduction and Motivation:</strong> Briefly outline your plan. What are you doing on this page, and why? Provide context and explain the goals of your analysis.</li>
-<li><strong>Overview of Methods:</strong> Give a concise explanation of the methods used. For example, if using K-Means clustering, describe what it is, how it works, the inputs and outputs, and key hyperparameters.</li>
-<li><strong>Code:</strong> Include the code you used to implement your workflow.</li>
-<li><strong>Summary and Interpretation of Results:</strong> Summarize your findings, interpret the results, and discuss their technical implications.</li>
-</ul>
-<p>In the provide repo, these subsections have been included in the <code>data-collection</code> file as separate <code>.qmd</code> files that can be embedded using the <code>{{&lt; include  &gt;}}</code> tag.</p>
-</section>
-<section id="what-to-address" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-address">What to address</h2>
-<p>The following is a list of some of the things you should address on this page. This list is not exhaustive, and you should use your judgment to decide what is most relevant to your project.</p>
-<p>On this page, you will focus on <strong>data collection</strong>, which is an essential step for future analysis. You should have already selected a specific data-science question that can be addressed in a data-driven way.</p>
-<p>It is recommended that you focus on one or two of the following data formats, <strong>text</strong>, <strong>tabular</strong>, <strong>image</strong>, <strong>geospatial</strong>, or <strong>network</strong> data.</p>
-<p><strong>Tabular</strong> (e.g.&nbsp;CSV files) and <strong>text</strong> formats are highly recommended, as these are covered most thoroughly in the course. Deviating from these formats may require additional work on your end. Please avoid <strong>timeseries</strong> data formats, as these require special methods not covered in the course. You can include as many additional formats as you want. Your project will revolve around the data you gather and will include data collection, analysis, visualization, and storytelling.</p>
-</section>
-<section id="start-collecting-data" class="level2">
-<h2 class="anchored" data-anchor-id="start-collecting-data">Start collecting data:</h2>
-<p>Begin gathering your data and document the methods and sources on the <strong>Data Collection</strong> page of your project. Include screenshots or example tables to illustrate the data collection process without displaying entire datasets. Ensure <strong>transparency</strong> so anyone can replicate your work.</p>
-</section>
-<section id="saving-the-raw-data" class="level2">
-<h2 class="anchored" data-anchor-id="saving-the-raw-data">Saving the raw data</h2>
-<ul>
-<li>During the collection phase, save the collected data locally to the <code>data/raw-data</code> folder, in the root of the project, for later processing. (Do not sync this folder to GitHub.)</li>
-<li>Remember, the “raw data” should typically be left “pristine”, to ensure replicability.</li>
-<li>Later when you clean the data, you should save the cleaned data to the <code>data/processed-data</code> folder, in the root of the project.</li>
-<li>You should also save files you download manually from online to this folder</li>
-</ul>
-</section>
-<section id="requirements" class="level2">
-<h2 class="anchored" data-anchor-id="requirements">Requirements:</h2>
-<ul>
-<li>Your data must be relevant to the project’s overall goals and help solve your research questions.</li>
-<li>You must use <strong>at least one API</strong> to collect your data.</li>
-<li>Ensure you have at least one <strong>regression target</strong>: a continuous quantity that can be used for regression prediction with other features.</li>
-<li>Ensure you have at least one <strong>binary classification target</strong>: a two-class (A,B) label that can be predicted using other features.</li>
-<li>Ensure you have at least one <strong>multiclass-classification target</strong>: a multi-class (A,B,C …) label that can be predicted using other features.</li>
-<li><strong>Do not use a Kaggle topic</strong>—this project is meant to simulate a real-world project. Kaggle datasets are typically too clean and have already been prepped for analysis, which doesn’t align with the project’s goals.</li>
-</ul>
-<p>Focus on data that tells a compelling story and supports the techniques covered in the class (e.g., clustering, classification, regression).</p>
-</section>
-</section>
-<section id="what-do-include-on-this-page" class="level1">
-<h1>What do include on this page</h1>
-<p>To ensure clarity and transparency throughout your project, your data collection documentation should include the following:</p>
-<ol start="0" type="1">
-<li><p><strong>Include all code used for data collection</strong> in the notebook below</p></li>
-<li><p><strong>Data Source Information</strong></p>
-<ul>
-<li>Specify where the data comes from, whether public datasets, APIs, or original collection.</li>
-<li>Provide links to datasets or API documentation and explain their relevance to the project.</li>
-</ul></li>
-<li><p><strong>Data Collection Methods</strong></p>
-<ul>
-<li>If you used an API or web scraping, explain the tools (e.g., <code>BeautifulSoup</code>, <code>Selenium</code>) and the process.</li>
-<li>Include links to your code for replicating data collection.</li>
-</ul></li>
-<li><p><strong>Data Structure and Format</strong></p>
-<ul>
-<li>Describe the structure of your raw data (e.g., rows, columns, data types) and its format (CSV, JSON, etc.).</li>
-</ul></li>
-<li><p><strong>Linking to Data</strong></p>
-<ul>
-<li>Include links to the <strong>raw dataset</strong>, ensuring transparency and allowing replication.</li>
-</ul></li>
-<li><p><strong>Code and Reproducibility</strong></p>
-<ul>
-<li>Link to all relevant code, including data collection , with clear documentation to enable replication.</li>
-</ul></li>
-<li><p><strong>Transparency and Replicability</strong></p>
-<ul>
-<li>Ensure your entire workflow is transparent and reproducible by linking all data, code, and documentation. This allows others to follow your process from start to finish.</li>
-</ul></li>
-</ol>
-</section>
-<section id="overview" class="level1">
-<h1>Overview</h1>
-<p>In this section, provide a high-level overview for technical staff, summarizing the key tasks and processes carried out here. Include the following elements:</p>
-<ul>
-<li><strong>Goals</strong>: Clearly define the purpose of the tasks or analysis being conducted.</li>
-<li><strong>Motivation</strong>: Explain the reasoning behind the work, such as solving a specific problem, improving a system, or optimizing performance.</li>
-<li><strong>Objectives</strong>: Outline the specific outcomes you aim to achieve, whether it’s implementing a solution, analyzing data, or building a model.</li>
-</ul>
-<p>This overview should give technical staff a clear understanding of the context and importance of the work, while guiding them on what to focus on in the details that follow.</p>
-</section>
-<section id="methods" class="level1">
-<h1>Methods</h1>
-<p>In this section, provide an overview summary of the methods used on this page. This should include a brief description of the key techniques, algorithms, tools, or processes employed in your work. Make sure to outline the approach taken for data collection, processing, analysis, or any specific technical steps relevant to the project.</p>
-<p>If you are developing a package, include a reference to the relevant documentation and provide a link here for easy access. Ensure that the package details are properly documented in its dedicated section, but mentioned and connected here for a complete understanding of the methods used in this project.</p>
-</section>
-<section id="data-source-information" class="level1">
-<h1>Data Source Information</h1>
+<p><br> <br></p>
+<section id="data-source-information" class="level2">
+<h2 class="anchored" data-anchor-id="data-source-information">Data Source Information</h2>
 <p>The data from this project is open source and available via a github repository. A very big thank you to the repo owner, <a href="https://x.com/jianmo_ni">Jianmo Ni</a>, who is a former UCSD student that compiled over 233.1 million amazon reviews for their paper on recommendation systems<span class="citation" data-cites="DataArticle"><sup><a href="#ref-DataArticle" role="doc-biblioref">1</a></sup></span>.</p>
 <p>The repo owner offers this data to the public under one condition - that anyone who uses it cites their original work, which I have included in the references section below. Alternatively, this <a href="https://cseweb.ucsd.edu/~jmcauley/pdfs/emnlp19a.pdf">link</a> will take you directly to the original paper that used this data. The raw data used in this report can be downloaded at the original <a href="https://nijianmo.github.io/amazon/index.html">repo</a>.</p>
-<p>Due to limited storage and computational capacity, I have elected to only conduct my analysis on the “5-core” version of Amazon Electronics reviews within the repository. The raw data is in json format, and therefore needs to be parsed and stored in a dataframe before any modeling or EDA can be done. For this process, I use the <code>parse()</code> and <code>getDF()</code> functions defined in the repository which is linked above.</p>
+<p>Due to limited storage and computational capacity, I have elected to only conduct my analysis on the “5-core” version of Amazon Book reviews within the repository. The raw data is in json format, and therefore needs to be parsed and stored in a dataframe before any modeling or EDA can be done. For this process, I use the <code>parse()</code> and <code>getDF()</code> functions defined in the repository which is linked above.</p>
 <p>In case you are not familiar, the term “5-core” is in reference to dense subsets, and in this case it means that the data below has been filtered such that the remaining users and items have 5 reviews each.</p>
 </section>
-<section id="code" class="level1">
-<h1>Code</h1>
-<section id="data-collection-code-overview" class="level2">
-<h2 class="anchored" data-anchor-id="data-collection-code-overview">Data Collection Code Overview</h2>
+<section id="code" class="level2">
+<h2 class="anchored" data-anchor-id="code">Code</h2>
+<section id="data-collection-code-overview" class="level3">
+<h3 class="anchored" data-anchor-id="data-collection-code-overview">Data Collection Code Overview</h3>
 <p>Here, we begin the process by loading in our data. as stated above, The initial <code>parse()</code> and <code>getDF()</code> functions are borrowed from the link above as well. However, when initially trying to load and parse this data, I ran into serious memory issues that rendered my machine unable to successfully convert the data into a dataframe. Therefore, I elected to use the <code>orjson</code> library over the traditional <code>json</code>, which cut my import time dramatically. For reference to that repository, please head <a href="https://github.com/ijl/orjson">here</a>.</p>
 <p><strong>Importing Packages and Loading Data</strong></p>
-<div id="cell-7" class="cell" data-execution_count="1">
+<div id="cell-4" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing necessary packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip</span>
@@ -393,16 +278,16 @@ div.csl-indent {
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame.from_dict(df, orient<span class="op">=</span><span class="st">'index'</span>)</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieving data</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> getDF_orjson(<span class="st">'../../data/raw-data/Electronics.json.gz'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> getDF_orjson(<span class="st">'../../data/raw-data/Books.json.gz'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Checking Dimensions</strong></p>
 <ul>
 <li>Now that the data has been loaded, let’s check the shape</li>
 </ul>
-<div id="cell-10" class="cell" data-execution_count="4">
+<div id="cell-7" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing the data shape</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df.shape</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>(6739590, 12)</code></pre>
 </div>
 </div>
@@ -413,8 +298,8 @@ div.csl-indent {
 <ul>
 <li>With that out of the way, we can zip up our data and continue on with the process</li>
 </ul>
-<div id="cell-14" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'../../data/raw-data/electronics_reviews.csv.gz'</span>, index<span class="op">=</span><span class="va">False</span>, compression<span class="op">=</span><span class="st">'gzip'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-11" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'../../data/raw-data/book_reviews.csv.gz'</span>, index<span class="op">=</span><span class="va">False</span>, compression<span class="op">=</span><span class="st">'gzip'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Moving Forward</strong></p>
 <ul>
@@ -422,34 +307,18 @@ div.csl-indent {
 </ul>
 </section>
 </section>
-<section id="summary" class="level1">
-<h1>Summary</h1>
-<p>This section should be written for a <strong>technical audience</strong>, focusing on detailed analysis, factual reporting, and clear presentation of data. The following serves as a guide, but feel free to adjust as needed.</p>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>In this section, I loaded in raw data in JSON form containing a corppus of over 6 million Amazon product reviews under the ‘Electronics’ category. With the help of custom functions provided in the dataset’s source repository, I parsed the data and passed it into a pandas dataframe.</p>
+</section>
 <section id="challenges" class="level2">
 <h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
 <ul>
-<li>Discuss any technical challenges faced during the project, such as data limitations, computational issues, or obstacles encountered during analysis.</li>
-<li>Explain unexpected results and their technical implications.</li>
-<li>Identify areas for future work, including potential optimizations, further analysis, or scaling solutions.</li>
-</ul>
-</section>
-<section id="benchmarks" class="level2">
-<h2 class="anchored" data-anchor-id="benchmarks">Benchmarks</h2>
-<ul>
-<li>Compare your findings to relevant research, industry benchmarks, or intuitive expectations, if applicable.</li>
-</ul>
-</section>
-<section id="conclusion-and-future-steps" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion-and-future-steps">Conclusion and Future Steps</h2>
-<ul>
-<li>Summarize the key technical points and outcomes of the project.</li>
-<li>Suggest potential improvements or refinements to this part of the project.</li>
-<li>Based on the results, provide actionable recommendations for further research or optimization efforts.</li>
+<li>Due to the massive size of the raw data file, I had to try a bunch of new methods to successfully load it in. In the end, I elected to use a refined version of the <code>json</code> package called <a href="https://github.com/ijl/orjson"><code>orjson</code></a>. Where <code>json</code> is the base python library for working with JSON formatted files, <code>orjson</code> is a third-party library build in Rust, and optimized for procedures that require rapid serialization of large-scale JSON files.</li>
 </ul>
 
 
 
-</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">

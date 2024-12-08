@@ -1,11 +1,12 @@
 # Data Collection Process
 
+<br>
+<br>
 
 
+## Introduction
 
-## 
-
-Welcome! This page serves as the first step in my project process
+This page will cover the process of cleaning the raw data collected in the [data collection](../data-collection/main.ipynb)
 
 
 # Instructions 
