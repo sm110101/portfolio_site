@@ -154,11 +154,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#instructions" id="toc-instructions" class="nav-link active" data-scroll-target="#instructions">Instructions</a>
-  <ul class="collapse">
-  <li><a href="#suggested-page-structure" id="toc-suggested-page-structure" class="nav-link" data-scroll-target="#suggested-page-structure">Suggested page structure</a></li>
-  <li><a href="#what-to-address" id="toc-what-to-address" class="nav-link" data-scroll-target="#what-to-address">What to address</a></li>
-  </ul></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
   </ul>
 </nav>
@@ -185,95 +181,19 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<!-- After digesting the instructions, you can delete this cell, these are assignment instructions and do not need to be included in your final submission.  -->
-<section id="instructions" class="level1">
-<h1>Instructions</h1>
-<p><code>Note</code>: You should remove these instructions once you have read and understood them. They should not be included in your final submission.</p>
-<p><code>Remember:</code> Exactly what do you put on this page will be specific you your project and data. Some things might “make more sense” on one page rather than another, depending on your workflow. Organize your project in a logical way that makes the most sense to you.</p>
-<section id="suggested-page-structure" class="level2">
-<h2 class="anchored" data-anchor-id="suggested-page-structure">Suggested page structure</h2>
-<p>Here’s one suggested structure for organizing your technical pages. You can adjust this as needed:</p>
-<p><code>Audience</code>:Remember that these are written for a technical audience. Assume they have completed the DSAN program, but would appreciate refreshers of the important concepts.</p>
+<p><br> <br></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Now that I have finally loaded in and cleaned the data, it’s time for the fun part. In this section, I dive into the the Amazon Electronics reviews dataset. My objectives are as follows:</p>
 <ul>
-<li><strong>Introduction and Motivation:</strong> Briefly outline your plan. What are you doing on this page, and why? Provide context and explain the goals of your analysis.</li>
-<li><strong>Overview of Methods:</strong> Give a concise explanation of the methods used. For example, if using K-Means clustering, describe what it is, how it works, the inputs and outputs, and key hyperparameters.</li>
-<li><strong>Code:</strong> Include the code you used to implement your workflow.</li>
-<li><strong>Summary and Interpretation of Results:</strong> Summarize your findings, interpret the results, and discuss their technical implications.</li>
+<li>Ucover any potential issues in the data set</li>
+<li>Summarize key characteristics of the data</li>
+<li>Identify any patterns or anomalies</li>
+<li>Prepare for the upcoming modeling stages</li>
 </ul>
 </section>
-<section id="what-to-address" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-address">What to address</h2>
-<p>The following is a list of some of the things you should address on this page. This list is not exhaustive, and you should use your judgment to decide what is most relevant to your project.</p>
-<p>The <strong>EDA (Exploratory Data Analysis)</strong> tab in your portfolio serves as a crucial foundation for your project. It provides a thorough overview of the dataset, highlights patterns, identifies potential issues, and prepares the data for further analysis. Follow these instructions to document your EDA effectively:</p>
-<p>The goal of EDA is to gain a deeper understanding of the dataset and its relevance to your project’s objectives. It involves summarizing key data characteristics, identifying patterns, anomalies, and preparing for future analysis phases.</p>
-<p>Here are suggestions for things to include on this page</p>
-<p><strong>Univariate Analysis</strong>:</p>
-<ul>
-<li><strong>Numerical Variables</strong>:
-<ul>
-<li>Provide summary statistics (mean, median, standard deviation).</li>
-<li>Visualize distributions using histograms or density plots.</li>
-</ul></li>
-<li><strong>Categorical Variables</strong>:
-<ul>
-<li>Present frequency counts and visualize distributions using bar charts or pie charts.</li>
-</ul></li>
-<li><strong>Key Insights</strong>:
-<ul>
-<li>Highlight any notable trends or patterns observed.</li>
-</ul></li>
-</ul>
-<p><strong>Bivariate and Multivariate Analysis</strong>:</p>
-<ul>
-<li><strong>Correlation Analysis</strong>:
-<ul>
-<li>Analyze relationships between numerical variables using a correlation matrix.</li>
-<li>Visualize with heatmaps or pair plots and discuss any strong correlations.</li>
-</ul></li>
-<li><strong>Crosstabulations</strong>:
-<ul>
-<li>For categorical variables, use crosstabs to explore relationships and visualize them with grouped bar plots.</li>
-</ul></li>
-<li><strong>Feature Pairings</strong>:
-<ul>
-<li>Analyze relationships between key variables, particularly those related to your target.</li>
-<li>Visualize with scatter plots, box plots, or violin plots.</li>
-</ul></li>
-</ul>
-<p><strong>Data Distribution and Normalization</strong>:</p>
-<ul>
-<li><strong>Skewness and Kurtosis</strong>:</li>
-<li>Analyze and discuss the distribution of variables.</li>
-<li>Apply transformations (e.g., log transformation) if needed for skewed data.</li>
-<li><strong>Normalization</strong>:</li>
-<li>Apply normalization or scaling techniques (e.g., min-max scaling, z-score).</li>
-<li>Document and visualize the impact of normalization.</li>
-</ul>
-<p><strong>Statistical Insights</strong>:</p>
-<ul>
-<li>Conduct basic statistical tests (e.g., T-tests, ANOVA, chi-square) to explore relationships between variables.</li>
-<li>Summarize the statistical results and their implications for your analysis.</li>
-</ul>
-<p><strong>Data Visualization and Storytelling</strong>:</p>
-<ul>
-<li><strong>Visual Summary</strong>:</li>
-<li>Present key insights using charts and visualizations (e.g., Matplotlib, Seaborn, Plotly).</li>
-<li>Ensure all visualizations are well-labeled and easy to interpret.</li>
-<li><strong>Interactive Visualizations (Optional)</strong>:</li>
-<li>Include interactive elements (e.g., Plotly, Bokeh) to allow users to explore the data further.</li>
-</ul>
-<p><strong>Conclusions and Next Steps</strong>:</p>
-<ul>
-<li><strong>Summary of EDA Findings</strong>:</li>
-<li>Highlight the main takeaways from the EDA process (key trends, patterns, data quality issues).</li>
-<li><strong>Implications for Modeling</strong>:</li>
-<li>Discuss how your EDA informs the next steps in your project (e.g., feature selection, data transformations).</li>
-<li>Outline any further data cleaning or preparation required before moving into modeling.</li>
-</ul>
-</section>
-</section>
-<section id="code" class="level1">
-<h1>Code</h1>
+<section id="code" class="level2">
+<h2 class="anchored" data-anchor-id="code">Code</h2>
 <p>Provide the source code used for this section of the project here.</p>
 <p>If you’re using a package for code organization, you can import it at this point. However, make sure that the <strong>actual workflow steps</strong>—including data processing, analysis, and other key tasks—are conducted and clearly demonstrated on this page. The goal is to show the technical flow of your project, highlighting how the code is executed to achieve your results.</p>
 <p>If relevant, link to additional documentation or external references that explain any complex components. This section should give readers a clear view of how the project is implemented from a technical perspective.</p>

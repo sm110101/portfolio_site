@@ -125,6 +125,35 @@ div.csl-indent {
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -221,6 +250,7 @@ div.csl-indent {
   <li><a href="#checking-data-types" id="toc-checking-data-types" class="nav-link" data-scroll-target="#checking-data-types">Checking data types</a></li>
   <li><a href="#renaming-columns" id="toc-renaming-columns" class="nav-link" data-scroll-target="#renaming-columns">Renaming Columns</a></li>
   <li><a href="#cleaning-and-processing-text-data" id="toc-cleaning-and-processing-text-data" class="nav-link" data-scroll-target="#cleaning-and-processing-text-data">Cleaning and Processing Text Data</a></li>
+  <li><a href="#creating-columns-for-binary-classification" id="toc-creating-columns-for-binary-classification" class="nav-link" data-scroll-target="#creating-columns-for-binary-classification">Creating Columns for Binary Classification</a></li>
   <li><a href="#writing-data" id="toc-writing-data" class="nav-link" data-scroll-target="#writing-data">Writing Data</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
@@ -261,7 +291,7 @@ div.csl-indent {
 <section id="importing-packages" class="level3">
 <h3 class="anchored" data-anchor-id="importing-packages">Importing Packages</h3>
 <p>First, let’s import the necessary packages.</p>
-<div id="cell-3" class="cell" data-execution_count="2">
+<div id="cell-3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip <span class="co"># For unzipping the raw data</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd <span class="co"># Using pandas for easier data manipulation</span></span>
@@ -270,14 +300,14 @@ div.csl-indent {
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings <span class="co"># Turning off warnings for cleaner output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-4" class="cell" data-execution_count="3">
+<div id="cell-4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>) <span class="co">#ignoring warnings</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="loading-raw-data" class="level3">
 <h3 class="anchored" data-anchor-id="loading-raw-data">Loading raw data</h3>
 <p>Now we can load in the processed CSV we constructed in the previous section.</p>
-<div id="cell-6" class="cell" data-execution_count="4">
+<div id="cell-6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pathway to raw data</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> <span class="st">"../../data/raw-data/ElectronicsReviews.csv.gz"</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -288,7 +318,7 @@ div.csl-indent {
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few lines</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>reviews_raw.head(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -351,7 +381,7 @@ div.csl-indent {
 <section id="dropping-unnecessary-columns" class="level3">
 <h3 class="anchored" data-anchor-id="dropping-unnecessary-columns">Dropping Unnecessary Columns</h3>
 <p>First, lets drop the <code>unixReviewTime</code>, <code>style</code> and <code>image</code> columns, since they will not be used in our analysis</p>
-<div id="cell-9" class="cell" data-execution_count="5">
+<div id="cell-9" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list of columns to drop</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>drop_cols <span class="op">=</span> [<span class="st">'unixReviewTime'</span>, <span class="st">'image'</span>, <span class="st">'style'</span>]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -370,7 +400,7 @@ div.csl-indent {
 <section id="checking-for-missing-values" class="level3">
 <h3 class="anchored" data-anchor-id="checking-for-missing-values">Checking for missing values</h3>
 <p>Now lets check to see if our dataset contains any NA values</p>
-<div id="cell-11" class="cell" data-execution_count="6">
+<div id="cell-11" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reviews_raw.isnull().<span class="bu">sum</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>overall               0
@@ -386,7 +416,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 <p>It looks like our most important column, <code>reviewText</code>, has 1640 null values, so let’s get rid of them.</p>
-<div id="cell-13" class="cell" data-execution_count="7">
+<div id="cell-13" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking only rows or reviews_raw where reviewText is not null</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>reviews_raw <span class="op">=</span> reviews_raw[reviews_raw[<span class="st">'reviewText'</span>].notna()]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -400,7 +430,7 @@ dtype: int64</code></pre>
 <section id="checking-data-types" class="level3">
 <h3 class="anchored" data-anchor-id="checking-data-types">Checking data types</h3>
 <p>Before moving forward, let’s ensure that each of our column data types are appropriate</p>
-<div id="cell-15" class="cell" data-execution_count="8">
+<div id="cell-15" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reviews_raw.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>overall         float64
@@ -419,7 +449,7 @@ dtype: object</code></pre>
 <ul>
 <li>Convert <code>vote</code> to an int object, where NA values are replaced by 0</li>
 </ul>
-<div id="cell-17" class="cell" data-execution_count="9">
+<div id="cell-17" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting 'vote' to integer, while dropping columns from strings and replacing NA with 0 </span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>reviews_raw[<span class="st">'vote'</span>] <span class="op">=</span> reviews_raw[<span class="st">'vote'</span>].replace({<span class="st">','</span>: <span class="st">''</span>}, regex<span class="op">=</span><span class="va">True</span>).fillna(<span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -431,7 +461,7 @@ Number of NULL values in vote Column: 0</code></pre>
 </div>
 </div>
 <p>Lets take another look at our null values</p>
-<div id="cell-19" class="cell" data-execution_count="10">
+<div id="cell-19" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reviews_raw.isnull().<span class="bu">sum</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>overall            0
@@ -447,7 +477,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 <p>As a final step to getting rid of all Null values, lets drop instances where <code>reviewerName</code> and <code>summary</code> are Null</p>
-<div id="cell-21" class="cell" data-execution_count="11">
+<div id="cell-21" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking only rows or reviewerName is not null</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>reviews_raw <span class="op">=</span> reviews_raw[reviews_raw[<span class="st">'reviewerName'</span>].notna()]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Now doing the same for the summary column</span></span>
@@ -473,7 +503,7 @@ dtype: int64</code></pre>
 <section id="renaming-columns" class="level3">
 <h3 class="anchored" data-anchor-id="renaming-columns">Renaming Columns</h3>
 <p>Before moving on to cleaning our actual text data, let’s rename <code>overall</code> to <code>reviewRating</code> and <code>asin</code> to <code>productID</code> for easier intuition and more uniformity</p>
-<div id="cell-24" class="cell" data-execution_count="12">
+<div id="cell-24" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Renaming cols</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>reviews_raw.rename(columns<span class="op">=</span>{</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'overall'</span>: <span class="st">'reviewRating'</span>,</span>
@@ -482,7 +512,7 @@ dtype: int64</code></pre>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># printing result</span></span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>reviews_raw.head(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
 
@@ -521,7 +551,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 <p>As a last step before cleaning the text, let’s convert <code>reviewTime</code> to actual datetime format</p>
-<div id="cell-26" class="cell" data-execution_count="13">
+<div id="cell-26" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting reviewTime from object to datetime</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>reviews_raw[<span class="st">'reviewTime'</span>] <span class="op">=</span> pd.to_datetime(reviews_raw[<span class="st">'reviewTime'</span>], <span class="bu">format</span><span class="op">=</span><span class="st">'%m </span><span class="sc">%d</span><span class="st">, %Y'</span>, errors <span class="op">=</span> <span class="st">'coerce'</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -535,7 +565,7 @@ dtype: int64</code></pre>
 <section id="cleaning-and-processing-text-data" class="level3">
 <h3 class="anchored" data-anchor-id="cleaning-and-processing-text-data">Cleaning and Processing Text Data</h3>
 <p>In this section I will begin to process the text columns within this dataset. I will first remove digits from the text using python’s built-in <code>.isdigit()</code> function. Next, I will utilize python’s <code>string</code> library to create a list of punctuation marks that will be referenced when removing all punctuation from the text. Step three involves lowercasing the text using python’s built-in <code>.lower()</code> function. Finally I will remove stopwords in the text with the help of <code>nltk.corpus</code>. If you are not familiar, stopwords are terms that do not carry any semantic meaning - some examples include ‘i’, ‘me’, ‘my’, ‘myself’, ‘we’, ‘our’, ‘ours’, etc. From there. After all of this is complete, we will have a fully cleaned dataframe that is ready for analysis and modeling.</p>
-<div id="cell-28" class="cell" data-execution_count="14">
+<div id="cell-28" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing stopwords </span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>stop_words <span class="op">=</span> <span class="bu">list</span>(stopwords.words(<span class="st">'english'</span>))</span>
@@ -549,7 +579,7 @@ dtype: int64</code></pre>
 ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"]</code></pre>
 </div>
 </div>
-<div id="cell-29" class="cell" data-execution_count="15">
+<div id="cell-29" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gathering punctuation marks to be removed</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>punctuation_marks <span class="op">=</span> <span class="bu">list</span>(string.punctuation)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -570,7 +600,7 @@ dtype: int64</code></pre>
 <li>Removes stopwords using list object <code>stop_words</code></li>
 </ol>
 <p><strong><em>Note</em></strong>: The function<span class="citation" data-cites="gpt4o_textfunc"><sup><a href="#ref-gpt4o_textfunc" role="doc-biblioref">2</a></sup></span> used below was provided to me by OpenAI’s GPT-4o model. The full citation can be found at the bottom of the page. Additionally, my original function will be included in the <strong>Challenges</strong> section.</p>
-<div id="cell-31" class="cell" data-execution_count="16">
+<div id="cell-31" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_review(text):</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predefine allowed characters (alphabet and space)</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    allowed_chars <span class="op">=</span> <span class="bu">set</span>(<span class="st">'abcdefghijklmnopqrstuvwxyz '</span>)</span>
@@ -586,12 +616,12 @@ dtype: int64</code></pre>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">' '</span>.join(cleaned_words)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, I will apply the function above to the <code>reviewText</code> and <code>summary</code> columns</p>
-<div id="cell-33" class="cell" data-execution_count="17">
+<div id="cell-33" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>reviews_raw[<span class="st">'reviewTextClean'</span>] <span class="op">=</span> reviews_raw[<span class="st">'reviewText'</span>].<span class="bu">apply</span>(clean_review)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>reviews_raw[<span class="st">'summaryClean'</span>] <span class="op">=</span> reviews_raw[<span class="st">'summary'</span>].<span class="bu">apply</span>(clean_review)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>reviews_raw[[<span class="st">'reviewTextClean'</span>, <span class="st">'summaryClean'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 
 
@@ -637,21 +667,74 @@ dtype: int64</code></pre>
 </div>
 <p>Here are the first few rows of cleaned text. It looks like everything works!</p>
 </section>
+<section id="creating-columns-for-binary-classification" class="level3">
+<h3 class="anchored" data-anchor-id="creating-columns-for-binary-classification">Creating Columns for Binary Classification</h3>
+<p>For this section, I create a new variable <code>binary_target</code> that I will use later on in the EDA and modeling stages. For rows where <code>reviewRating</code> <span class="math inline">\(\geq 4\)</span> , I assign a “positive” label, and for rows where <code>reviewRating</code> <span class="math inline">\(&lt; 4\)</span> , I assign a “negative” label. The overall goal for this variable is to include it as a target in a binary classification model where try to predict whether a review is “positive” or “negative” based on its text contents.</p>
+<div id="cell-36" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>reviews_raw[<span class="st">'binary_target'</span>] <span class="op">=</span> reviews_raw[<span class="st">'reviewRating'</span>].<span class="bu">apply</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="st">'positive'</span> <span class="cf">if</span> x <span class="op">&gt;=</span> <span class="dv">4</span> <span class="cf">else</span> <span class="st">'negative'</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>reviews_raw.head(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">reviewRating</th>
+<th data-quarto-table-cell-role="th">vote</th>
+<th data-quarto-table-cell-role="th">verified</th>
+<th data-quarto-table-cell-role="th">reviewTime</th>
+<th data-quarto-table-cell-role="th">reviewerID</th>
+<th data-quarto-table-cell-role="th">productID</th>
+<th data-quarto-table-cell-role="th">reviewerName</th>
+<th data-quarto-table-cell-role="th">reviewText</th>
+<th data-quarto-table-cell-role="th">summary</th>
+<th data-quarto-table-cell-role="th">reviewTextClean</th>
+<th data-quarto-table-cell-role="th">summaryClean</th>
+<th data-quarto-table-cell-role="th">binary_target</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>5.0</td>
+<td>67</td>
+<td>True</td>
+<td>1999-09-18</td>
+<td>AAP7PPBU72QFM</td>
+<td>0151004714</td>
+<td>D. C. Carrad</td>
+<td>This is the best novel I have read in 2 or 3 y...</td>
+<td>A star is born</td>
+<td>best novel read years everything fiction beaut...</td>
+<td>star born</td>
+<td>positive</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
 <section id="writing-data" class="level3">
 <h3 class="anchored" data-anchor-id="writing-data">Writing Data</h3>
 <p>After all of that, we can now write our cleaned dataset to a CSV file. Due to the large size of the data set, I will create two different data sets. The first file will be the entire cleaned data set, which I will write to a new directory <code>/data/processed-data-large/</code>, which will be included in .gitignore to reduce the size of the payload when pushing to my remote repository.</p>
 <p>The second dataset, I will take a sample of 100000 observations from the dataset and write it to <code>/data/processed-data/</code>. That way, viewers of my remote repository will be able to see what the cleaned version of my data looks like. I will also use this data set in some cases when conducting EDA.</p>
-<div id="cell-36" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating cleaned dataframe containing all variables</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>reviews <span class="op">=</span> reviews_raw.copy()</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a dataframe with 100,000 samples from reviews</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">100000</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>reviews_short <span class="op">=</span> reviews.sample(n <span class="op">=</span> sample_size, random_state<span class="op">=</span><span class="dv">5000</span>)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Writing files</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>reviews.to_csv(<span class="st">'../../data/processed-data-large/reviews_large.csv.gz'</span>, index<span class="op">=</span><span class="va">False</span>, compression<span class="op">=</span><span class="st">'gzip'</span>)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>reviews_short.to_csv(<span class="st">'../../data/processed-data/reviews_short.csv.gz'</span>, index <span class="op">=</span> <span class="va">False</span>, compression<span class="op">=</span><span class="st">'gzip'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-38" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating cleaned dataframe containing all variables</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>reviews <span class="op">=</span> reviews_raw.copy()</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a dataframe with 100,000 samples from reviews</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">100000</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>reviews_short <span class="op">=</span> reviews.sample(n <span class="op">=</span> sample_size, random_state<span class="op">=</span><span class="dv">5000</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Writing files</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>reviews.to_csv(<span class="st">'../../data/processed-data-large/reviews_large.csv.gz'</span>, index<span class="op">=</span><span class="va">False</span>, compression<span class="op">=</span><span class="st">'gzip'</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>reviews_short.to_csv(<span class="st">'../../data/processed-data/reviews_short.csv.gz'</span>, index <span class="op">=</span> <span class="va">False</span>, compression<span class="op">=</span><span class="st">'gzip'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="summary" class="level3">
