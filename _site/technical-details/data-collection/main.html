@@ -253,6 +253,13 @@ div.csl-indent {
 <section id="data-collection-code" class="level3">
 <h3 class="anchored" data-anchor-id="data-collection-code">Data Collection Code</h3>
 <p>Here, we begin the process by loading in our data. as stated above, The initial <code>parse()</code> and <code>getDF()</code> functions are borrowed from the link above as well. However, when initially trying to load and parse this data, I ran into serious memory issues that rendered my machine unable to successfully convert the data into a dataframe. Therefore, I elected to use the <code>orjson</code> library over the traditional <code>json</code>, which cut my import time dramatically. For reference to that repository, please head <a href="https://github.com/ijl/orjson">here</a>.</p>
+<ol start="2" type="1">
+<li><strong>Data Collection Methods</strong>
+<ul>
+<li>If you used an API or web scraping, explain the tools (e.g., <code>BeautifulSoup</code>, <code>Selenium</code>) and the process.</li>
+<li>Include links to your code for replicating data collection.</li>
+</ul></li>
+</ol>
 <p><strong>Importing Packages and Loading Data</strong></p>
 <div id="cell-4" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing necessary packages</span></span>
