@@ -36,6 +36,16 @@ website:
             href: technical-details/progress-log.qmd
           - text: LLM usage Log
             href: technical-details/llm-usage-log.qmd
+    right:
+      - icon: linkedin
+        href: https://www.linkedin.com/in/spm122/
+      - icon: twitter-x
+        href: https://x.com/sm110101
+      - icon: github
+        href: https://github.com/sm110101
+      - icon: instagram
+        href: https://www.instagram.com/sean.morriss/
+      
 
 format:
   html:
