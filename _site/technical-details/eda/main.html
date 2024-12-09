@@ -54,10 +54,30 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -103,7 +123,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -195,7 +247,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a>
   <ul class="collapse">
   <li><a href="#importing-libraries" id="toc-importing-libraries" class="nav-link" data-scroll-target="#importing-libraries">Importing Libraries</a></li>
-  <li><a href="#basic-summary-statistics" id="toc-basic-summary-statistics" class="nav-link" data-scroll-target="#basic-summary-statistics">Basic Summary Statistics</a></li>
+  <li><a href="#loading-in-data" id="toc-loading-in-data" class="nav-link" data-scroll-target="#loading-in-data">Loading in data</a></li>
+  <li><a href="#basic-summary-statistics" id="toc-basic-summary-statistics" class="nav-link" data-scroll-target="#basic-summary-statistics">Basic Summary Statistics</a>
+  <ul class="collapse">
+  <li><a href="#looking-at-reviewrating-and-number-of-community-votes-vote" id="toc-looking-at-reviewrating-and-number-of-community-votes-vote" class="nav-link" data-scroll-target="#looking-at-reviewrating-and-number-of-community-votes-vote">Looking at <code>reviewRating</code> and number of community votes (<code>vote</code>)</a></li>
+  <li><a href="#plotting-distribution-of-raw-vs-clean-review-text-lengths" id="toc-plotting-distribution-of-raw-vs-clean-review-text-lengths" class="nav-link" data-scroll-target="#plotting-distribution-of-raw-vs-clean-review-text-lengths">Plotting Distribution of Raw vs Clean Review Text Lengths</a></li>
+  <li><a href="#frequently-appearing-terms-by-review-rating" id="toc-frequently-appearing-terms-by-review-rating" class="nav-link" data-scroll-target="#frequently-appearing-terms-by-review-rating">Frequently Appearing Terms by Review Rating</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -223,8 +281,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><br> <br></p>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<section id="overview" class="level1">
+<h1>Overview</h1>
 <p>Now that I have finally loaded in and cleaned the data, it’s time for the fun part. In this section, I dive into the the Amazon Electronics reviews dataset. My objectives are as follows:</p>
 <ul>
 <li>Ucover any potential issues in the data set</li>
@@ -232,39 +290,476 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Identify any patterns or anomalies</li>
 <li>Prepare for the upcoming modeling stages</li>
 </ul>
+<p>As another point - from here on, I will work only with the smaller version of the data due to memory and compute bottlenecks on my local device. That dataset retains all of the cleaned variables with only 100,000 rows rather than our initial 6.7 million rows. My hope is that this sample size is large enough to capture all trends that exist in the population data set, while offering also being lightweight enough for multiple model iterations</p>
 </section>
-<section id="code" class="level2">
-<h2 class="anchored" data-anchor-id="code">Code</h2>
-<p>Provide the source code used for this section of the project here.</p>
-<p>If you’re using a package for code organization, you can import it at this point. However, make sure that the <strong>actual workflow steps</strong>—including data processing, analysis, and other key tasks—are conducted and clearly demonstrated on this page. The goal is to show the technical flow of your project, highlighting how the code is executed to achieve your results.</p>
-<p>If relevant, link to additional documentation or external references that explain any complex components. This section should give readers a clear view of how the project is implemented from a technical perspective.</p>
-<p>Remember, this page is a technical narrative, NOT just a notebook with a collection of code cells, include in-line Prose, to describe what is going on.</p>
-<section id="importing-libraries" class="level3">
-<h3 class="anchored" data-anchor-id="importing-libraries">Importing Libraries</h3>
-<p>In this section, I import all of the packages necessary for generating different types of visualizations for the data. In addition to visualization-related packages, I also bring in pandas &amp; numpy for easy data manipulation and nltk for ngrams analysis.</p>
+<section id="code" class="level1">
+<h1>Code</h1>
+<section id="importing-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="importing-libraries">Importing Libraries</h2>
+<p>In this section, I import all of the packages necessary for generating different types of visualizations for the data. In addition to visualization-related packages, I also bring in pandas &amp; numpy for easy data manipulation and nltk for ngrams analysis. Finally, I will import various specialized packags for robust textual data EDA and dimension reduction.</p>
 <div id="cell-4" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> wordcloud</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard Packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Text-based processing and analysis packages</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textblob</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimension reduction packages</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="basic-summary-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="basic-summary-statistics">Basic Summary Statistics</h3>
+<section id="loading-in-data" class="level2">
+<h2 class="anchored" data-anchor-id="loading-in-data">Loading in data</h2>
+<p>Now, let’s begin by loading in the cleaned data set that I constructed in the previous section:</p>
+<div id="cell-6" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pathway to raw data</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> <span class="st">"../../data/processed-data/reviews_short.csv.gz"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Unzip the CSV file</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> gzip.<span class="bu">open</span>(data_path, <span class="st">'rb'</span>) <span class="im">as</span> f:</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Read the CSV file into a dataframe</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    reviews <span class="op">=</span> pd.read_csv(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-7" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few lines</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>reviews.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">reviewRating</th>
+<th data-quarto-table-cell-role="th">vote</th>
+<th data-quarto-table-cell-role="th">verified</th>
+<th data-quarto-table-cell-role="th">reviewTime</th>
+<th data-quarto-table-cell-role="th">reviewerID</th>
+<th data-quarto-table-cell-role="th">productID</th>
+<th data-quarto-table-cell-role="th">reviewerName</th>
+<th data-quarto-table-cell-role="th">reviewText</th>
+<th data-quarto-table-cell-role="th">summary</th>
+<th data-quarto-table-cell-role="th">reviewTextClean</th>
+<th data-quarto-table-cell-role="th">summaryClean</th>
+<th data-quarto-table-cell-role="th">binary_target</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>5.0</td>
+<td>2</td>
+<td>False</td>
+<td>2016-06-17</td>
+<td>A7HY1CEDK0204</td>
+<td>B00I9GYG8O</td>
+<td>Jor El</td>
+<td>If you're looking for Cinema 4K capabilities o...</td>
+<td>Filmmakers will love this camera.</td>
+<td>youre looking cinema k capabilities budget cam...</td>
+<td>filmmakers love camera</td>
+<td>positive</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2.0</td>
+<td>0</td>
+<td>False</td>
+<td>2018-07-13</td>
+<td>A16KA1REUFF1R8</td>
+<td>B01DB6BK5I</td>
+<td>Jason A. Dangelo</td>
+<td>&lt;div id="video-block-R14IHTRCCNUS1P" class="a-...</td>
+<td>Web-cams from 2002 packed in a non-discrete bu...</td>
+<td>div idvideoblockrihtrccnusp classasection aspa...</td>
+<td>webcams packed nondiscrete buggy package</td>
+<td>negative</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>5.0</td>
+<td>0</td>
+<td>True</td>
+<td>2018-02-05</td>
+<td>A3TUCX8PIDH0JA</td>
+<td>B00011KM3I</td>
+<td>Alcerio</td>
+<td>Great products and excellent services!</td>
+<td>Five Stars</td>
+<td>great products excellent services</td>
+<td>five stars</td>
+<td>positive</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>5.0</td>
+<td>0</td>
+<td>True</td>
+<td>2014-01-16</td>
+<td>A255B39EEYELQ8</td>
+<td>B000EDOSFQ</td>
+<td>herbert nichols</td>
+<td>Priced rivaled any one sided dvd case, easy to...</td>
+<td>Satisfied</td>
+<td>priced rivaled one sided dvd case easy open dv...</td>
+<td>satisfied</td>
+<td>positive</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1.0</td>
+<td>5</td>
+<td>True</td>
+<td>2017-08-07</td>
+<td>A5HL1JPPIMUM3</td>
+<td>B01CVOLKKQ</td>
+<td>G. E. Roquet</td>
+<td>Only made it a year, then burned up. Had to cy...</td>
+<td>Melted</td>
+<td>made year burned cycle almost every day last m...</td>
+<td>melted</td>
+<td>negative</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="basic-summary-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="basic-summary-statistics">Basic Summary Statistics</h2>
 <ul>
+<li>Summary of quantitative columns <code>reviewRating</code> and <code>vote</code></li>
 <li>mean review length (words)</li>
 <li>frequency of different ratings score and binary sentiments</li>
 <li>distribution of community vote numbers (excluding 0)</li>
-<li></li>
 </ul>
+<section id="looking-at-reviewrating-and-number-of-community-votes-vote" class="level3">
+<h3 class="anchored" data-anchor-id="looking-at-reviewrating-and-number-of-community-votes-vote">Looking at <code>reviewRating</code> and number of community votes (<code>vote</code>)</h3>
+<p>First, lets look at a summary of our two main nunmerical columns <code>reviewRating</code> and <code>vote</code>. When cleaning the data initially, I noticed that there are a lot of reviews that have no community votes. To address that, I will create a temporary data set called <code>reviews_votes</code> that drops all rows where no votes are placed. Then, we can use the pandas <code>.describe()</code> function, to print out the following summary statistics for each column:</p>
+<ul>
+<li><code>count</code> (Number of observations)</li>
+<li><code>mean</code> (Average value)</li>
+<li><code>std</code> (Standard Deviation)</li>
+<li><code>min</code> (Minimum value)</li>
+<li><code>25th</code> (25th percentile value)</li>
+<li><code>50th</code> (Median value)</li>
+<li><code>75th</code> (75th percentile value)</li>
+<li><code>max</code> (Maximum value)</li>
+</ul>
+<div id="cell-11" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Temporary data set that ignores zero vote reviews</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>review_votes <span class="op">=</span> reviews[reviews[<span class="st">'vote'</span>] <span class="op">!=</span> <span class="dv">0</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="op">=</span> review_votes[[<span class="st">'reviewRating'</span>, <span class="st">'vote'</span>]].describe()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing Summary stats</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"SUMMARY STATS FOR QUANTITATIVE COLUMNS:"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"========================================"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>summary_stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>SUMMARY STATS FOR QUANTITATIVE COLUMNS:
+========================================</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">reviewRating</th>
+<th data-quarto-table-cell-role="th">vote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>13977.000000</td>
+<td>13977.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>3.875152</td>
+<td>11.799099</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>1.451692</td>
+<td>84.030018</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>1.000000</td>
+<td>2.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>3.000000</td>
+<td>2.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>5.000000</td>
+<td>4.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>5.000000</td>
+<td>7.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>5.000000</td>
+<td>6770.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>Interpretation</strong></p>
+<p>Due to the discrete, ordinal structure of the <code>reviewRating</code> column, there is not much dispersion between the median, 75th percentile, and maximum values. However, the column mean of 3.87 and median of 5 suggests that the distribution of reviewRatings is left-skewed, with over 50% of reviews containing 5-star ratings. This result echoes back to the concerns raised in the paper written by Magdelano et al.&nbsp;in which the researchers faced an overpresence of highly positive review ratings in their analysis of bakery reviews<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">1</a></sup></span>. For a better understanding of how they tackled that issue, you can refer to their work (cited below), or to my literature review of the paper on the <a href="../../index.html">home</a> page.</p>
+<p>Let us now shift our focus now to the summary statistics of the <code>vote</code> column. When looking at these results, one thing become abundantly clear - there is extreme variation and skewness in the distribution of community votes cast toward different reviews. For non-zero vote entries, the mean number of community votes is around 11.8 per post, with a standard deviation of 84 votes and maximum value of 6770 votes. To further quantify these characteristics, I will calculate the skewness and kurtosis of vote counts. In case you are unfamiliar with these values, “skewness” classifies the amount of assymmetry in a distribution (whether one tail is longer than the other), while kurtosis measures the “tailedness” of a distribution or what the ends of either side of the distribution look like<span class="citation" data-cites="SkewKurt"><sup><a href="#ref-SkewKurt" role="doc-biblioref">2</a></sup></span>.</p>
+<p><strong><em>Here is a diagram to help</em></strong><span class="citation" data-cites="SkewKurtImage"><sup><a href="#ref-SkewKurtImage" role="doc-biblioref">3</a></sup></span></p>
+<p><img src="../../xtra/multiclass-portfolio-website/images/skewness_and_kurtosis.png" class="img-fluid" width="400"></p>
+<p><a href="https://www.researchgate.net/publication/316114940/figure/fig1/AS:961444636012553@1606237672944/The-illustration-of-skewness-and-kurtosis-in-a-distribution.gif">Source: Research Gate</a></p>
+<p>Now let’s find the actual numerical values:</p>
+<div id="cell-14" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> skew, kurtosis</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Skewness of Vote Counts: </span><span class="sc">{</span>skew(review_votes[<span class="st">'vote'</span>])<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Kurtosis of Vote Counts: </span><span class="sc">{</span>kurtosis(review_votes[<span class="st">'vote'</span>])<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Skewness of Vote Counts: 58.06515030184553
+Kurtosis of Vote Counts: 4208.537902609067</code></pre>
+</div>
+</div>
+<p><strong>Skewness:</strong> Our value for skewness of around 58 indicates that the distribution of vote counts is extremely positively skewed - meaning vote counts for reviews are concentrated primarily around lower values. For context, a normal distribution typically has a skewness around 0.</p>
+<p><strong>Kurtosis:</strong> The kurtosis value of around 4208 tells us that the distribution of vote counts has very heavy tails. In other words, there are an extreme number of outliers present in our collection of community votes.</p>
+</section>
+<section id="plotting-distribution-of-raw-vs-clean-review-text-lengths" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-distribution-of-raw-vs-clean-review-text-lengths">Plotting Distribution of Raw vs Clean Review Text Lengths</h3>
+<p>Let’s move on now to looking at the distributions of the <code>reviewText</code> and <code>reviewTextClean</code> columns. The goal for this section is to gain some initial intuition into whether our text processing in the data cleaning section actually worked as intended. In order to do this, I will count the number of words and number of characters in each column and place them into two different plots showing the overlapping distributions of characters counts and word counts between the raw and cleaneed text.</p>
+<div id="cell-18" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting distributions of word counts:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(reviews[<span class="st">'reviewText'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">len</span>(x.split())), kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, label<span class="op">=</span><span class="st">"# Words in Raw Review Text"</span>, color<span class="op">=</span><span class="st">"red"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(reviews[<span class="st">'reviewTextClean'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">len</span>(x.split())), kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, label<span class="op">=</span><span class="st">'# Words in Cleaned Review Text'</span>, color<span class="op">=</span><span class="st">'green'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribution of Word Counts (reviewText vs reviewTextClean)'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Word Count'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretation</strong> At a glance, it appears that our text processing step works as intended. In the above plot, we observe a left-ward shift in the distribution of word-length for the clean text after removing stopwords from the data. Now, lets create a similar plot showing the character counts:</p>
+<div id="cell-20" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting distributions of character counts:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(reviews[<span class="st">'reviewText'</span>].<span class="bu">apply</span>(<span class="bu">len</span>), kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, label<span class="op">=</span><span class="st">'# Characters in Raw Review Text'</span>, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(reviews[<span class="st">'reviewTextClean'</span>].<span class="bu">apply</span>(<span class="bu">len</span>), kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, label<span class="op">=</span><span class="st">'# Characters in Cleaned Review Text'</span>, color<span class="op">=</span><span class="st">'green'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribution of Word Counts (reviewText vs reviewTextClean)'</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Word Count'</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As expected, we observe the same leftward shift in the distribution of character counts for the cleaned text</p>
+</section>
+<section id="frequently-appearing-terms-by-review-rating" class="level3">
+<h3 class="anchored" data-anchor-id="frequently-appearing-terms-by-review-rating">Frequently Appearing Terms by Review Rating</h3>
+<p>Moving forward, let’s now take a look at how different keywords relate to review ratings given in the dataset. For this section, I will leverage the <code>CountVectorizer</code> object from <code>sklearn</code>. In case you are unfamiliar, the <code>CountVectorizer</code> object takes in our reviews data, and converts it into a document frequency matrix where each row will represent a review, and each column represents a different word found in our every review. Each element of the matrix corresponds to the number of times word <span class="math inline">\(i\)</span> appears in document <span class="math inline">\(j\)</span>. One of the greatest benefits to using <code>CountVectorizer</code> is its ability to convert unstructured text data into a meaningful numeric format. In the case below, I focus on the top 10 most common keywords for each of the five different star rating assigned to amazon electronics products.</p>
+<p>From there, I will create 5 separate plots for each review score that contain bar graphs of the most frequently appearing terms. The goal for this process is to gain a better understanding of which words are more likely to appear for different product ratings.</p>
+<p>For creating the plots themselves, I use the <code>plot_top_words()</code> function defined in <a href="https://drive.google.com/file/d/1hAT8fF0UuDyjLUyuisCngYP4VIA-evZH/view?usp=sharing">dsan5000_hw-1.ipynb</a>. However, when implementing this function, a few necessary changes had to be made. In the original function (cited above), the required inputs are a non-negative matrix factorization model, a list of words extracted from a document term matrix, and the <code>n_top_words</code> parameter. In my implementation, I elect to use only two inputs - a pandas dataframe, and the <code>top_n_words</code> parameter. The updated function then creates a document term matrix, and extracts the word list and frequencies natively using the inputed pandas dataframe. From there, the process is essentially the same - where both functions continue on by sorting the top n words, and plotting them based on the target labels. Within the function below, I leverage a popular LLM in two cases - both having to do with the overall format of the end plots. In the first case, I use OpenAI’s GPT-4o model to assist in setting up a grid structure for my subplots in order to give them a cleaner presenation on this website<span class="citation" data-cites="GridVisualization"><sup><a href="#ref-GridVisualization" role="doc-biblioref">4</a></sup></span>. In the second case, I look for help on removing the final blank plot in the visualization<span class="citation" data-cites="SubplotRemoval"><sup><a href="#ref-SubplotRemoval" role="doc-biblioref">5</a></sup></span>.</p>
+<div id="cell-23" class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_top_words_by_rating(reviews, n_top_words<span class="op">=</span><span class="dv">10</span>):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function will plot the "n_top_words" based on user rating</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize the CountVectorizer</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    vectorizer <span class="op">=</span> CountVectorizer(max_features<span class="op">=</span>n_top_words)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Getting unique values for user review ratings </span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    ratings <span class="op">=</span> <span class="bu">sorted</span>(reviews[<span class="st">'reviewRating'</span>].unique(), reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">######### See [4] in references</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Determine grid size (2x2, 3x3, etc.)</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    n_rows <span class="op">=</span> <span class="bu">int</span>(np.ceil(<span class="bu">len</span>(ratings) <span class="op">/</span> <span class="dv">2</span>))  <span class="co"># 2 columns per row</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    n_cols <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#########</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize figure</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(n_rows, n_cols, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span> <span class="op">*</span> n_rows))</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    axes <span class="op">=</span> axes.flatten()  </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop through review ratings</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idx, rating <span class="kw">in</span> <span class="bu">enumerate</span>(ratings):</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Only look at reviews that have the current rating we are looping for</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        filtered_reviews <span class="op">=</span> reviews[reviews[<span class="st">'reviewRating'</span>] <span class="op">==</span> rating][<span class="st">'reviewTextClean'</span>]</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Fitting and transforming the reviews</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> vectorizer.fit_transform(filtered_reviews)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>        terms <span class="op">=</span> vectorizer.get_feature_names_out() <span class="co"># This function extracts the actual term names from the fequency matrix</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>        frequencies <span class="op">=</span> X.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>).A1 <span class="co"># Here, we are taking the column sums (word totals) across all of the data</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Sorting terms by frequency</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        top_features_ind <span class="op">=</span> frequencies.argsort()[<span class="op">-</span>n_top_words:] </span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        top_features <span class="op">=</span> terms[top_features_ind]  </span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        weights <span class="op">=</span> frequencies[top_features_ind]  </span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Ploting top n words</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[idx]</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>        ax.barh(top_features, weights, height<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">"skyblue"</span>) </span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f"Top </span><span class="sc">{</span>n_top_words<span class="sc">}</span><span class="ss"> Words for </span><span class="sc">{</span>rating<span class="sc">}</span><span class="ss"> Star Rating"</span>, fontdict<span class="op">=</span>{<span class="st">"fontsize"</span>: <span class="dv">20</span>})</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>        ax.tick_params(axis<span class="op">=</span><span class="st">"both"</span>, which<span class="op">=</span><span class="st">"major"</span>, labelsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="st">"top right left"</span>.split():  </span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>            ax.spines[i].set_visible(<span class="va">False</span>)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">######## See [5] in references</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hide any unused subplots</span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(ratings), <span class="bu">len</span>(axes)):</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>        fig.delaxes(axes[i])</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>    <span class="co">########</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="st">"Top Words by Review Rating"</span>, fontsize<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>    plt.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.5</span>, hspace<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>plot_top_words_by_rating(reviews, n_top_words<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Unfortunately, these results are pretty unclear. There are multiple cases where the top words do not have any real relevance to their related review score. For example, in almost every plot, the top term is <code>one</code>… It is impossible to know what the context of this is. Similarly, we can see a high prevalence of the word “would” in many of the plots. However, there is a hint to what is going on in these plots. If you refer to the plots for 1- 2- and 3-star reviews, you can see that the word “work” appears in all three. Somewhat counterintuitive, no? It doesn’t seem very likely that the word “work” should have any association with low-rated electronics. That is exactly where the problem lies. In reality, it’s highly possible that the word “work” in most of these negative reviews follows the word “dont” (in the case of the cleaned text). Therefore, the next step in my analysis will be re-running these visualizations. However, this time, I will look at the most frequent “bigrams” or pairs of words. By doing this, I should be able to account for cases of negation in the review text.</p>
+<p>In <code>plot_top_bigrams_by_rating()</code> below, I repeat all of the steps taken in <code>plot_top_words_by_rating()</code>, with the edition of the <code>ngram_range=(2,2)</code> parameter, which I source from an <a href="https://stackoverflow.com/questions/51158638/countvectorize-vocabulary-specification-for-bigrams-python">article</a> on stack overflow. Let’s see how it goes:</p>
+<div id="cell-25" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_top_bigrams_by_rating(reviews, n_top_bigrams<span class="op">=</span><span class="dv">10</span>):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Plots the top `n_top_bigrams` bigrams based on user review rating.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize the CountVectorizer for bigrams</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    vectorizer <span class="op">=</span> CountVectorizer(max_features<span class="op">=</span>n_top_bigrams, ngram_range<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Getting unique values for user review ratings </span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    ratings <span class="op">=</span> <span class="bu">sorted</span>(reviews[<span class="st">'reviewRating'</span>].unique(), reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">######### See [4] in references</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Determine grid size (2x2, 3x3, etc.)</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    n_rows <span class="op">=</span> <span class="bu">int</span>(np.ceil(<span class="bu">len</span>(ratings) <span class="op">/</span> <span class="dv">2</span>))  <span class="co"># 2 columns per row</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    n_cols <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">########</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize figure</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(n_rows, n_cols, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span> <span class="op">*</span> n_rows))</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    axes <span class="op">=</span> axes.flatten() </span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop through review ratings</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idx, rating <span class="kw">in</span> <span class="bu">enumerate</span>(ratings):</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Only look at reviews that have the current rating we are looping for</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>        filtered_reviews <span class="op">=</span> reviews[reviews[<span class="st">'reviewRating'</span>] <span class="op">==</span> rating][<span class="st">'reviewTextClean'</span>]</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Fitting and transforming the reviews (for bigrams in this case)</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> vectorizer.fit_transform(filtered_reviews)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        terms <span class="op">=</span> vectorizer.get_feature_names_out()  <span class="co"># Extracting bigrams</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        frequencies <span class="op">=</span> X.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>).A1  <span class="co"># Here, we are taking out the column sums (bigram totals) across all of the data</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Sorting terms by frequency</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>        top_features_ind <span class="op">=</span> frequencies.argsort()[<span class="op">-</span>n_top_bigrams:]</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>        top_features <span class="op">=</span> terms[top_features_ind] </span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        weights <span class="op">=</span> frequencies[top_features_ind] </span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Plot the top n bigrams</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[idx]</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>        ax.barh(top_features, weights, height<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">"skyblue"</span>)</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f"Top </span><span class="sc">{</span>n_top_bigrams<span class="sc">}</span><span class="ss"> Bigrams for </span><span class="sc">{</span>rating<span class="sc">}</span><span class="ss"> Star Rating"</span>, fontdict<span class="op">=</span>{<span class="st">"fontsize"</span>: <span class="dv">20</span>})</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>        ax.tick_params(axis<span class="op">=</span><span class="st">"both"</span>, which<span class="op">=</span><span class="st">"major"</span>, labelsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="st">"top right left"</span>.split():</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>            ax.spines[i].set_visible(<span class="va">False</span>)</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="co">######### See [5] in references</span></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hide any unused subplots</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(ratings), <span class="bu">len</span>(axes)):</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>        fig.delaxes(axes[i])</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    <span class="co">##########</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="st">"Top Bigrams by Review Rating"</span>, fontsize<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    plt.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.5</span>, hspace<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>plot_top_bigrams_by_rating(reviews, n_top_bigrams<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Much better! These plots provide much better context as to where certain words appear in different review scores, with bigrams like “works great” and “highly recommend” appearing frequently in highly rated products, and bigrams like “stopped working” and “waste money” appearing in lower rated reviews. However, there are still some minor issues with context - like in the case of the two-star reviews where we see a high frequency of reviews saying “would recommend”. Outside of this, it looks like we are on the right track.</p>
+<div id="cell-27" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
 
 
 </section>
 </section>
+</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-Magdelano2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Magdaleno, D., Montes, M., Estrada, B. &amp; Ochoa-Zezzatti, A. A GPT-based approach for sentiment analysis and bakery rating prediction. in <em>Advances in computational intelligence. MICAI 2023 international workshops</em> (eds. Calvo, H. et al.) 61–76 (Springer Nature Switzerland, 2024).</div>
+</div>
+<div id="ref-SkewKurt" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline"><a href="https://library.soton.ac.uk/skewness-and-kurtosis#:~:text=Skewed%20data%20is%20data%20which,are%20mesokurtosis%2C%20platykurtosis%20and%20leptokurtosis">Skewness and kurtosis</a>.</div>
+</div>
+<div id="ref-SkewKurtImage" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline"><a href="https://www.researchgate.net/publication/316114940/figure/fig1/AS:961444636012553@1606237672944/The-illustration-of-skewness-and-kurtosis-in-a-distribution.gif">Skewness and kurtosis diagram</a>.</div>
+</div>
+<div id="ref-GridVisualization" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">‘Prompt: I want to visualize data for a variable that has a varying number of unique categories. The visualizations should be laid out in a grid format, with two columns per row and the number of rows calculated dynamically based on the number of unique categories. Can you help me write code that determines the number of rows and columns required for such a grid layout?‘ ChatGPT, version-4o, OpenAI, dec-9, 2024, chat.openai.com.</div>
+</div>
+<div id="ref-SubplotRemoval" class="csl-entry" role="listitem">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">‘Prompt: How can i dynamically remove unused subplots from a grid to clean up the visualization when there are fewer categories than grid spaces?‘ ChatGPT, version-4o, OpenAI, dec-9, 2024, chat.openai.com.</div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
