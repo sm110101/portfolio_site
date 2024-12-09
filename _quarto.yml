@@ -39,7 +39,9 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: 
+      dark: cyborg
+      light: minty
     bibliography:   ./assets/references.bib
     csl:  ./assets/nature.csl
     toc: true
