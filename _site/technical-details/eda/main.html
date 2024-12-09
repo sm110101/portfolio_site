@@ -265,6 +265,7 @@ window.Quarto = {
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   <li><a href="#modeling-implications" id="toc-modeling-implications" class="nav-link" data-scroll-target="#modeling-implications">Modeling Implications</a></li>
   <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -864,7 +865,7 @@ LOWEST: Work well!
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>In this section, perform exploratory data analysis (EDA) on 100,000 samples drawn from a large dataset containing details on Amazon electronics reviews. In the analysis, I looked at the characteristics of the quantitative variables in the dataset (<code>reviewRating</code> and <code>vote</code>) - Where <code>reviewRating</code> corresponds to the rating (1-5) assigned by a user to a product in a single review, and <code>vote</code> represents the amount of community votes given to a review. In both cases, I discovered heavy skewness in their distributions, with the sample of reviews with non-zero votes having extremely high skewness (58.07) and kurtosis (4208.54).</p>
+<p>In this section, perform exploratory data analysis (EDA) on 100,000 samples drawn from a large dataset containing details on Amazon electronics reviews. In the analysis, I looked at the characteristics of the quantitative variables in the dataset (<code>reviewRating</code> and <code>vote</code>) - Where <code>reviewRating</code> corresponds to the rating (1-5) assigned by a user to a product in a single review, and <code>vote</code> represents the amount of community votes given to a review. In both cases, I discovered heavy skewness and tailedness in their distributions, with the sample of reviews with non-zero votes having extremely high skewness (58.07) and kurtosis (4208.54).</p>
 <p>In the next section of this page, I look at the prevalance of different terms across all five review ratings. When looking only at single term frequency, I struggled to gather any useful context. To reconcile this, I instead chose to look at frequency of word-pairs across all review ratings, which proved far more useful in understanding the linguistic patterns across the review classes.</p>
 <p>Finally, I took advantage of the <code>textblob</code> library to find the polarity and subjectivity of each review. In this section, I discovered that reviews in this dataset are typically posess higher polarity values (more positive). I then shifted my focus toward the subjectivity of the reviews, where I uncovered an interesting phenomenon where there was a disproportionately high frequency of reviews with high and low subjectivity values. With only that in mind, I conjectured that higher subjectivity may coincicide with low polarity (i.e.&nbsp;a reviewer’s emotions may run high when writing a negative review). However, after creating a scatterplot that compared the two variables, I found this to be untrue. Instead, subjectivity tends to increase with more extreme values of polarity, regardless of direction.</p>
 </section>
@@ -883,6 +884,10 @@ LOWEST: Work well!
 <p>As I outlined before, there are serious imbalances within the frequencies of different review ratings. In order to account for this, I will try to improve upon the undersampling method used in Magdelano et al<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">1</a></sup></span>.</p>
 <p><strong>Noisy Data</strong></p>
 <p>It is highly likely (even after processing) that my <code>reviewTextClean</code> column may typos, informal language, or otherwise irrelevant content that may impede model performance down the line.</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p><strong>Next Section: <a href="../../technical-details/unsupervised-learning/main.html">Unsupervised Learning</a></strong></p>
 
 
 
