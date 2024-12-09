@@ -592,7 +592,21 @@
     "href": "technical-details/eda/main.html#summary",
     "title": "Exploratory Data Analysis",
     "section": "Summary",
-    "text": "Summary"
+    "text": "Summary\nHere is the start of my Summary"
+  },
+  {
+    "objectID": "technical-details/eda/main.html#modeling-implications",
+    "href": "technical-details/eda/main.html#modeling-implications",
+    "title": "Exploratory Data Analysis",
+    "section": "Modeling Implications",
+    "text": "Modeling Implications\nHere is the start of the modeling implications"
+  },
+  {
+    "objectID": "technical-details/eda/main.html#challenges",
+    "href": "technical-details/eda/main.html#challenges",
+    "title": "Exploratory Data Analysis",
+    "section": "Challenges",
+    "text": "Challenges\nHere are the challenges"
   },
   {
     "objectID": "technical-details/unsupervised-learning/main.html",
