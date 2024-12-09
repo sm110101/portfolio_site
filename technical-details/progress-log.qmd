@@ -8,15 +8,19 @@ This page serves as a progress log for my DSAN5000 final project
 
 **Weekly project contribution log:**
 
-**12-8-2024
+**12-10-2024
 
 * [ ] Finish Supervised learning page
 * [ ] Finish Unsupervised Learning page
 * [ ] Finish EDA page
 
+**12-8-2024
+
+* [X] Begin brainstorming ideas for EDA page
+
 **12-7-2024**
 
-* [ ] Re-download data using webscraping method via requests libary
+* [X] Re-download data using webscraping method via requests libary
 * [X] Finish Data Cleaning page
 
 **12-6-2024**
@@ -30,7 +34,7 @@ This page serves as a progress log for my DSAN5000 final project
 
 **10-16-2024** 
 
-* [X] Download Amazon reviews Corpus
+* [X] Download Amazon reviews Corpus for initial look at the data 
 * [X] Explore initial topics and brainstorm methods  
 
 

@@ -253,6 +253,7 @@ window.Quarto = {
   <li><a href="#looking-at-reviewrating-and-number-of-community-votes-vote" id="toc-looking-at-reviewrating-and-number-of-community-votes-vote" class="nav-link" data-scroll-target="#looking-at-reviewrating-and-number-of-community-votes-vote">Looking at <code>reviewRating</code> and number of community votes (<code>vote</code>)</a></li>
   <li><a href="#plotting-distribution-of-raw-vs-clean-review-text-lengths" id="toc-plotting-distribution-of-raw-vs-clean-review-text-lengths" class="nav-link" data-scroll-target="#plotting-distribution-of-raw-vs-clean-review-text-lengths">Plotting Distribution of Raw vs Clean Review Text Lengths</a></li>
   <li><a href="#frequently-appearing-terms-by-review-rating" id="toc-frequently-appearing-terms-by-review-rating" class="nav-link" data-scroll-target="#frequently-appearing-terms-by-review-rating">Frequently Appearing Terms by Review Rating</a></li>
+  <li><a href="#sentiment-analysis-polarity" id="toc-sentiment-analysis-polarity" class="nav-link" data-scroll-target="#sentiment-analysis-polarity">Sentiment Analysis (Polarity)</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -732,9 +733,13 @@ Kurtosis of Vote Counts: 4208.537902609067</code></pre>
 </div>
 </div>
 </div>
-<p>Much better! These plots provide much better context as to where certain words appear in different review scores, with bigrams like “works great” and “highly recommend” appearing frequently in highly rated products, and bigrams like “stopped working” and “waste money” appearing in lower rated reviews. However, there are still some minor issues with context - like in the case of the two-star reviews where we see a high frequency of reviews saying “would recommend”. Outside of this, it looks like we are on the right track.</p>
-<div id="cell-27" class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Much better! These plots provide much better context as to where certain words appear in different review scores, with bigrams like “works great” and “highly recommend” appearing frequently in highly rated products, and bigrams like “stopped working” and “waste money” appearing in lower rated reviews. However, there are still some minor issues with context - like in the case of the two-star reviews where we see a high frequency of reviews saying “would recommend”. Outside of this, it looks like we are on the right track. This particular step provides some valuable insight into our feature selection process. Specifically, when moving onto the modeling stage, I will likely elect to use bigrams over unigrams as a feature in prediction.</p>
+</section>
+<section id="sentiment-analysis-polarity" class="level3">
+<h3 class="anchored" data-anchor-id="sentiment-analysis-polarity">Sentiment Analysis (Polarity)</h3>
+<div id="cell-29" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding polarity column to data</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># reviews['Polarity'] = reviews['combinedTextClean'].apply(lambda x: TextBlob(x).polarity)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
