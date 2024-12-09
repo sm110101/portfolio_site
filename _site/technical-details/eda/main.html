@@ -284,7 +284,9 @@ window.Quarto = {
   <li><a href="#distributions-of-polarity-and-subjectivity" id="toc-distributions-of-polarity-and-subjectivity" class="nav-link" data-scroll-target="#distributions-of-polarity-and-subjectivity">Distributions of Polarity and Subjectivity</a></li>
   <li><a href="#scatterplot-of-polarity-v-subjectivity" id="toc-scatterplot-of-polarity-v-subjectivity" class="nav-link" data-scroll-target="#scatterplot-of-polarity-v-subjectivity">Scatterplot of Polarity v Subjectivity</a></li>
   </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a>
+  <ul class="collapse">
   <li><a href="#modeling-implications" id="toc-modeling-implications" class="nav-link" data-scroll-target="#modeling-implications">Modeling Implications</a></li>
   <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
@@ -885,12 +887,12 @@ LOWEST: Work well!
 <p>Contrary to my belief above, subjectivity is not higher for more negative reviews. Instead, this plot demonstrates that subjectivity in fact tends to increase with more extreme values of polarity (regardless of which direction). In other words, reviews that are exceedingly negative <strong><em>and</em></strong> positive tend to have higher subjectivity values. As for polarity, the relationship is clear: lower polarity tends to relate to reviews classified as “negative”, and higher polarity relates to revies classified as “positive”.</p>
 </section>
 </section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
 <p>In this section, perform exploratory data analysis (EDA) on 100,000 samples drawn from a large dataset containing details on Amazon electronics reviews. In the analysis, I looked at the characteristics of the quantitative variables in the dataset (<code>reviewRating</code> and <code>vote</code>) - Where <code>reviewRating</code> corresponds to the rating (1-5) assigned by a user to a product in a single review, and <code>vote</code> represents the amount of community votes given to a review. In both cases, I discovered heavy skewness and tailedness in their distributions, with the sample of reviews with non-zero votes having extremely high skewness (58.07) and kurtosis (4208.54).</p>
 <p>In the next section of this page, I look at the prevalance of different terms across all five review ratings. When looking only at single term frequency, I struggled to gather any useful context. To reconcile this, I instead chose to look at frequency of word-pairs across all review ratings, which proved far more useful in understanding the linguistic patterns across the review classes.</p>
 <p>Finally, I took advantage of the <code>textblob</code> library to find the polarity and subjectivity of each review. In this section, I discovered that reviews in this dataset are typically posess higher polarity values (more positive). I then shifted my focus toward the subjectivity of the reviews, where I uncovered an interesting phenomenon where there was a disproportionately high frequency of reviews with high and low subjectivity values. With only that in mind, I conjectured that higher subjectivity may coincicide with low polarity (i.e.&nbsp;a reviewer’s emotions may run high when writing a negative review). However, after creating a scatterplot that compared the two variables, I found this to be untrue. Instead, subjectivity tends to increase with more extreme values of polarity, regardless of direction.</p>
-</section>
 <section id="modeling-implications" class="level2">
 <h2 class="anchored" data-anchor-id="modeling-implications">Modeling Implications</h2>
 <p><strong>Potential use of TF-IDF for single term feature</strong></p>
