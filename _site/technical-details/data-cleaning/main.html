@@ -746,9 +746,8 @@ dtype: int64</code></pre>
 </section>
 <section id="challenges" class="level3">
 <h3 class="anchored" data-anchor-id="challenges">Challenges</h3>
-<ul>
-<li>Experienced serious bottlenecks with string-based text cleaning, so I asked chat-gpt to optimize it for me. You can find the citation below. Additionally, here is the original function that I fed into the LLM:</li>
-</ul>
+<p><strong>Text Processing Optimization</strong></p>
+<p>Experienced serious bottlenecks with string-based text cleaning, so I asked chat-gpt to optimize it for me. You can find the citation below. Additionally, here is the original function that I fed into the LLM:</p>
 <pre><code>def clean_review(text):
     #Remove digits
     text = ''.join(char for char in text if not char.isdigit())
@@ -762,9 +761,8 @@ dtype: int64</code></pre>
 
     # Return cleaned text
     return ' '.join(words)</code></pre>
-<ul>
-<li>Due to the massive size of the data, I could only save a trunacted version of the cleaned data set to the <code>data/processed-data/</code> directory. Doing this made pushing the data to github easier, while also providing graders with a reference to what the whole dataset looks like. As for the full size version of the cleaned data, I stored it in a new subdirectory of the data folder: <code>/data/processed-data-large/</code>.</li>
-</ul>
+<p><strong>Storage Issues</strong></p>
+<p>Due to the massive size of the data, I could only save a trunacted version of the cleaned data set to the <code>data/processed-data/</code> directory. Doing this made pushing the data to github easier, while also providing graders with a reference to what the whole dataset looks like. As for the full size version of the cleaned data, I stored it in a new subdirectory of the data folder: <code>/data/processed-data-large/</code>.</p>
 </section>
 </section>
 <section id="section" class="level2">
