@@ -252,9 +252,18 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#looking-at-reviewrating-and-number-of-community-votes-vote" id="toc-looking-at-reviewrating-and-number-of-community-votes-vote" class="nav-link" data-scroll-target="#looking-at-reviewrating-and-number-of-community-votes-vote">Looking at <code>reviewRating</code> and number of community votes (<code>vote</code>)</a></li>
   <li><a href="#plotting-distribution-of-raw-vs-clean-review-text-lengths" id="toc-plotting-distribution-of-raw-vs-clean-review-text-lengths" class="nav-link" data-scroll-target="#plotting-distribution-of-raw-vs-clean-review-text-lengths">Plotting Distribution of Raw vs Clean Review Text Lengths</a></li>
-  <li><a href="#frequently-appearing-terms-by-review-rating" id="toc-frequently-appearing-terms-by-review-rating" class="nav-link" data-scroll-target="#frequently-appearing-terms-by-review-rating">Frequently Appearing Terms by Review Rating</a></li>
-  <li><a href="#sentiment-analysis-polarity" id="toc-sentiment-analysis-polarity" class="nav-link" data-scroll-target="#sentiment-analysis-polarity">Sentiment Analysis (Polarity)</a></li>
   </ul></li>
+  <li><a href="#frequently-appearing-terms-by-review-rating" id="toc-frequently-appearing-terms-by-review-rating" class="nav-link" data-scroll-target="#frequently-appearing-terms-by-review-rating">Frequently Appearing Terms by Review Rating</a>
+  <ul class="collapse">
+  <li><a href="#document-term-matrix" id="toc-document-term-matrix" class="nav-link" data-scroll-target="#document-term-matrix">Document Term Matrix</a></li>
+  </ul></li>
+  <li><a href="#sentiment-analysis-polarity-and-subjectivity" id="toc-sentiment-analysis-polarity-and-subjectivity" class="nav-link" data-scroll-target="#sentiment-analysis-polarity-and-subjectivity">Sentiment Analysis (Polarity and Subjectivity)</a>
+  <ul class="collapse">
+  <li><a href="#distributions-of-polarity-and-subjectivity" id="toc-distributions-of-polarity-and-subjectivity" class="nav-link" data-scroll-target="#distributions-of-polarity-and-subjectivity">Distributions of Polarity and Subjectivity</a></li>
+  <li><a href="#scatterplot-of-polarity-v-subjectivity" id="toc-scatterplot-of-polarity-v-subjectivity" class="nav-link" data-scroll-target="#scatterplot-of-polarity-v-subjectivity">Scatterplot of Polarity v Subjectivity</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#modeling-implications" id="toc-modeling-implications" class="nav-link" data-scroll-target="#modeling-implications">Modeling Implications</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -298,7 +307,7 @@ window.Quarto = {
 <section id="importing-libraries" class="level2">
 <h2 class="anchored" data-anchor-id="importing-libraries">Importing Libraries</h2>
 <p>In this section, I import all of the packages necessary for generating different types of visualizations for the data. In addition to visualization-related packages, I also bring in pandas &amp; numpy for easy data manipulation and nltk for ngrams analysis. Finally, I will import various specialized packags for robust textual data EDA and dimension reduction.</p>
-<div id="cell-4" class="cell" data-execution_count="5">
+<div id="cell-4" class="cell" data-execution_count="72">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard Packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -307,14 +316,14 @@ window.Quarto = {
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Text-based processing and analysis packages</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textblob</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimension reduction packages</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimension reduction packages</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignoring warnings</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="loading-in-data" class="level2">
@@ -332,7 +341,7 @@ window.Quarto = {
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    reviews <span class="op">=</span> pd.read_csv(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-7" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few lines</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first few lines</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>reviews.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
@@ -536,7 +545,7 @@ window.Quarto = {
 <p><strong>Interpretation</strong></p>
 <p>Due to the discrete, ordinal structure of the <code>reviewRating</code> column, there is not much dispersion between the median, 75th percentile, and maximum values. However, the column mean of 3.87 and median of 5 suggests that the distribution of reviewRatings is left-skewed, with over 50% of reviews containing 5-star ratings. This result echoes back to the concerns raised in the paper written by Magdelano et al.&nbsp;in which the researchers faced an overpresence of highly positive review ratings in their analysis of bakery reviews<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">1</a></sup></span>. For a better understanding of how they tackled that issue, you can refer to their work (cited below), or to my literature review of the paper on the <a href="../../index.html">home</a> page.</p>
 <p>Let us now shift our focus now to the summary statistics of the <code>vote</code> column. When looking at these results, one thing become abundantly clear - there is extreme variation and skewness in the distribution of community votes cast toward different reviews. For non-zero vote entries, the mean number of community votes is around 11.8 per post, with a standard deviation of 84 votes and maximum value of 6770 votes. To further quantify these characteristics, I will calculate the skewness and kurtosis of vote counts. In case you are unfamiliar with these values, “skewness” classifies the amount of assymmetry in a distribution (whether one tail is longer than the other), while kurtosis measures the “tailedness” of a distribution or what the ends of either side of the distribution look like<span class="citation" data-cites="SkewKurt"><sup><a href="#ref-SkewKurt" role="doc-biblioref">2</a></sup></span>.</p>
-<p><strong><em>Here is a diagram to help</em></strong><span class="citation" data-cites="SkewKurtImage"><sup><a href="#ref-SkewKurtImage" role="doc-biblioref">3</a></sup></span></p>
+<p><strong><em>Here is a diagram to help</em></strong></p>
 <p><img src="../../xtra/multiclass-portfolio-website/images/skewness_and_kurtosis.png" class="img-fluid" width="400"></p>
 <p><a href="https://www.researchgate.net/publication/316114940/figure/fig1/AS:961444636012553@1606237672944/The-illustration-of-skewness-and-kurtosis-in-a-distribution.gif">Source: Research Gate</a></p>
 <p>Now let’s find the actual numerical values:</p>
@@ -597,11 +606,16 @@ Kurtosis of Vote Counts: 4208.537902609067</code></pre>
 </div>
 <p>As expected, we observe the same leftward shift in the distribution of character counts for the cleaned text</p>
 </section>
-<section id="frequently-appearing-terms-by-review-rating" class="level3">
-<h3 class="anchored" data-anchor-id="frequently-appearing-terms-by-review-rating">Frequently Appearing Terms by Review Rating</h3>
+</section>
+<section id="frequently-appearing-terms-by-review-rating" class="level2">
+<h2 class="anchored" data-anchor-id="frequently-appearing-terms-by-review-rating">Frequently Appearing Terms by Review Rating</h2>
+<section id="document-term-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="document-term-matrix">Document Term Matrix</h3>
 <p>Moving forward, let’s now take a look at how different keywords relate to review ratings given in the dataset. For this section, I will leverage the <code>CountVectorizer</code> object from <code>sklearn</code>. In case you are unfamiliar, the <code>CountVectorizer</code> object takes in our reviews data, and converts it into a document frequency matrix where each row will represent a review, and each column represents a different word found in our every review. Each element of the matrix corresponds to the number of times word <span class="math inline">\(i\)</span> appears in document <span class="math inline">\(j\)</span>. One of the greatest benefits to using <code>CountVectorizer</code> is its ability to convert unstructured text data into a meaningful numeric format. In the case below, I focus on the top 10 most common keywords for each of the five different star rating assigned to amazon electronics products.</p>
+<p><strong>Example of a DTM:</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/DTM.jpg" class="img-fluid" width="400"></p>
+<p><a href="https://stackoverflow.com/questions/38712750/how-could-i-make-document-term-matrix-with-my-own-term-list">Source: Stack Overflow</a> <br></p>
 <p>From there, I will create 5 separate plots for each review score that contain bar graphs of the most frequently appearing terms. The goal for this process is to gain a better understanding of which words are more likely to appear for different product ratings.</p>
-<p>For creating the plots themselves, I use the <code>plot_top_words()</code> function defined in <a href="https://drive.google.com/file/d/1hAT8fF0UuDyjLUyuisCngYP4VIA-evZH/view?usp=sharing">dsan5000_hw-1.ipynb</a>. However, when implementing this function, a few necessary changes had to be made. In the original function (cited above), the required inputs are a non-negative matrix factorization model, a list of words extracted from a document term matrix, and the <code>n_top_words</code> parameter. In my implementation, I elect to use only two inputs - a pandas dataframe, and the <code>top_n_words</code> parameter. The updated function then creates a document term matrix, and extracts the word list and frequencies natively using the inputed pandas dataframe. From there, the process is essentially the same - where both functions continue on by sorting the top n words, and plotting them based on the target labels. Within the function below, I leverage a popular LLM in two cases - both having to do with the overall format of the end plots. In the first case, I use OpenAI’s GPT-4o model to assist in setting up a grid structure for my subplots in order to give them a cleaner presenation on this website<span class="citation" data-cites="GridVisualization"><sup><a href="#ref-GridVisualization" role="doc-biblioref">4</a></sup></span>. In the second case, I look for help on removing the final blank plot in the visualization<span class="citation" data-cites="SubplotRemoval"><sup><a href="#ref-SubplotRemoval" role="doc-biblioref">5</a></sup></span>.</p>
+<p>For creating the plots themselves, I use the <code>plot_top_words()</code> function defined in <a href="https://drive.google.com/file/d/1hAT8fF0UuDyjLUyuisCngYP4VIA-evZH/view?usp=sharing">dsan5000_hw-1.ipynb</a>. However, when implementing this function, a few necessary changes had to be made. In the original function (cited above), the required inputs are a non-negative matrix factorization model, a list of words extracted from a document term matrix, and the <code>n_top_words</code> parameter. In my implementation, I elect to use only two inputs - a pandas dataframe, and the <code>top_n_words</code> parameter. The updated function then creates a document term matrix, and extracts the word list and frequencies natively using the inputed pandas dataframe. From there, the process is essentially the same - where both functions continue on by sorting the top n words, and plotting them based on the target labels. Within the function below, I leverage a popular LLM in two cases - both having to do with the overall format of the end plots. In the first case, I use OpenAI’s GPT-4o model to assist in setting up a grid structure for my subplots in order to give them a cleaner presenation on this website<span class="citation" data-cites="GridVisualization"><sup><a href="#ref-GridVisualization" role="doc-biblioref">3</a></sup></span>. In the second case, I look for help on removing the final blank plot in the visualization<span class="citation" data-cites="SubplotRemoval"><sup><a href="#ref-SubplotRemoval" role="doc-biblioref">4</a></sup></span>.</p>
 <div id="cell-23" class="cell" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_top_words_by_rating(reviews, n_top_words<span class="op">=</span><span class="dv">10</span>):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -735,34 +749,144 @@ Kurtosis of Vote Counts: 4208.537902609067</code></pre>
 </div>
 <p>Much better! These plots provide much better context as to where certain words appear in different review scores, with bigrams like “works great” and “highly recommend” appearing frequently in highly rated products, and bigrams like “stopped working” and “waste money” appearing in lower rated reviews. However, there are still some minor issues with context - like in the case of the two-star reviews where we see a high frequency of reviews saying “would recommend”. Outside of this, it looks like we are on the right track. This particular step provides some valuable insight into our feature selection process. Specifically, when moving onto the modeling stage, I will likely elect to use bigrams over unigrams as a feature in prediction.</p>
 </section>
-<section id="sentiment-analysis-polarity" class="level3">
-<h3 class="anchored" data-anchor-id="sentiment-analysis-polarity">Sentiment Analysis (Polarity)</h3>
-<div id="cell-29" class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding polarity column to data</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># reviews['Polarity'] = reviews['combinedTextClean'].apply(lambda x: TextBlob(x).polarity)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sentiment-analysis-polarity-and-subjectivity" class="level2">
+<h2 class="anchored" data-anchor-id="sentiment-analysis-polarity-and-subjectivity">Sentiment Analysis (Polarity and Subjectivity)</h2>
+<p>In this section, I import the <a href="https://textblob.readthedocs.io/en/dev/"><code>textblob</code></a> library to assist in calculating the polarity and subjectivity of our cleaned review text data. In case you are not familiar, “polarity” is a continous value that falls in the range [-1, 1], where values closer to -1 indicate more of a negative tone, while values closer to 1 indicate a more positive tone<span class="citation" data-cites="PolarityAndSentiment"><sup><a href="#ref-PolarityAndSentiment" role="doc-biblioref">5</a></sup></span>. “Subjectivity” is also a continuous value, but it falls in the range [0, 1] and quantifies the emotion or level of opinion in a piece of text. Text data with high levels of subjectivity is characterized as having greater opinionation than factual information<span class="citation" data-cites="PolarityAndSentiment"><sup><a href="#ref-PolarityAndSentiment" role="doc-biblioref">5</a></sup></span>. For the analysis here, I will construct a few visualizations to see how these two factors behave in my review data.</p>
+<div id="cell-29" class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> textblob <span class="im">import</span> TextBlob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div id="cell-30" class="cell" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding polarity column to data</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>reviews[<span class="st">'Polarity'</span>] <span class="op">=</span> reviews[<span class="st">'reviewTextClean'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: TextBlob(x).polarity)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>reviews[<span class="st">'Subjectivity'</span>] <span class="op">=</span> reviews[<span class="st">'reviewTextClean'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: TextBlob(x).subjectivity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Here are the reviews with the highest and lowest polarity and subjectivity values</li>
+</ul>
+<div id="cell-32" class="cell" data-execution_count="69">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#highest and lowest polarity reviews</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>top_polarity_review <span class="op">=</span> reviews.nlargest(<span class="dv">1</span>, <span class="st">'Polarity'</span>)[<span class="st">'reviewText'</span>].values[<span class="dv">0</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>bottom_polarity_review <span class="op">=</span> reviews.nsmallest(<span class="dv">1</span>, <span class="st">'Polarity'</span>)[<span class="st">'reviewText'</span>].values[<span class="dv">0</span>]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Highest and lowest subjectivity reviews</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>top_subj_review <span class="op">=</span> reviews.nlargest(<span class="dv">1</span>, <span class="st">'Subjectivity'</span>)[<span class="st">'reviewText'</span>].values[<span class="dv">0</span>]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>bottom_subj_review <span class="op">=</span> reviews.nsmallest(<span class="dv">1</span>, <span class="st">'Subjectivity'</span>)[<span class="st">'reviewText'</span>].values[<span class="dv">0</span>]</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full reviews</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"POLARITY"</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"================="</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HIGHEST: </span><span class="sc">{</span>top_polarity_review<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"LOWEST: </span><span class="sc">{</span>bottom_polarity_review<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"SUBJECTIVITY"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"================="</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HIGHEST: </span><span class="sc">{</span>top_subj_review<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"LOWEST: </span><span class="sc">{</span>bottom_subj_review<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>POLARITY
+=================
+HIGHEST: Perfect on samsung s4 mini
+LOWEST: I would never recommend this or purchase it again. The fabric is awful material. I dislike the feel of it. I literaly take it off every time I use the product. 
+
+SUBJECTIVITY
+=================
+HIGHEST: Perfect on samsung s4 mini
+LOWEST: Work well! 
+</code></pre>
+</div>
+</div>
+<section id="distributions-of-polarity-and-subjectivity" class="level3">
+<h3 class="anchored" data-anchor-id="distributions-of-polarity-and-subjectivity">Distributions of Polarity and Subjectivity</h3>
+<p>Below, I construct two histograms showing the distribution of polarity and subjectivity across our data set</p>
+<div id="cell-34" class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting polarity Distribution </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(reviews[<span class="st">'Polarity'</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribution of Polarity Scores'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Polarity'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When looking at the above plot, it’s clear that most of the reviews carry a positive sentiment on average. While there is a large collection of reviews that have a neutral tone, the overall distribution of sentiments leans more to the positive side. We can also see a disproportionately high number of reviews with positive to very positive sentiment on the right tail of the distribution. On the other hand, there are far fewer reviews that carry a negative sentiment, which again shares parallels to Magdelano’s bakery review dataset<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">1</a></sup></span>.</p>
+<div id="cell-36" class="cell" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Subjectivity Distribution</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(reviews[<span class="st">'Subjectivity'</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribution of Subjectivity Scores'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Subjectivity'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Looking now at the distribution of subjectivity across electronics reviews, we see an interesting characteristic. While most reviews possess moderate subjectivity, there are extrememly high occurences of reviews with extremely high and extremely low subjectivity levels. In the case of extreme highs, it’s possible that these reviews are on average negative - written by disgruntled customers who went online to vent about their poor experience with the product. On the opposite end, reviews with extremely low subjectivity are likely more thought out and methodical, where the reviewer offers a useful documentation of their experience with the product.</p>
+</section>
+<section id="scatterplot-of-polarity-v-subjectivity" class="level3">
+<h3 class="anchored" data-anchor-id="scatterplot-of-polarity-v-subjectivity">Scatterplot of Polarity v Subjectivity</h3>
+<p>To test whether my conjecture about high subjectivity relates to negative polarity or sentiment, I construct a scatterplot between the two below. In the scatterplot, I also fill in points by their corresponding binary class label that I created in the data cleaning section. As a refresher, the <code>binary_target</code> variable uses the following condition:</p>
+<ul>
+<li>“positive” for <code>reviewRating</code> <span class="math inline">\(\geq 4\)</span></li>
+<li>“negative” for <code>reviewRating</code> <span class="math inline">\(&lt; 4\)</span></li>
+</ul>
+<div id="cell-39" class="cell" data-execution_count="70">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>reviews, x<span class="op">=</span><span class="st">'Polarity'</span>, y<span class="op">=</span><span class="st">'Subjectivity'</span>, hue<span class="op">=</span><span class="st">'binary_target'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Polarity vs. Subjectivity'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Polarity'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Subjectivity'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">'Sentiment'</span>, loc<span class="op">=</span><span class="st">'best'</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Contrary to my belief above, subjectivity is not higher for more negative reviews. Instead, this plot demonstrates that subjectivity in fact tends to increase with more extreme values of polarity (regardless of which direction). In other words, reviews that are exceedingly negative <strong><em>and</em></strong> positive tend to have higher subjectivity values. As for polarity, the relationship is clear: lower polarity tends to relate to reviews classified as “negative”, and higher polarity relates to revies classified as “positive”.</p>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+</section>
+<section id="modeling-implications" class="level2">
+
 
 
 
 </section>
 </section>
-</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Modeling Implications</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-Magdelano2024" class="csl-entry" role="listitem">
 <div class="csl-left-margin">1. </div><div class="csl-right-inline">Magdaleno, D., Montes, M., Estrada, B. &amp; Ochoa-Zezzatti, A. A GPT-based approach for sentiment analysis and bakery rating prediction. in <em>Advances in computational intelligence. MICAI 2023 international workshops</em> (eds. Calvo, H. et al.) 61–76 (Springer Nature Switzerland, 2024).</div>
 </div>
 <div id="ref-SkewKurt" class="csl-entry" role="listitem">
 <div class="csl-left-margin">2. </div><div class="csl-right-inline"><a href="https://library.soton.ac.uk/skewness-and-kurtosis#:~:text=Skewed%20data%20is%20data%20which,are%20mesokurtosis%2C%20platykurtosis%20and%20leptokurtosis">Skewness and kurtosis</a>.</div>
 </div>
-<div id="ref-SkewKurtImage" class="csl-entry" role="listitem">
-<div class="csl-left-margin">3. </div><div class="csl-right-inline"><a href="https://www.researchgate.net/publication/316114940/figure/fig1/AS:961444636012553@1606237672944/The-illustration-of-skewness-and-kurtosis-in-a-distribution.gif">Skewness and kurtosis diagram</a>.</div>
-</div>
 <div id="ref-GridVisualization" class="csl-entry" role="listitem">
-<div class="csl-left-margin">4. </div><div class="csl-right-inline">‘Prompt: I want to visualize data for a variable that has a varying number of unique categories. The visualizations should be laid out in a grid format, with two columns per row and the number of rows calculated dynamically based on the number of unique categories. Can you help me write code that determines the number of rows and columns required for such a grid layout?‘ ChatGPT, version-4o, OpenAI, dec-9, 2024, chat.openai.com.</div>
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">‘Prompt: I want to visualize data for a variable that has a varying number of unique categories. The visualizations should be laid out in a grid format, with two columns per row and the number of rows calculated dynamically based on the number of unique categories. Can you help me write code that determines the number of rows and columns required for such a grid layout?‘ ChatGPT, version-4o, OpenAI, dec-9, 2024, chat.openai.com.</div>
 </div>
 <div id="ref-SubplotRemoval" class="csl-entry" role="listitem">
-<div class="csl-left-margin">5. </div><div class="csl-right-inline">‘Prompt: How can i dynamically remove unused subplots from a grid to clean up the visualization when there are fewer categories than grid spaces?‘ ChatGPT, version-4o, OpenAI, dec-9, 2024, chat.openai.com.</div>
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">‘Prompt: How can i dynamically remove unused subplots from a grid to clean up the visualization when there are fewer categories than grid spaces?‘ ChatGPT, version-4o, OpenAI, dec-9, 2024, chat.openai.com.</div>
+</div>
+<div id="ref-PolarityAndSentiment" class="csl-entry" role="listitem">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline"><a href="https://neptune.ai/blog/sentiment-analysis-python-textblob-vs-vader-vs-flair#:~:text=Polarity%20is%20a%20float%20that,opinion%2C%20emotion%2C%20or%20judgment">Sentiment analysis in python: TextBlob vs vader sentiment vs flair vs building it from scratch</a>.</div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
