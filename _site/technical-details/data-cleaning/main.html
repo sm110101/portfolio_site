@@ -277,10 +277,12 @@ window.Quarto = {
   <li><a href="#cleaning-and-processing-text-data" id="toc-cleaning-and-processing-text-data" class="nav-link" data-scroll-target="#cleaning-and-processing-text-data">Cleaning and Processing Text Data</a></li>
   <li><a href="#creating-columns-for-binary-classification" id="toc-creating-columns-for-binary-classification" class="nav-link" data-scroll-target="#creating-columns-for-binary-classification">Creating Columns for Binary Classification</a></li>
   <li><a href="#writing-data" id="toc-writing-data" class="nav-link" data-scroll-target="#writing-data">Writing Data</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
-  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
   </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a>
+  <ul class="collapse">
+  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -307,14 +309,14 @@ window.Quarto = {
 
 
 <p><br> <br></p>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<section id="overview" class="level1">
+<h1>Overview</h1>
 <p>In this section, I continue by cleaning the data gathered in the <a href="../../technical-details/data-collection/main.html">Data Collection</a> section. To begin, I load in the raw data file from the <code>data/raw-data/</code> directory. From there, I drop columns that are not relevant to my <a href="../../technical-details/eda/main.html">EDA</a> and modeling down the line. Throughout this section, I try to consistently reduce the number of NA values until none remain in the final version of the dataset. While cleaning, I also make sure to drop NA values from rows where their removal wouldn’t seriously impact the size of the dataset. The columns that ended up matching this criteria were <code>reviewerName</code> and <code>summary</code>. I also make sure to assign proper data types to the columns - changing number of community votes <code>vote</code> to an integer value, date of review posting <code>reviewTime</code> to datetime. Finally, I run the function <code>clean_review()</code> on the <code>reviewText</code> and <code>summary</code> columns. In the challenges section, I highlight the computational bottleneck faced when trying to run <code>clean_text()</code> on over 12 million entries, and how I improved its performance. The final result of this section yields a clean dataset, ripe for further exploration and modeling.</p>
 </section>
-<section id="code" class="level2">
-<h2 class="anchored" data-anchor-id="code">Code</h2>
-<section id="importing-packages" class="level3">
-<h3 class="anchored" data-anchor-id="importing-packages">Importing Packages</h3>
+<section id="code" class="level1">
+<h1>Code</h1>
+<section id="importing-packages" class="level2">
+<h2 class="anchored" data-anchor-id="importing-packages">Importing Packages</h2>
 <p>First, let’s import the necessary packages.</p>
 <div id="cell-3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Packages</span></span>
@@ -329,8 +331,8 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>) <span class="co">#ignoring warnings</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="loading-raw-data" class="level3">
-<h3 class="anchored" data-anchor-id="loading-raw-data">Loading raw data</h3>
+<section id="loading-raw-data" class="level2">
+<h2 class="anchored" data-anchor-id="loading-raw-data">Loading raw data</h2>
 <p>Now we can load in the processed CSV we constructed in the previous section.</p>
 <div id="cell-6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pathway to raw data</span></span>
@@ -403,8 +405,8 @@ window.Quarto = {
 <li><code>image</code>: Image path (if any)</li>
 </ul>
 </section>
-<section id="dropping-unnecessary-columns" class="level3">
-<h3 class="anchored" data-anchor-id="dropping-unnecessary-columns">Dropping Unnecessary Columns</h3>
+<section id="dropping-unnecessary-columns" class="level2">
+<h2 class="anchored" data-anchor-id="dropping-unnecessary-columns">Dropping Unnecessary Columns</h2>
 <p>First, lets drop the <code>unixReviewTime</code>, <code>style</code> and <code>image</code> columns, since they will not be used in our analysis</p>
 <div id="cell-9" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list of columns to drop</span></span>
@@ -422,8 +424,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="checking-for-missing-values" class="level3">
-<h3 class="anchored" data-anchor-id="checking-for-missing-values">Checking for missing values</h3>
+<section id="checking-for-missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="checking-for-missing-values">Checking for missing values</h2>
 <p>Now lets check to see if our dataset contains any NA values</p>
 <div id="cell-11" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reviews_raw.isnull().<span class="bu">sum</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -452,8 +454,8 @@ dtype: int64</code></pre>
 </div>
 </div>
 </section>
-<section id="checking-data-types" class="level3">
-<h3 class="anchored" data-anchor-id="checking-data-types">Checking data types</h3>
+<section id="checking-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="checking-data-types">Checking data types</h2>
 <p>Before moving forward, let’s ensure that each of our column data types are appropriate</p>
 <div id="cell-15" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reviews_raw.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -525,8 +527,8 @@ dtype: int64</code></pre>
 </div>
 <p>Great! Now we are left with no more NA entries in our data.</p>
 </section>
-<section id="renaming-columns" class="level3">
-<h3 class="anchored" data-anchor-id="renaming-columns">Renaming Columns</h3>
+<section id="renaming-columns" class="level2">
+<h2 class="anchored" data-anchor-id="renaming-columns">Renaming Columns</h2>
 <p>Before moving on to cleaning our actual text data, let’s rename <code>overall</code> to <code>reviewRating</code> and <code>asin</code> to <code>productID</code> for easier intuition and more uniformity</p>
 <div id="cell-24" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Renaming cols</span></span>
@@ -587,8 +589,8 @@ dtype: int64</code></pre>
 </div>
 </div>
 </section>
-<section id="cleaning-and-processing-text-data" class="level3">
-<h3 class="anchored" data-anchor-id="cleaning-and-processing-text-data">Cleaning and Processing Text Data</h3>
+<section id="cleaning-and-processing-text-data" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-and-processing-text-data">Cleaning and Processing Text Data</h2>
 <p>In this section I will begin to process the text columns within this dataset. I will first remove digits from the text using python’s built-in <code>.isdigit()</code> function. Next, I will utilize python’s <code>string</code> library to create a list of punctuation marks that will be referenced when removing all punctuation from the text. Step three involves lowercasing the text using python’s built-in <code>.lower()</code> function. Finally I will remove stopwords in the text with the help of <code>nltk.corpus</code>. If you are not familiar, stopwords are terms that do not carry any semantic meaning - some examples include ‘i’, ‘me’, ‘my’, ‘myself’, ‘we’, ‘our’, ‘ours’, etc. From there. After all of this is complete, we will have a fully cleaned dataframe that is ready for analysis and modeling.</p>
 <div id="cell-28" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing stopwords </span></span>
@@ -692,8 +694,8 @@ dtype: int64</code></pre>
 </div>
 <p>Here are the first few rows of cleaned text. It looks like everything works!</p>
 </section>
-<section id="creating-columns-for-binary-classification" class="level3">
-<h3 class="anchored" data-anchor-id="creating-columns-for-binary-classification">Creating Columns for Binary Classification</h3>
+<section id="creating-columns-for-binary-classification" class="level2">
+<h2 class="anchored" data-anchor-id="creating-columns-for-binary-classification">Creating Columns for Binary Classification</h2>
 <p>For this section, I create a new variable <code>binary_target</code> that I will use later on in the EDA and modeling stages. For rows where <code>reviewRating</code> <span class="math inline">\(\geq 4\)</span> , I assign a “positive” label, and for rows where <code>reviewRating</code> <span class="math inline">\(&lt; 4\)</span> , I assign a “negative” label. The overall goal for this variable is to include it as a target in a binary classification model where try to predict whether a review is “positive” or “negative” based on its text contents.</p>
 <div id="cell-36" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>reviews_raw[<span class="st">'binary_target'</span>] <span class="op">=</span> reviews_raw[<span class="st">'reviewRating'</span>].<span class="bu">apply</span>(</span>
@@ -745,8 +747,8 @@ dtype: int64</code></pre>
 </div>
 </div>
 </section>
-<section id="writing-data" class="level3">
-<h3 class="anchored" data-anchor-id="writing-data">Writing Data</h3>
+<section id="writing-data" class="level2">
+<h2 class="anchored" data-anchor-id="writing-data">Writing Data</h2>
 <p>After all of that, we can now write our cleaned dataset to a CSV file. Due to the large size of the data set, I will create two different data sets. The first file will be the entire cleaned data set, which I will write to a new directory <code>/data/processed-data-large/</code>, which will be included in .gitignore to reduce the size of the payload when pushing to my remote repository.</p>
 <p>The second dataset, I will take a sample of 100000 observations from the dataset and write it to <code>/data/processed-data/</code>. That way, viewers of my remote repository will be able to see what the cleaned version of my data looks like. I will also use this data set in some cases when conducting EDA.</p>
 <div id="cell-38" class="cell" data-execution_count="18">
@@ -762,13 +764,13 @@ dtype: int64</code></pre>
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>reviews_short.to_csv(<span class="st">'../../data/processed-data/reviews_short.csv.gz'</span>, index <span class="op">=</span> <span class="va">False</span>, compression<span class="op">=</span><span class="st">'gzip'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="summary" class="level3">
-<h3 class="anchored" data-anchor-id="summary">Summary</h3>
-<p>In this section, I load in the raw data gathered during the <a href="../../technical-details/data-collection/main.html">data collection</a> phase. Next, I performed crucial tasks like dropping NA values and correcting data types. From there, I ran the <code>clean_review()</code> script on the <code>reviewText</code> and <code>summary</code> columns of the data, which lowercased the text and removed stopwords, punctuation marks, and digits. Finally I solved the problem relating to file size by generating a sample of 100000 observations from the data set, and saving it to the <code>/data/processed-data/</code> directory, while saving the full size, cleaned data set to the untracked <code>/data/processed-data-large/</code> directory.</p>
 </section>
-<section id="challenges" class="level3">
-<h3 class="anchored" data-anchor-id="challenges">Challenges</h3>
-<p><strong>Text Processing Optimization</strong></p>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<p>In this section, I load in the raw data gathered during the <a href="../../technical-details/data-collection/main.html">data collection</a> phase. Next, I performed crucial tasks like dropping NA values and correcting data types. From there, I ran the <code>clean_review()</code> script on the <code>reviewText</code> and <code>summary</code> columns of the data, which lowercased the text and removed stopwords, punctuation marks, and digits. Finally I solved the problem relating to file size by generating a sample of 100000 observations from the data set, and saving it to the <code>/data/processed-data/</code> directory, while saving the full size, cleaned data set to the untracked <code>/data/processed-data-large/</code> directory.</p>
+<section id="challenges" class="level2">
+<h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
+<p><span style="text-decoration: underline;"><strong>Text Processing Optimization</strong></span></p>
 <p>Experienced serious bottlenecks with string-based text cleaning, so I asked chat-gpt to optimize it for me. You can find the citation below. Additionally, here is the original function that I fed into the LLM:</p>
 <pre><code>def clean_review(text):
     #Remove digits
@@ -783,9 +785,8 @@ dtype: int64</code></pre>
 
     # Return cleaned text
     return ' '.join(words)</code></pre>
-<p><strong>Storage Issues</strong></p>
+<p><span style="text-decoration: underline;"><strong>Storage Issues</strong></span></p>
 <p>Due to the massive size of the data, I could only save a trunacted version of the cleaned data set to the <code>data/processed-data/</code> directory. Doing this made pushing the data to github easier, while also providing graders with a reference to what the whole dataset looks like. As for the full size version of the cleaned data, I stored it in a new subdirectory of the data folder: <code>/data/processed-data-large/</code>.</p>
-</section>
 </section>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section"></h2>
@@ -793,6 +794,7 @@ dtype: int64</code></pre>
 
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
