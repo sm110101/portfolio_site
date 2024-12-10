@@ -333,7 +333,7 @@ window.Quarto = {
 <section id="importing-libraries" class="level2">
 <h2 class="anchored" data-anchor-id="importing-libraries">Importing Libraries</h2>
 <p>In this section, I import all of the packages necessary for generating different types of visualizations for the data. In addition to visualization-related packages, I also bring in pandas &amp; numpy for easy data manipulation and nltk for ngrams analysis. Finally, I will import various specialized packags for robust textual data EDA and dimension reduction.</p>
-<div id="cell-4" class="cell" data-execution_count="72">
+<div id="cell-4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard Packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -355,7 +355,7 @@ window.Quarto = {
 <section id="loading-in-data" class="level2">
 <h2 class="anchored" data-anchor-id="loading-in-data">Loading in data</h2>
 <p>Now, let’s begin by loading in the cleaned data set that I constructed in the previous section:</p>
-<div id="cell-6" class="cell">
+<div id="cell-6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pathway to raw data</span></span>
@@ -366,10 +366,10 @@ window.Quarto = {
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Read the CSV file into a dataframe</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    reviews <span class="op">=</span> pd.read_csv(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-7" class="cell" data-execution_count="9">
+<div id="cell-7" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first few lines</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>reviews.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
 
@@ -495,7 +495,7 @@ window.Quarto = {
 <li><code>75th</code> (75th percentile value)</li>
 <li><code>max</code> (Maximum value)</li>
 </ul>
-<div id="cell-11" class="cell" data-execution_count="15">
+<div id="cell-11" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Temporary data set that ignores zero vote reviews</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>review_votes <span class="op">=</span> reviews[reviews[<span class="st">'vote'</span>] <span class="op">!=</span> <span class="dv">0</span>]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="op">=</span> review_votes[[<span class="st">'reviewRating'</span>, <span class="st">'vote'</span>]].describe()</span>
@@ -508,7 +508,7 @@ window.Quarto = {
 <pre><code>SUMMARY STATS FOR QUANTITATIVE COLUMNS:
 ========================================</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -575,7 +575,7 @@ window.Quarto = {
 <p><img src="../../xtra/multiclass-portfolio-website/images/skewness_and_kurtosis.png" class="img-fluid" width="400"></p>
 <p><a href="https://www.researchgate.net/publication/316114940/figure/fig1/AS:961444636012553@1606237672944/The-illustration-of-skewness-and-kurtosis-in-a-distribution.gif">Source: Research Gate</a></p>
 <p>Now let’s find the actual numerical values:</p>
-<div id="cell-14" class="cell" data-execution_count="16">
+<div id="cell-14" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> skew, kurtosis</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Skewness of Vote Counts: </span><span class="sc">{</span>skew(review_votes[<span class="st">'vote'</span>])<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -591,7 +591,7 @@ Kurtosis of Vote Counts: 4208.537902609067</code></pre>
 <section id="plotting-distribution-of-raw-vs-clean-review-text-lengths" class="level3">
 <h3 class="anchored" data-anchor-id="plotting-distribution-of-raw-vs-clean-review-text-lengths">Plotting Distribution of Raw vs Clean Review Text Lengths</h3>
 <p>Let’s move on now to looking at the distributions of the <code>reviewText</code> and <code>reviewTextClean</code> columns. The goal for this section is to gain some initial intuition into whether our text processing in the data cleaning section actually worked as intended. In order to do this, I will count the number of words and number of characters in each column and place them into two different plots showing the overlapping distributions of characters counts and word counts between the raw and cleaneed text.</p>
-<div id="cell-20" class="cell" data-execution_count="25">
+<div id="cell-18" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting distributions of word counts:</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(reviews[<span class="st">'reviewText'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">len</span>(x.split())), kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, label<span class="op">=</span><span class="st">"# Words in Raw Review Text"</span>, color<span class="op">=</span><span class="st">"red"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
@@ -611,7 +611,7 @@ Kurtosis of Vote Counts: 4208.537902609067</code></pre>
 </div>
 </div>
 <p><strong>Interpretation</strong> At a glance, it appears that our text processing step works as intended. In the above plot, we observe a left-ward shift in the distribution of word-length for the clean text after removing stopwords from the data. Now, lets create a similar plot showing the character counts:</p>
-<div id="cell-22" class="cell" data-execution_count="26">
+<div id="cell-20" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting distributions of character counts:</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(reviews[<span class="st">'reviewText'</span>].<span class="bu">apply</span>(<span class="bu">len</span>), kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, label<span class="op">=</span><span class="st">'# Characters in Raw Review Text'</span>, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
@@ -642,7 +642,7 @@ Kurtosis of Vote Counts: 4208.537902609067</code></pre>
 <p><a href="https://stackoverflow.com/questions/38712750/how-could-i-make-document-term-matrix-with-my-own-term-list">Source: Stack Overflow</a> <br></p>
 <p>From there, I will create 5 separate plots for each review score that contain bar graphs of the most frequently appearing terms. The goal for this process is to gain a better understanding of which words are more likely to appear for different product ratings.</p>
 <p>For creating the plots themselves, I use the <code>plot_top_words()</code> function defined in <a href="https://drive.google.com/file/d/1hAT8fF0UuDyjLUyuisCngYP4VIA-evZH/view?usp=sharing">dsan5000_hw-1.ipynb</a>. However, when implementing this function, a few necessary changes had to be made. In the original function (cited above), the required inputs are a non-negative matrix factorization model, a list of words extracted from a document term matrix, and the <code>n_top_words</code> parameter. In my implementation, I elect to use only two inputs - a pandas dataframe, and the <code>top_n_words</code> parameter. The updated function then creates a document term matrix, and extracts the word list and frequencies natively using the inputed pandas dataframe. From there, the process is essentially the same - where both functions continue on by sorting the top n words, and plotting them based on the target labels. Within the function below, I leverage a popular LLM in two cases - both having to do with the overall format of the end plots. In the first case, I use OpenAI’s GPT-4o model to assist in setting up a grid structure for my subplots in order to give them a cleaner presenation on this website<span class="citation" data-cites="GridVisualization"><sup><a href="#ref-GridVisualization" role="doc-biblioref">3</a></sup></span>. In the second case, I look for help on removing the final blank plot in the visualization<span class="citation" data-cites="SubplotRemoval"><sup><a href="#ref-SubplotRemoval" role="doc-biblioref">4</a></sup></span>.</p>
-<div id="cell-25" class="cell" data-execution_count="46">
+<div id="cell-23" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_top_words_by_rating(reviews, n_top_words<span class="op">=</span><span class="dv">10</span>):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function will plot the "n_top_words" based on user rating</span></span>
@@ -709,7 +709,7 @@ Kurtosis of Vote Counts: 4208.537902609067</code></pre>
 </div>
 <p>Unfortunately, these results are pretty unclear. There are multiple cases where the top words do not have any real relevance to their related review score. For example, in almost every plot, the top term is <code>one</code>… It is impossible to know what the context of this is. Similarly, we can see a high prevalence of the word “would” in many of the plots. However, there is a hint to what is going on in these plots. If you refer to the plots for 1- 2- and 3-star reviews, you can see that the word “work” appears in all three. Somewhat counterintuitive, no? It doesn’t seem very likely that the word “work” should have any association with low-rated electronics. That is exactly where the problem lies. In reality, it’s highly possible that the word “work” in most of these negative reviews follows the word “dont” (in the case of the cleaned text). Therefore, the next step in my analysis will be re-running these visualizations. However, this time, I will look at the most frequent “bigrams” or pairs of words. By doing this, I should be able to account for cases of negation in the review text.</p>
 <p>In <code>plot_top_bigrams_by_rating()</code> below, I repeat all of the steps taken in <code>plot_top_words_by_rating()</code>, with the edition of the <code>ngram_range=(2,2)</code> parameter, which I source from an <a href="https://stackoverflow.com/questions/51158638/countvectorize-vocabulary-specification-for-bigrams-python">article</a> on stack overflow. Let’s see how it goes:</p>
-<div id="cell-27" class="cell" data-execution_count="47">
+<div id="cell-25" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_top_bigrams_by_rating(reviews, n_top_bigrams<span class="op">=</span><span class="dv">10</span>):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Plots the top `n_top_bigrams` bigrams based on user review rating.</span></span>
@@ -779,10 +779,10 @@ Kurtosis of Vote Counts: 4208.537902609067</code></pre>
 <section id="sentiment-analysis-polarity-and-subjectivity" class="level2">
 <h2 class="anchored" data-anchor-id="sentiment-analysis-polarity-and-subjectivity">Sentiment Analysis (Polarity and Subjectivity)</h2>
 <p>In this section, I import the <a href="https://textblob.readthedocs.io/en/dev/"><code>textblob</code></a> library to assist in calculating the polarity and subjectivity of our cleaned review text data. In case you are not familiar, “polarity” is a continous value that falls in the range [-1, 1], where values closer to -1 indicate more of a negative tone, while values closer to 1 indicate a more positive tone<span class="citation" data-cites="PolarityAndSentiment"><sup><a href="#ref-PolarityAndSentiment" role="doc-biblioref">5</a></sup></span>. “Subjectivity” is also a continuous value, but it falls in the range [0, 1] and quantifies the emotion or level of opinion in a piece of text. Text data with high levels of subjectivity is characterized as having greater opinionation than factual information<span class="citation" data-cites="PolarityAndSentiment"><sup><a href="#ref-PolarityAndSentiment" role="doc-biblioref">5</a></sup></span>. For the analysis here, I will construct a few visualizations to see how these two factors behave in my review data.</p>
-<div id="cell-31" class="cell" data-execution_count="50">
+<div id="cell-29" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> textblob <span class="im">import</span> TextBlob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-32" class="cell" data-execution_count="54">
+<div id="cell-30" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding polarity column to data</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>reviews[<span class="st">'Polarity'</span>] <span class="op">=</span> reviews[<span class="st">'reviewTextClean'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: TextBlob(x).polarity)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>reviews[<span class="st">'Subjectivity'</span>] <span class="op">=</span> reviews[<span class="st">'reviewTextClean'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: TextBlob(x).subjectivity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -790,7 +790,7 @@ Kurtosis of Vote Counts: 4208.537902609067</code></pre>
 <ul>
 <li>Here are the reviews with the highest and lowest polarity and subjectivity values</li>
 </ul>
-<div id="cell-34" class="cell" data-execution_count="69">
+<div id="cell-32" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#highest and lowest polarity reviews</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>top_polarity_review <span class="op">=</span> reviews.nlargest(<span class="dv">1</span>, <span class="st">'Polarity'</span>)[<span class="st">'reviewText'</span>].values[<span class="dv">0</span>]</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>bottom_polarity_review <span class="op">=</span> reviews.nsmallest(<span class="dv">1</span>, <span class="st">'Polarity'</span>)[<span class="st">'reviewText'</span>].values[<span class="dv">0</span>]</span>
@@ -823,7 +823,7 @@ LOWEST: Work well!
 <section id="distributions-of-polarity-and-subjectivity" class="level3">
 <h3 class="anchored" data-anchor-id="distributions-of-polarity-and-subjectivity">Distributions of Polarity and Subjectivity</h3>
 <p>Below, I construct two histograms showing the distribution of polarity and subjectivity across our data set</p>
-<div id="cell-36" class="cell" data-execution_count="57">
+<div id="cell-34" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting polarity Distribution </span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(reviews[<span class="st">'Polarity'</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
@@ -841,7 +841,7 @@ LOWEST: Work well!
 </div>
 </div>
 <p>When looking at the above plot, it’s clear that most of the reviews carry a positive sentiment on average. While there is a large collection of reviews that have a neutral tone, the overall distribution of sentiments leans more to the positive side. We can also see a disproportionately high number of reviews with positive to very positive sentiment on the right tail of the distribution. On the other hand, there are far fewer reviews that carry a negative sentiment, which again shares parallels to Magdelano’s bakery review dataset<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">1</a></sup></span>.</p>
-<div id="cell-38" class="cell" data-execution_count="58">
+<div id="cell-36" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Subjectivity Distribution</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(reviews[<span class="st">'Subjectivity'</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
@@ -867,7 +867,7 @@ LOWEST: Work well!
 <li>“positive” for <code>reviewRating</code> <span class="math inline">\(\geq 4\)</span></li>
 <li>“negative” for <code>reviewRating</code> <span class="math inline">\(&lt; 4\)</span></li>
 </ul>
-<div id="cell-41" class="cell" data-execution_count="81">
+<div id="cell-39" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>reviews, x<span class="op">=</span><span class="st">'Polarity'</span>, y<span class="op">=</span><span class="st">'Subjectivity'</span>, hue<span class="op">=</span><span class="st">'binary_target'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Polarity vs. Subjectivity'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>

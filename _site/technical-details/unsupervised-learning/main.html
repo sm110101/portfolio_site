@@ -282,10 +282,9 @@ window.Quarto = {
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a>
   <ul class="collapse">
   <li><a href="#loading-in-data-and-libraries" id="toc-loading-in-data-and-libraries" class="nav-link" data-scroll-target="#loading-in-data-and-libraries">Loading in Data and Libraries</a></li>
-  <li><a href="#dimension-reduction-1" id="toc-dimension-reduction-1" class="nav-link" data-scroll-target="#dimension-reduction-1">Dimension Reduction</a>
+  <li><a href="#text-embedding" id="toc-text-embedding" class="nav-link" data-scroll-target="#text-embedding">Text Embedding</a>
   <ul class="collapse">
-  <li><a href="#pca-1" id="toc-pca-1" class="nav-link" data-scroll-target="#pca-1">PCA</a></li>
-  <li><a href="#t-sne-1" id="toc-t-sne-1" class="nav-link" data-scroll-target="#t-sne-1">T-SNE</a></li>
+  <li><a href="#parameter-optimization" id="toc-parameter-optimization" class="nav-link" data-scroll-target="#parameter-optimization">Parameter Optimization</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -320,13 +319,13 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="dimension-reduction">Dimension Reduction</h2>
 <section id="pca" class="level3">
 <h3 class="anchored" data-anchor-id="pca">PCA</h3>
-<p>In this section, I will use a few different text embedding methods in order to vectorize our reviews data. Similar to what was done in the EDA section for visualizing frequent keywords for different rating scores, I will use a simple bag-of-words approach to vectorizing bigrams (pairs of words). Next, I will us text frequency-inverse document frequency (TF-IDF) to vectorize single words in the text. The rationale for using TF-IDF over bag-of-words for single terms comes from the lack of useful information provided when applying bag-of-words to single terms in the <a href="../../technical-details/eda/main.html">EDA</a> section. For a refresher on the result provided by using bag-of-words, please refer to to diagram in the <a href="../../technical-details/eda/main.html">EDA</a> section, and for further context on TF-IDF, see the equations outlined in the literature review on the <a href="../../index.html">Home</a> page.</p>
-<p>From there, I will leverage several different unsupervised learning techniques. To begin, I use two types of dimension reduction techniques to collapse our embedded text data into a low dimensional space for easier visualization. For this, I will use Principle Components Analysis (PCA) and t-distributed Stochastic Neighbor Embedding. In case you are unfamiliar with these two topics - PCA works by identifying an axes in high-dimensional space, along which the preserved variance of the data is maximized. These so-called “principle” components are eigenvectors of the covariance matrix, and their selection (i.e.&nbsp;how many principle components we take) depends on the respective share of total variance preserved by their eigenvalues<span class="citation" data-cites="EigenPCA"><sup><a href="#ref-EigenPCA" role="doc-biblioref">1</a></sup></span>.</p>
+<p>In this section, I will use text frequency-inverse document TF-IDF as my embedding method to vectorize our reviews data. My rationale for using only TF-IDF, comes from the questionable results obtained when I used only the bag-of-words approach in the <a href="../../technical-details/eda/main.html">EDA</a> section. Specifically, when looking only at single term frequency per review class, there were multiple instances where meaningless words appeared most frequently across all review scores. I was able to address this issue by instead bagging pairs of words (bigrams) instead, which yielded more intuitive results. Regardless, I choose only to use TF-IDF in this section because it considers both how often a term appears in a single review (Term Frequency), and how rare the term is accross all reviews (Inverse Document Frequency). This two-pronged approach punishes words that are common across the entire review corpus, while favoring those that are less common and therefore may have greater meaning. For further context on TF-IDF, see the equations outlined in the literature review on the <a href="../../index.html">Home</a> page.</p>
+<p>After embedding the review text, I will leverage several different unsupervised learning techniques. To begin, I use two types of dimension reduction techniques to collapse the high-dimensional tf-idf matrix into a low dimensional space for easier visualization. For this, I will use Principle Components Analysis (PCA) and t-distributed Stochastic Neighbor Embedding. In case you are unfamiliar with these two topics - PCA works by identifying an axes in high-dimensional space, along which the preserved variance of the data is maximized. These so-called “principle” components are eigenvectors of the covariance matrix, and their selection (i.e.&nbsp;how many principle components we take) depends on the respective share of total variance preserved by their eigenvalues<span class="citation" data-cites="EigenPCA"><sup><a href="#ref-EigenPCA" role="doc-biblioref">1</a></sup></span>.</p>
 <p><strong>Here is a helpful visualization of what is going on in PCA:</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/pca.gif" class="img-fluid" width="600"> <br> Source: <a href="https://builtin.com/data-science/step-step-explanation-principal-component-analysis">Builtin</a></p>
 </section>
 <section id="t-sne" class="level3">
 <h3 class="anchored" data-anchor-id="t-sne">t-SNE</h3>
-<p>On the other hand, t-SNE takes a non-linear, probabilistic approach to dimension reduction that works in two stages. First t-SNE constructs probability distributions over different pairs of high-dimensional points, where it then assigns higher probabilities to similar points and lower probabilities to dissimilar points<span class="citation" data-cites="WikiTSNE"><sup><a href="#ref-WikiTSNE" role="doc-biblioref">2</a></sup></span>. From there, creates a similar probability distributions in a lower dimensional space, and shrinks the difference between the to distributions by minimizing the kullback-Leibler (KL) divergence between the two. In simple terms, the KL divergence simply measures the difference between two different probability distributions<span class="citation" data-cites="WikiKL"><sup><a href="#ref-WikiKL" role="doc-biblioref">3</a></sup></span>. T-SNE also requires the use of a <code>perplexity</code> hyperparameter, which represents a guess as to how many close neighbors a given point should have, or the “balance between preserving the global and local structure of the data”<span class="citation" data-cites="perplexity"><sup><a href="#ref-perplexity" role="doc-biblioref">4</a></sup></span>. Feel free to head over <a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding">here</a> for a more robust explanation of t-SNE and KL divergence.</p>
+<p>On the other hand, t-SNE takes a non-linear, probabilistic approach to dimension reduction that works in two stages. First t-SNE constructs probability distributions over different pairs of high-dimensional points, where it then assigns higher probabilities to similar points and lower probabilities to dissimilar points<span class="citation" data-cites="WikiTSNE"><sup><a href="#ref-WikiTSNE" role="doc-biblioref">2</a></sup></span>. From there, t-SNE creates similar probability distributions in lower dimensional space, and shrinks the difference between the two distributions by minimizing the kullback-Leibler (KL) divergence between the two. In simple terms, the KL divergence simply measures the difference between two different probability distributions<span class="citation" data-cites="WikiKL"><sup><a href="#ref-WikiKL" role="doc-biblioref">3</a></sup></span>. T-SNE also requires the use of a <code>perplexity</code> hyperparameter, which represents a guess as to how many close neighbors a given point should have, or the “balance between preserving the global and local structure of the data”<span class="citation" data-cites="perplexity"><sup><a href="#ref-perplexity" role="doc-biblioref">4</a></sup></span>. Feel free to head over <a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding">here</a> for a more robust explanation of t-SNE and KL divergence.</p>
 <p><strong>Example of how <code>perplexity</code> Influences t-SNE Results</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/perplexity.png" class="img-fluid" width="600"> <br> Source: <a href="https://www.scdiscoveries.com/blog/knowledge/what-is-t-sne-plot/">Single Cell Discoveries</a></p>
 </section>
 </section>
@@ -349,12 +348,12 @@ window.Quarto = {
 <section id="hierarchical-clustering" class="level3">
 <h3 class="anchored" data-anchor-id="hierarchical-clustering">Hierarchical Clustering</h3>
 <p>In the next step of the process, I will use hierarchical clustering to help extract text groupings from the data. Unlike K-Means clustering’s reliance on centroids, hierarchical clustering uses a tree-based model of distance called a ‘dendrogram’ to analyze similarity of data points. The dendrogram is constructed through an interative process, where it progressively combines or splits up clusters based on the similarity of points within them. The process ends either when all points in the data are combined into a single cluster, or when a predefined number of clusters are formed.</p>
-<p>There are two different types of hierarchical clustering, agglomerative and divisive. Here, I elect to use agglomerative or “bottom-up” hierarchical clustering to group my data points. Take for example the case when our data set is the set of letters [A,B,C,D,E,F]. An agglomerative model starts by treating each letter as its own cluster. In the next step, the model then combines the most similar clusters. For instance, the model may merge together clusters B and C, and D and E, resulting in the new clusters [A, BC, DE, F]. From there, the model calculates cluster distances again, merging clusters DE and F, leaving us with [A, BC, DEF]. Eventually, the model will merge all clusters such that we have a single cluster [ABCDEF] (Thanks to <a href="https://www.geeksforgeeks.org/hierarchical-clustering/">geeksforgeeks</a> for this example).</p>
+<p>There are two different types of hierarchical clustering, agglomerative and divisive. Here, I elect to use agglomerative or “bottom-up” hierarchical clustering to group my data points. Take for example the case when our data set a the set letters [A,B,C,D,E,F]. An agglomerative clustering model starts by treating each letter as its own cluster. In the next step, the model combines the most similar clusters. For instance, the model may merge together clusters B and C, and D and E, resulting in the new clusters [A, BC, DE, F]. From there, the model calculates cluster distances again, merging clusters DE and F, leaving us with [A, BC, DEF]. Eventually, the model will merge all clusters such that we have a single cluster [ABCDEF] (Thanks to <a href="https://www.geeksforgeeks.org/hierarchical-clustering/">geeksforgeeks</a> for this example).</p>
 <p><strong>Simple Example of Agglomerative Clustering:</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/agglomerative.png" class="img-fluid" width="400"> <br> Source: <a href="https://www.geeksforgeeks.org/hierarchical-clustering/">GeeksforGeeks</a></p>
 </section>
 <section id="dbcscan" class="level3">
 <h3 class="anchored" data-anchor-id="dbcscan">DBCSCAN</h3>
-<p>Density-based spatial clustering of applications with noice, or DBSCAN is a density-based approach to clustering data points. I elect to use this method of clustering in my analysis as well since the two methods above (K-Means and Agglomerative) are geared towards finding spherical- or convex-shaped clusters (shapes that are more well-defined and less noisy). In the case of low-dimensional representations of text data, it is highly likely that clusters will not be well-defined, and therefore may require an alternative method for extracting them. That is precisely where DBSCAN comes into play. The DBSCAN algorithm requires <code>eps</code> and <code>MinPts</code> parameters, where eps “defines the neighborhood around data points,” wherein the distance between two points that are close to eachother (neighbors) approximately equal to <code>eps</code><span class="citation" data-cites="eps"><sup><a href="#ref-eps" role="doc-biblioref">7</a></sup></span>. The parameter <code>MinPts</code> simply defines the minimum number of data points within the eps radius, where larger data sets typically require a higher value of <code>MinPts</code><span class="citation" data-cites="eps"><sup><a href="#ref-eps" role="doc-biblioref">7</a></sup></span>.</p>
+<p>Density-based spatial clustering of applications with noice, or DBSCAN is a density-based approach to clustering data points. I elect to use this method of clustering in my analysis because the two methods above (K-Means and Agglomerative) are geared towards finding spherical- or convex-shaped clusters (shapes that are more well-defined and less noisy). In the case of low-dimensional representations of text data, it is highly likely that clusters will not be well-defined, and therefore may require an alternative method for extracting them. That is precisely where DBSCAN comes into play. The DBSCAN algorithm requires <code>eps</code> and <code>MinPts</code> parameters, where eps “defines the neighborhood around data points,” wherein the distance between two points that are close to eachother (neighbors) approximately equal to <code>eps</code><span class="citation" data-cites="eps"><sup><a href="#ref-eps" role="doc-biblioref">7</a></sup></span>. The parameter <code>MinPts</code> simply defines the minimum number of data points within the eps radius, where larger data sets typically require a higher value of <code>MinPts</code><span class="citation" data-cites="eps"><sup><a href="#ref-eps" role="doc-biblioref">7</a></sup></span>.</p>
 <p><strong>Example of DBSCAN Clustering</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/DBSCAN.gif" class="img-fluid" width="400"></p>
 </section>
 </section>
@@ -370,18 +369,28 @@ window.Quarto = {
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimension reduction packages</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer, TfidfVectorizer</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Clustering packages</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans, DBSCAN</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.cluster.hierarchy <span class="im">import</span> linkage, dendrogram</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Itertools product function to test all possible combinations of TF-IDF params for testing</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimension reduction packages</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer, TfidfVectorizer</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Data visualization packages</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.figure_factory <span class="im">as</span> ff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Clustering packages</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans, DBSCAN</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.cluster.hierarchy <span class="im">import</span> linkage, dendrogram</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Data visualization packages</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.figure_factory <span class="im">as</span> ff</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignoring warnings</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pathway to raw data</span></span>
@@ -438,111 +447,157 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="dimension-reduction-1" class="level2">
-<h2 class="anchored" data-anchor-id="dimension-reduction-1">Dimension Reduction</h2>
-<p>In this section, I vectorize our cleaned text data using the <code>CountVectorizer</code> and <code>TfidfVectorizer</code> objects found in the <a href="https://scikit-learn.org/stable/"><code>sklearn</code></a> library. Like I said previously, I experienced some issues relating to poor performance when applying <code>CountVectorizer</code> to single terms. Therefore, in this section, I elect to run the <code>CountVectorizer</code> on both single terms, and bigrams (pairs of words) instead. Next, I run <code>TfidfVectorizer</code> on single words and bigrams, as its consideration of word weights allows it to punish terms that are commonly found across all classes (review scores in this case).</p>
-<section id="pca-1" class="level3">
-<h3 class="anchored" data-anchor-id="pca-1">PCA</h3>
-<p><strong>Bag-of-Words with PCA</strong></p>
+<section id="text-embedding" class="level2">
+<h2 class="anchored" data-anchor-id="text-embedding">Text Embedding</h2>
+<p>In this section, I vectorize our cleaned text data using the <code>TfidfVectorizer</code> object found in the <a href="https://scikit-learn.org/stable/"><code>sklearn</code></a> library. Like I said previously, I experienced some issues relating to poor performance when applying <code>CountVectorizer</code> to single terms. Therefore, in this section, I elect to run the TfidfVectorizer` on single words and bigrams, as its consideration of word weights allows it to punish terms that are commonly found across all classes (review scores in this case).</p>
 <div id="cell-7" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Bag-of-words transformation</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># initializing CountVectorizer</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>vectorizer <span class="op">=</span> CountVectorizer(max_features<span class="op">=</span><span class="dv">100</span>, ngram_range<span class="op">=</span>(<span class="dv">1</span>,<span class="dv">2</span>), stop_words<span class="op">=</span><span class="st">'english'</span>) <span class="co"># This considers both unigrams and bigrams</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>X_bow <span class="op">=</span> vectorizer.fit_transform(reviews[<span class="st">'reviewTextClean'</span>])</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Map term names for visualization</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>terms <span class="op">=</span> vectorizer.get_feature_names_out()</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the most influential term for each row</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>most_influential_term_indices <span class="op">=</span> X_bow.toarray().argmax(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>most_influential_terms <span class="op">=</span> np.array(terms)[most_influential_term_indices]</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply PCA</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>X_bow_pca <span class="op">=</span> pca.fit_transform(X_bow.toarray())</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract to dataframe</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>X_bow_pca_df <span class="op">=</span> pd.DataFrame(X_bow_pca, columns<span class="op">=</span>[<span class="st">"PC1"</span>,<span class="st">"PC2"</span>])</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>X_bow_pca_df[<span class="st">'most_influencial_term'</span>] <span class="op">=</span> most_influential_terms</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Interactive PCA Plot</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    X_bow_pca_df,</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'PC1'</span>,</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'PC2'</span>,</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    hover_data<span class="op">=</span>[<span class="st">'most_influencial_term'</span>],</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'PCA on Bag-of-Words Features (With Bigrams)'</span>,</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">'PC1'</span>: <span class="st">'Principal Component 1'</span>, <span class="st">'PC2'</span>: <span class="st">'Principal Component 2'</span>}</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>fig.update_traces(marker<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">8</span>, opacity<span class="op">=</span><span class="fl">0.6</span>))</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating column of only cleaned review text</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># review_texts = reviews['reviewTextClean']</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="parameter-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="parameter-optimization">Parameter Optimization</h3>
+<div id="cell-9" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_embeddings(data, title, labels<span class="op">=</span><span class="va">None</span>, hover_data<span class="op">=</span><span class="va">None</span>, top_terms<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Creates an interactive scatter plot using Plotly with hover data.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">        data (np.array): 2D array of reduced data (e.g., PCA or t-SNE output).</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">        title (str): Title of the plot.</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">        labels (pd.Series or None): Numeric labels for coloring the plot (e.g., reviewRating).</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">        hover_data (pd.DataFrame or None): DataFrame with hover information (optional).</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">        top_terms (list of str): List of most important terms for each review.</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a DataFrame for the plot</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    plot_df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'Dim 1'</span>, <span class="st">'Dim 2'</span>])</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> labels <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        plot_df[<span class="st">'Rating'</span>] <span class="op">=</span> labels</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> hover_data <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        plot_df <span class="op">=</span> pd.concat([plot_df, hover_data.reset_index(drop<span class="op">=</span><span class="va">True</span>)], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> top_terms <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        plot_df[<span class="st">'Top Term'</span>] <span class="op">=</span> top_terms</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate the scatter plot</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> px.scatter(</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        plot_df, </span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">'Dim 1'</span>, y<span class="op">=</span><span class="st">'Dim 2'</span>, </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">'Rating'</span>,  <span class="co"># Points are colored by the review rating</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        hover_data<span class="op">=</span>[<span class="st">'Top Term'</span>],  <span class="co"># Only show the most important term on hover</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        color_continuous_scale<span class="op">=</span><span class="st">'viridis'</span>,  <span class="co"># Use a color gradient for review ratings</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span>title</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    fig.update_traces(marker<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">8</span>, opacity<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    fig.update_layout(title<span class="op">=</span><span class="bu">dict</span>(x<span class="op">=</span><span class="fl">0.5</span>), legend<span class="op">=</span><span class="bu">dict</span>(orientation<span class="op">=</span><span class="st">"h"</span>, y<span class="op">=-</span><span class="fl">0.2</span>))</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>TF-IDF with PCA</strong></p>
-<div id="cell-9" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TF-IDF transformation</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tfidf_vectorizer <span class="op">=</span> TfidfVectorizer(max_features<span class="op">=</span><span class="dv">1000</span>, ngram_range<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">2</span>), stop_words<span class="op">=</span><span class="st">'english'</span>, max_df<span class="op">=</span><span class="fl">0.8</span>)  <span class="co"># Includes bigrams</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>X_tfidf <span class="op">=</span> tfidf_vectorizer.fit_transform(reviews[<span class="st">'reviewTextClean'</span>])</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract feature names</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>terms <span class="op">=</span> tfidf_vectorizer.get_feature_names_out()</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the most influential term for each row</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>most_influential_term_indices <span class="op">=</span> X_tfidf.toarray().argmax(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>most_influential_terms <span class="op">=</span> np.array(terms)[most_influential_term_indices]</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply PCA</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>X_tfidf_pca <span class="op">=</span> pca.fit_transform(X_tfidf.toarray())</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DataFrame for PCA results</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>pca_tfidf_df <span class="op">=</span> pd.DataFrame(X_tfidf_pca, columns<span class="op">=</span>[<span class="st">'PC1'</span>, <span class="st">'PC2'</span>])</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>pca_tfidf_df[<span class="st">'Most_Influential_Term'</span>] <span class="op">=</span> most_influential_terms  <span class="co"># Add terms for hover information</span></span>
+<div id="cell-10" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reduce_and_visualize(reviews, method<span class="op">=</span><span class="st">"tsne"</span>, sample_size<span class="op">=</span><span class="dv">1000</span>, random_state<span class="op">=</span><span class="dv">42</span>, perplexity<span class="op">=</span><span class="dv">30</span>, intermediate_pca<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Reduces dimensionality using PCA or t-SNE and visualizes the results with points colored by review rating.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">        reviews (pd.DataFrame): Original dataset containing 'reviewText' and 'reviewRating'.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">        method (str): The dimensionality reduction method ('pca' or 'tsne').</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_size (int): Number of rows to sample for testing.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">        random_state (int): Random state for reproducibility.</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">        perplexity (int): Perplexity value for t-SNE.</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">        intermediate_pca (bool): Whether to apply PCA before t-SNE.</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample the dataset for testing</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sample_size <span class="op">&lt;</span> <span class="bu">len</span>(reviews):</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        sampled_reviews <span class="op">=</span> reviews.sample(n<span class="op">=</span>sample_size, random_state<span class="op">=</span>random_state).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        sampled_reviews <span class="op">=</span> reviews.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Interactive PCA Plot</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    pca_tfidf_df,</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'PC1'</span>,</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'PC2'</span>,</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    hover_data<span class="op">=</span>[<span class="st">'Most_Influential_Term'</span>],</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'PCA on TF-IDF Features (With Bigrams)'</span>,</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">'PC1'</span>: <span class="st">'Principal Component 1'</span>, <span class="st">'PC2'</span>: <span class="st">'Principal Component 2'</span>}</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>fig.update_traces(marker<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">8</span>, opacity<span class="op">=</span><span class="fl">0.6</span>))</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the relevant columns after sampling</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    review_texts <span class="op">=</span> sampled_reviews[<span class="st">'reviewTextClean'</span>]</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    review_ratings <span class="op">=</span> sampled_reviews[<span class="st">'reviewRating'</span>]  <span class="co"># Correctly aligned with reviewTextClean</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    review_text <span class="op">=</span> sampled_reviews[<span class="st">'reviewText'</span>]</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Simplified parameter grid</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    param_grid <span class="op">=</span> {</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">'max_features'</span>: [<span class="dv">500</span>],                <span class="co"># Single value for faster processing</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">'ngram_range'</span>: [(<span class="dv">2</span>, <span class="dv">2</span>)],              <span class="co"># Focus on bigrams</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">'min_df'</span>: [<span class="dv">1</span>],                        <span class="co"># Single min_df value</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">'max_df'</span>: [<span class="fl">0.8</span>]                       <span class="co"># Single max_df value</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> max_features, ngram_range, min_df, max_df <span class="kw">in</span> product(</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'max_features'</span>], </span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'ngram_range'</span>], </span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'min_df'</span>], </span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'max_df'</span>]</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Testing Parameters: max_features=</span><span class="sc">{</span>max_features<span class="sc">}</span><span class="ss">, ngram_range=</span><span class="sc">{</span>ngram_range<span class="sc">}</span><span class="ss">, min_df=</span><span class="sc">{</span>min_df<span class="sc">}</span><span class="ss">, max_df=</span><span class="sc">{</span>max_df<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize TF-IDF</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        tfidf <span class="op">=</span> TfidfVectorizer(</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>            max_features<span class="op">=</span>max_features,</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>            ngram_range<span class="op">=</span>ngram_range,</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>            min_df<span class="op">=</span>min_df,</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>            max_df<span class="op">=</span>max_df</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Fit and transform the data</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>            X_tfidf <span class="op">=</span> tfidf.fit_transform(review_texts)</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extract the most important term for each review</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>            feature_names <span class="op">=</span> np.array(tfidf.get_feature_names_out())</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>            top_terms <span class="op">=</span> feature_names[np.argmax(X_tfidf.toarray(), axis<span class="op">=</span><span class="dv">1</span>)]</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Intermediate PCA step for t-SNE</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> intermediate_pca <span class="kw">and</span> method.lower() <span class="op">==</span> <span class="st">"tsne"</span>:</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">"Applying intermediate PCA..."</span>)</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>                pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">50</span>, random_state<span class="op">=</span>random_state)</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>                X_reduced <span class="op">=</span> pca.fit_transform(X_tfidf.toarray())</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>                X_reduced <span class="op">=</span> X_tfidf.toarray()</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Dimensionality reduction</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> method.lower() <span class="op">==</span> <span class="st">"pca"</span>:</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>                reducer <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>random_state)</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>                reduced_data <span class="op">=</span> reducer.fit_transform(X_reduced)</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="ss">f"PCA: max_features=</span><span class="sc">{</span>max_features<span class="sc">}</span><span class="ss">, ngram_range=</span><span class="sc">{</span>ngram_range<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> method.lower() <span class="op">==</span> <span class="st">"tsne"</span>:</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>                reducer <span class="op">=</span> TSNE(n_components<span class="op">=</span><span class="dv">2</span>, perplexity<span class="op">=</span>perplexity, random_state<span class="op">=</span>random_state, n_iter<span class="op">=</span><span class="dv">500</span>)</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>                reduced_data <span class="op">=</span> reducer.fit_transform(X_reduced)</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="ss">f"t-SNE: max_features=</span><span class="sc">{</span>max_features<span class="sc">}</span><span class="ss">, ngram_range=</span><span class="sc">{</span>ngram_range<span class="sc">}</span><span class="ss">, perplexity=</span><span class="sc">{</span>perplexity<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Invalid method. Choose 'pca' or 'tsne'."</span>)</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Prepare hover data</span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>            hover_data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>                <span class="st">'reviewText'</span>: review_text,  <span class="co"># Original review text</span></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>            })</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Plot the reduced data with points colored by review rating</span></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>            plot_embeddings(</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>                reduced_data, </span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>                title, </span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>                labels<span class="op">=</span>review_ratings,  <span class="co"># Points are colored by review ratings</span></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>                hover_data<span class="op">=</span>hover_data,</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>                top_terms<span class="op">=</span>top_terms</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Failed for parameters: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>    reviews<span class="op">=</span>reviews,            <span class="co"># Pass the full dataset</span></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"tsne"</span>,              <span class="co"># Choose "tsne" for t-SNE or "pca" for PCA</span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>    sample_size<span class="op">=</span><span class="dv">2000</span>,           <span class="co"># Test on a sample of 2000 reviews</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,            <span class="co"># Set a random state for reproducibility</span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>    perplexity<span class="op">=</span><span class="dv">30</span>,              <span class="co"># Set the perplexity for t-SNE</span></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>    intermediate_pca<span class="op">=</span><span class="va">True</span>       <span class="co"># Apply PCA before t-SNE</span></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Testing Parameters: max_features=500, ngram_range=(2, 2), min_df=1, max_df=0.8
+Applying intermediate PCA...</code></pre>
 </div>
-</div>
-</section>
-<section id="t-sne-1" class="level3">
-<h3 class="anchored" data-anchor-id="t-sne-1">T-SNE</h3>
-<p><strong>TF-IDF with T-SNE</strong></p>
-<div id="cell-11" class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply t-SNE</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tsne <span class="op">=</span> TSNE(n_components<span class="op">=</span><span class="dv">2</span>, perplexity<span class="op">=</span><span class="dv">30</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>X_tfidf_tsne <span class="op">=</span> tsne.fit_transform(X_tfidf.toarray())</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DataFrame for t-SNE results</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>X_tsne_tfidf_df <span class="op">=</span> pd.DataFrame(X_tfidf_tsne, columns<span class="op">=</span>[<span class="st">'Dim1'</span>, <span class="st">'Dim2'</span>])</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>X_tsne_tfidf_df[<span class="st">'Most_Influential_Term'</span>] <span class="op">=</span> most_influential_terms  <span class="co"># Add terms for hover information</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-12" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interactive t-SNE Plot</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    X_tsne_tfidf_df,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'Dim1'</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'Dim2'</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    hover_data<span class="op">=</span>[<span class="st">'Most_Influential_Term'</span>],</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'t-SNE on TF-IDF Features (With Bigrams)'</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">'Dim1'</span>: <span class="st">'Dimension 1'</span>, <span class="st">'Dim2'</span>: <span class="st">'Dimension 2'</span>}</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>fig.update_traces(marker<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">8</span>, opacity<span class="op">=</span><span class="fl">0.6</span>))</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
 </div>
