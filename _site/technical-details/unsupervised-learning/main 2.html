@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -70,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -181,8 +230,18 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
   <ul class="collapse">
+  <li><a href="#dimension-reduction" id="toc-dimension-reduction" class="nav-link" data-scroll-target="#dimension-reduction">Dimension Reduction</a>
+  <ul class="collapse">
+  <li><a href="#pca" id="toc-pca" class="nav-link" data-scroll-target="#pca">PCA</a></li>
+  <li><a href="#t-sne" id="toc-t-sne" class="nav-link" data-scroll-target="#t-sne">t-SNE</a></li>
+  </ul></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a>
+  <ul class="collapse">
+  <li><a href="#k-means" id="toc-k-means" class="nav-link" data-scroll-target="#k-means">K-Means</a></li>
+  <li><a href="#hierarchical-clustering" id="toc-hierarchical-clustering" class="nav-link" data-scroll-target="#hierarchical-clustering">Hierarchical Clustering</a></li>
   <li><a href="#part-1-dimensionality-reduction" id="toc-part-1-dimensionality-reduction" class="nav-link" data-scroll-target="#part-1-dimensionality-reduction">Part 1: Dimensionality Reduction</a></li>
   <li><a href="#part-2-clustering-methods" id="toc-part-2-clustering-methods" class="nav-link" data-scroll-target="#part-2-clustering-methods">Part 2: Clustering Methods</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
   </ul>
@@ -213,6 +272,39 @@ ul.task-list li input[type="checkbox"] {
 <p><br> <br></p>
 <section id="overview" class="level1">
 <h1>Overview</h1>
+<section id="dimension-reduction" class="level2">
+<h2 class="anchored" data-anchor-id="dimension-reduction">Dimension Reduction</h2>
+<section id="pca" class="level3">
+<h3 class="anchored" data-anchor-id="pca">PCA</h3>
+<p>In this section, I will use a few different text embedding methods in order to vectorize our reviews data. Similar to what was done in the EDA section for visualizing frequent keywords for different rating scores, I will use a simple bag-of-words approach to vectorizing bigrams (pairs of words). Next, I will us text frequency-inverse document frequency (TF-IDF) to vectorize single words in the text. The rationale for using TF-IDF over bag-of-words for single terms comes from the lack of useful information provided when applying bag-of-words to single terms in the <a href="../../technical-details/eda/main.html">EDA</a> section. For a refresher on the result provided by using bag-of-words, please refer to to diagram in the <a href="../../technical-details/eda/main.html">EDA</a> section, and for further context on TF-IDF, see the equations outlined in the literature review on the <a href="../../index.html">Home</a> page.</p>
+<p>From there, I will leverage several different unsupervised learning techniques. To begin, I use two types of dimension reduction techniques to collapse our embedded text data into a low dimensional space for easier visualization. For this, I will use Principle Components Analysis (PCA) and t-distributed Stochastic Neighbor Embedding. In case you are unfamiliar with these two topics - PCA works by identifying an axes in high-dimensional space, along which the preserved variance of the data is maximized. These so-called “principle” components are eigenvectors of the covariance matrix, and their selection (i.e.&nbsp;how many principle components we take) depends on the respective share of total variance preserved by their eigenvalues<span class="citation" data-cites="EigenPCA"><sup><a href="#ref-EigenPCA" role="doc-biblioref">1</a></sup></span>.</p>
+<p><strong>Here is a helpful visualization of what is going on in PCA:</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/pca.gif" class="img-fluid" width="600"> <br> Source: <a href="https://builtin.com/data-science/step-step-explanation-principal-component-analysis">Builtin</a></p>
+</section>
+<section id="t-sne" class="level3">
+<h3 class="anchored" data-anchor-id="t-sne">t-SNE</h3>
+<p>On the other hand, t-SNE takes a non-linear, probabilistic approach to dimension reduction that works in two stages. First t-SNE constructs probability distributions over different pairs of high-dimensional points, where it then assigns higher probabilities to similar points and lower probabilities to dissimilar points<span class="citation" data-cites="WikiTSNE"><sup><a href="#ref-WikiTSNE" role="doc-biblioref">2</a></sup></span>. From there, creates a similar probability distributions in a lower dimensional space, and shrinks the difference between the to distributions by minimizing the kullback-Leibler (KL) divergence between the two. In simple terms, the KL divergence simply measures the difference between two different probability distributions<span class="citation" data-cites="WikiKL"><sup><a href="#ref-WikiKL" role="doc-biblioref">3</a></sup></span>. T-SNE also requires the use of a <code>perplexity</code> hyperparameter, which represents a guess as to how many close neighbors a given point should have, or the “balance between preserving the global and local structure of the data”<span class="citation" data-cites="perplexity"><sup><a href="#ref-perplexity" role="doc-biblioref">4</a></sup></span>. Feel free to head over <a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding">here</a> for a more robust explanation of t-SNE and KL divergence.</p>
+<p><strong>Example of how <code>perplexity</code> Influences t-SNE Results</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/perplexity.png" class="img-fluid" width="600"> <br> Source: <a href="https://www.scdiscoveries.com/blog/knowledge/what-is-t-sne-plot/">Single Cell Discoveries</a></p>
+</section>
+</section>
+<section id="clustering" class="level2">
+<h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
+<p>Once the data is properly collapsed into a lower-dimensional space, I will apply several clustering methods in order to better understand how different pieces of text group together. For this, I will use K-Means Clustering, Hierarchical Clustering, and DBSCAN. The goal for using clustering methods within the context of this study is to uncover underlying patterns in text for different review rating scores.</p>
+<section id="k-means" class="level3">
+<h3 class="anchored" data-anchor-id="k-means">K-Means</h3>
+<p>As a first step, I will apply a K-Means clustering algorithm to the dimension-reduced data. The K-Means alorithm starts by randomly selecting <span class="math inline">\(k\)</span> points in the dataset, where <span class="math inline">\(k\)</span> is a hyperparameter that we can optimize by using the elbow method (covered below). From there, the algorithm takes these <span class="math inline">\(k\)</span> centroids and calculates their distance to all other points in the data set, assigning all of the closest points to their respective centroid. For my distance metric, I elect use euclidean distance<span class="citation" data-cites="eucdistance"><sup><a href="#ref-eucdistance" role="doc-biblioref">5</a></sup></span>:</p>
+<p><span class="math display">\[
+\text{for a point} \ x = (x_1, x_2, ..., x_n) \ \text{and centroid} \ \mu = (\mu_1, \mu_2, \mu_n) \ \text{their distance} \ d(x,\mu) = \sqrt{\sum_{i=1}^{n}(x_{i}-\mu_{i})^2}
+\]</span></p>
+<p>After all data points have been assigned to their initial clusters, we calculate the mean of all data points for a given cluster<span class="citation" data-cites="Week8Slides"><sup><a href="#ref-Week8Slides" role="doc-biblioref">6</a></sup></span>:</p>
+<p><span class="math display">\[
+\mu_{j}^{\text{new}} \leftarrow \frac{1}{|S_{j}|} \sum_{x_{i} \in{S_{j}}} x_{i}
+\]</span></p>
+<p>From there, we repeat our disance calculation and cluster re-assignment until convergence.</p>
+<p><strong>Example of K-Means Convergence</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/kmeans.gif" class="img-fluid" width="400"> <br> Source: <a href="https://commons.wikimedia.org/wiki/File:K-means_convergence.gif">Wikipedia</a></p>
+</section>
+<section id="hierarchical-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="hierarchical-clustering">Hierarchical Clustering</h3>
+</section>
 <section id="part-1-dimensionality-reduction" class="level3">
 <h3 class="anchored" data-anchor-id="part-1-dimensionality-reduction">Part 1: Dimensionality Reduction</h3>
 <p>The objective of this section is to explore and demonstrate the effectiveness of PCA and t-SNE in reducing the dimensionality of complex data while preserving essential information and improving visualization.</p>
@@ -262,6 +354,7 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 </section>
 </section>
+</section>
 <section id="code" class="level1">
 <h1>Code</h1>
 <p>Provide the source code used for this section of the project here.</p>
@@ -270,9 +363,29 @@ ul.task-list li input[type="checkbox"] {
 <p>Remember, this page is a technical narrative, NOT just a notebook with a collection of code cells, include in-line Prose, to describe what is going on.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-EigenPCA" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline"><a href="https://medium.com/@dareyadewumi650/understanding-the-role-of-eigenvectors-and-eigenvalues-in-pca-dimensionality-reduction-10186dad0c5c">Understanding the role of eigenvectors and eigenvalues in PCA dimensionality reduction.</a></div>
+</div>
+<div id="ref-WikiTSNE" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline"><a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding">T-distributed stochastic neighbor embedding</a>.</div>
+</div>
+<div id="ref-WikiKL" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline"><a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback leibler divergence</a>.</div>
+</div>
+<div id="ref-perplexity" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline"><a href="https://opentsne.readthedocs.io/en/latest/index.html">openTSNE</a>.</div>
+</div>
+<div id="ref-eucdistance" class="csl-entry" role="listitem">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline"><a href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean distance</a>.</div>
+</div>
+<div id="ref-Week8Slides" class="csl-entry" role="listitem">
+<div class="csl-left-margin">6. </div><div class="csl-right-inline"><a href="https://jjacobs.me/dsan5000/5a969ccadf5ebc7ab4027c0706d0a1dbc7be7117/w08/#k-means-clustering">DSAN 5000: Week 8 - unsupervised learning</a>.</div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
