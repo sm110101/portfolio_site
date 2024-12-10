@@ -234,6 +234,7 @@ div.csl-indent {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#data-structure-and-format" id="toc-data-structure-and-format" class="nav-link" data-scroll-target="#data-structure-and-format">Data Structure and Format</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a>
   <ul class="collapse">
   <li><a href="#api-based-data-retrieval-using-requests-library" id="toc-api-based-data-retrieval-using-requests-library" class="nav-link" data-scroll-target="#api-based-data-retrieval-using-requests-library">API-Based Data Retrieval Using <code>requests</code> Library**</a></li>
@@ -278,17 +279,27 @@ div.csl-indent {
 <p>Due to limited storage and computational capacity, I have elected to only conduct my analysis on the “5-core” version of Amazon Electronics reviews within the repository. The raw data is in json format, and therefore needs to be parsed and stored in a dataframe before any modeling or EDA can be done. For this process, I use the <code>parse()</code> and <code>getDF()</code> functions defined in the repository which is linked above.</p>
 <p>In case you are not familiar, the term “5-core” is in reference to dense subsets, and in this case it means that the data below has been filtered such that the remaining users and items have 5 reviews each.</p>
 </section>
+<section id="data-structure-and-format" class="level1">
+<h1>Data Structure and Format</h1>
+<p>Before we begin collection and clearning, here an example of a single json object contained in the raw data file:</p>
+<p><br></p>
+<p><img src="../../xtra/multiclass-portfolio-website/images/raw_data_json.png" class="img-fluid" width="400"></p>
+<p>Source: <a href="https://cseweb.ucsd.edu/~jmcauley/datasets/amazon/links.html">The repo above</a></p>
+<p><br></p>
+<p>Within this dictionary, we observe the following characteristics: - <code>overall</code>: Rating - <code>vote</code>: Amount of community votes given to the review. Users will often vote when they find a review helpful - <code>verified</code>: Boolean variable that indicates whether an account is verified or not - <code>reviewTime</code>: Time of the review (raw) - <code>reviewerID</code>: ID of the reviewer - <code>asin</code>: Id of the product - <code>style</code>: Key-value object. In this case, describing product attributes - <code>reviewerName</code>: Name of the reviewer - <code>reviewText</code>: Raw, unprocessed text contents of the review - <code>summary</code>: The title of the user’s review - <code>unixReviewTime</code>: Time of the review in unix time (Measures time “based by the number of non-leap seconds that have elapsed since 00:00:00 UTC”)<span class="citation" data-cites="UnixTime"><sup><a href="#ref-UnixTime" role="doc-biblioref">2</a></sup></span>. - <code>image</code>: Image path (if any)</p>
+<p>The raw dataset contains a total of around 6.7 million of these entries (one for each review).</p>
+</section>
 <section id="code" class="level1">
 <h1>Code</h1>
 <section id="api-based-data-retrieval-using-requests-library" class="level2">
 <h2 class="anchored" data-anchor-id="api-based-data-retrieval-using-requests-library">API-Based Data Retrieval Using <code>requests</code> Library**</h2>
-<p>The following code uses an API-based retrieval method to download the data directly from the github repository. The pull code itself is provided by OpenAI’s GPT-4o Model<span class="citation" data-cites="gpt4o"><sup><a href="#ref-gpt4o" role="doc-biblioref">2</a></sup></span>. After numerous attempts at debugging and testing the code in another environment, the LLM added a tweak in the code to disable SSL verification. While this ended up working, this is an unsafe practice, and you should always use discretion before trying it in your own analysis.</p>
-<div id="cell-4" class="cell" data-execution_count="4">
+<p>The following code uses an API-based retrieval method to download the data directly from the github repository. The pull code itself is provided by OpenAI’s GPT-4o Model<span class="citation" data-cites="gpt4o"><sup><a href="#ref-gpt4o" role="doc-biblioref">3</a></sup></span>. After numerous attempts at debugging and testing the code in another environment, the LLM added a tweak in the code to disable SSL verification. While this ended up working, this is an unsafe practice, and you should always use discretion before trying it in your own analysis.</p>
+<div id="cell-5" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests <span class="co">#Importing requests library for  api-based retrieval</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-5" class="cell" data-execution_count="5">
+<div id="cell-6" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dataset URL</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://jmcauley.ucsd.edu/data/amazon_v2/categoryFilesSmall/Electronics_5.json.gz"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -314,7 +325,7 @@ div.csl-indent {
 <section id="importing-packages-and-loading-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-packages-and-loading-data">Importing Packages and Loading Data</h2>
 <p>Here, we begin the process by loading in our data. as stated above, The initial <code>parse()</code> and <code>getDF()</code> functions are borrowed from the link above as well. However, when initially trying to load and parse this data, I ran into serious memory issues that rendered my machine unable to successfully convert the data into a dataframe. Therefore, I elected to use the <code>orjson</code> library over the traditional <code>json</code>, which cut my import time dramatically. For reference to that repository, please head <a href="https://github.com/ijl/orjson">here</a>.</p>
-<div id="cell-7" class="cell" data-execution_count="6">
+<div id="cell-8" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing necessary packages</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip</span>
@@ -344,7 +355,7 @@ div.csl-indent {
 <ul>
 <li>Now that the data has been loaded, let’s check the shape</li>
 </ul>
-<div id="cell-10" class="cell" data-execution_count="7">
+<div id="cell-11" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing the data shape</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
@@ -360,7 +371,7 @@ div.csl-indent {
 <ul>
 <li>With that out of the way, we can zip up our data and continue on with the process</li>
 </ul>
-<div id="cell-14" class="cell" data-execution_count="8">
+<div id="cell-15" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'../../data/raw-data/ElectronicsReviews.csv.gz'</span>, index<span class="op">=</span><span class="va">False</span>, compression<span class="op">=</span><span class="st">'gzip'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Moving Forward</strong></p>
@@ -390,8 +401,11 @@ div.csl-indent {
 <div id="ref-DataArticle" class="csl-entry" role="listitem">
 <div class="csl-left-margin">1. </div><div class="csl-right-inline">Jianmo Ni, J. M., Jiacheng Li. Justifying recommendations using distantly-labeled reviews and fine-grained aspects. (2019).</div>
 </div>
+<div id="ref-UnixTime" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline"><a href="https://en.wikipedia.org/wiki/Unix_time">Wikipedia - unix time</a>.</div>
+</div>
 <div id="ref-gpt4o" class="csl-entry" role="listitem">
-<div class="csl-left-margin">2. </div><div class="csl-right-inline">ChatGPT, version-4o, OpenAI, may-13, 2024, chat.openai.com.</div>
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">ChatGPT, version-4o, OpenAI, may-13, 2024, chat.openai.com.</div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

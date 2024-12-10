@@ -8,11 +8,33 @@ This page serves as a progress log for my DSAN5000 final project
 
 **Weekly project contribution log:**
 
+
+
+**12-13-2024
+
+* [ ] Improve website formatting
+* [ ] Correct typos/poor writing on all pages
+
+**12-12-2024
+
+* [ ] Quadruple check project guidelines to ensure proper adherence
+* [ ] Finish first draft of report
+
+**12-11-2024
+
+* [ ] Outline plan for report (build out structure, collect meaningful img/assets)
+* [ ] Finish first draft of supervised learning page
+
 **12-10-2024
 
-* [ ] Finish Supervised learning page
-* [ ] Finish Unsupervised Learning page
-* [ ] Finish EDA page
+* [ ] Ouline plan for structuring supervised learning 
+* [ ] Finish first draft of unsupervised learning page
+
+**12-9-2024
+
+* [X] add a picture of review data in raw JSON format 
+* [ ] Outline a plan for structuring unsupervised model page
+* [X] Finish first draft of EDA page
 
 **12-8-2024
 
@@ -21,11 +43,11 @@ This page serves as a progress log for my DSAN5000 final project
 **12-7-2024**
 
 * [X] Re-download data using webscraping method via requests libary
-* [X] Finish Data Cleaning page
+* [X] Finish first draft of Data Cleaning page
 
 **12-6-2024**
 
-* [X] Finish Data Collection page
+* [X] Finish first draft of Data Collection page
 * [X] Finished literature reviews for articles
 
 **12-5-2024**
