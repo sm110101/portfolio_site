@@ -179,7 +179,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#code" id="toc-code" class="nav-link active" data-scroll-target="#code">Code</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#part-1-dimensionality-reduction" id="toc-part-1-dimensionality-reduction" class="nav-link" data-scroll-target="#part-1-dimensionality-reduction">Part 1: Dimensionality Reduction</a></li>
+  <li><a href="#part-2-clustering-methods" id="toc-part-2-clustering-methods" class="nav-link" data-scroll-target="#part-2-clustering-methods">Part 2: Clustering Methods</a></li>
+  </ul></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
   </ul>
 </nav>
     </div>
@@ -205,6 +210,58 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p><br> <br></p>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<section id="part-1-dimensionality-reduction" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-dimensionality-reduction">Part 1: Dimensionality Reduction</h3>
+<p>The objective of this section is to explore and demonstrate the effectiveness of PCA and t-SNE in reducing the dimensionality of complex data while preserving essential information and improving visualization.</p>
+<ol type="1">
+<li><strong>PCA (Principal Component Analysis):</strong>
+<ul>
+<li>Apply PCA to your dataset.</li>
+<li>Determine the optimal number of principal components.</li>
+<li>Visualize the reduced-dimensional data.</li>
+<li>Analyze and interpret the results.</li>
+</ul></li>
+<li><strong>t-SNE (t-distributed Stochastic Neighbor Embedding):</strong>
+<ul>
+<li>Implement t-SNE on the same dataset.</li>
+<li>Experiment with different perplexity values.</li>
+<li>Visualize the t-SNE output to reveal patterns and clusters.</li>
+<li>Compare the results of t-SNE with those from PCA.</li>
+</ul></li>
+<li><strong>Evaluation and Comparison:</strong>
+<ul>
+<li>Evaluate the effectiveness of PCA and t-SNE in preserving data structure.</li>
+<li>Compare the visualization capabilities of both techniques.</li>
+<li>Discuss the trade-offs and scenarios where one technique may perform better than the other.</li>
+</ul></li>
+</ol>
+</section>
+<section id="part-2-clustering-methods" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-clustering-methods">Part 2: Clustering Methods</h3>
+<p>Apply clustering techniques (K-Means, DBSCAN, and Hierarchical clustering) to a selected dataset. The goal is to understand how each method works, compare their performance, and interpret the results.</p>
+<ol type="1">
+<li><strong>Clustering Methods:</strong>
+<ul>
+<li>Apply <strong>K-Means</strong>, <strong>DBSCAN</strong>, and <strong>Hierarchical clustering</strong> to your dataset.</li>
+<li>Write a technical summary for each method (2–4 paragraphs per method) explaining how it works, its purpose, and any model selection methods used (e.g., Elbow, Silhouette).</li>
+</ul></li>
+<li><strong>Results Section:</strong>
+<ul>
+<li>Discuss and visualize the results of each clustering analysis.</li>
+<li>Compare the performance of different clustering methods, noting any insights gained from the analysis.</li>
+<li>Visualize cluster patterns and how they relate (if at all) to existing labels in the dataset.</li>
+<li>Use professional, labeled, and clear visualizations that support your discussion.</li>
+</ul></li>
+<li><strong>Conclusion:</strong>
+<ul>
+<li>Summarize the key findings and their real-world implications in a non-technical way. Focus on the most important results and how they could apply to practical situations.</li>
+</ul></li>
+</ol>
+</section>
+</section>
 <section id="code" class="level1">
 <h1>Code</h1>
 <p>Provide the source code used for this section of the project here.</p>
