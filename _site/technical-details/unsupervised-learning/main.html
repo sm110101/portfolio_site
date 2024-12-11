@@ -282,12 +282,21 @@ window.Quarto = {
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a>
   <ul class="collapse">
   <li><a href="#loading-in-data-and-libraries" id="toc-loading-in-data-and-libraries" class="nav-link" data-scroll-target="#loading-in-data-and-libraries">Loading in Data and Libraries</a></li>
-  <li><a href="#text-embedding-dimension-reduction" id="toc-text-embedding-dimension-reduction" class="nav-link" data-scroll-target="#text-embedding-dimension-reduction">Text Embedding &amp; Dimension Reduction</a>
+  <li><a href="#baseline-tests" id="toc-baseline-tests" class="nav-link" data-scroll-target="#baseline-tests">Baseline Tests</a>
   <ul class="collapse">
-  <li><a href="#preliminary-tests-t-sne-vs-pca" id="toc-preliminary-tests-t-sne-vs-pca" class="nav-link" data-scroll-target="#preliminary-tests-t-sne-vs-pca">Preliminary Tests: t-SNE vs PCA</a></li>
-  <li><a href="#parameter-optimization" id="toc-parameter-optimization" class="nav-link" data-scroll-target="#parameter-optimization">Parameter Optimization</a></li>
+  <li><a href="#basline-t-sne-vs-pca" id="toc-basline-t-sne-vs-pca" class="nav-link" data-scroll-target="#basline-t-sne-vs-pca">Basline: t-SNE vs PCA</a></li>
+  </ul></li>
+  <li><a href="#parameter-optimization-dimension-reduction" id="toc-parameter-optimization-dimension-reduction" class="nav-link" data-scroll-target="#parameter-optimization-dimension-reduction">Parameter Optimization: Dimension Reduction</a>
+  <ul class="collapse">
+  <li><a href="#test-1-intermediate-pca" id="toc-test-1-intermediate-pca" class="nav-link" data-scroll-target="#test-1-intermediate-pca">Test 1: Intermediate PCA</a></li>
+  <li><a href="#test-2-no-intermediate-pca" id="toc-test-2-no-intermediate-pca" class="nav-link" data-scroll-target="#test-2-no-intermediate-pca">Test 2: No Intermediate PCA</a></li>
+  <li><a href="#test-3-adjusting-perplexity" id="toc-test-3-adjusting-perplexity" class="nav-link" data-scroll-target="#test-3-adjusting-perplexity">Test 3: Adjusting Perplexity</a></li>
+  <li><a href="#test-4-adjusting-document-frequency-in-tf-idf-embedding" id="toc-test-4-adjusting-document-frequency-in-tf-idf-embedding" class="nav-link" data-scroll-target="#test-4-adjusting-document-frequency-in-tf-idf-embedding">Test 4: Adjusting Document Frequency in TF-IDF Embedding</a></li>
+  <li><a href="#test-5-tweaking-number-of-iterations-in-t-sne" id="toc-test-5-tweaking-number-of-iterations-in-t-sne" class="nav-link" data-scroll-target="#test-5-tweaking-number-of-iterations-in-t-sne">Test 5: Tweaking Number of Iterations in t-SNE</a></li>
+  <li><a href="#fine-tuning-perplexity" id="toc-fine-tuning-perplexity" class="nav-link" data-scroll-target="#fine-tuning-perplexity">Fine-tuning Perplexity</a></li>
   </ul></li>
   </ul></li>
+  <li><a href="#beak" id="toc-beak" class="nav-link" data-scroll-target="#beak">Beak</a></li>
   </ul>
 </nav>
     </div>
@@ -448,8 +457,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="text-embedding-dimension-reduction" class="level2">
-<h2 class="anchored" data-anchor-id="text-embedding-dimension-reduction">Text Embedding &amp; Dimension Reduction</h2>
+<section id="baseline-tests" class="level2">
+<h2 class="anchored" data-anchor-id="baseline-tests">Baseline Tests</h2>
 <p>In this section, I vectorize our cleaned text data using the <code>TfidfVectorizer</code> object found in the <a href="https://scikit-learn.org/stable/"><code>sklearn</code></a> library. Like I said previously, I experienced some issues relating to poor performance when applying <code>CountVectorizer</code> to single terms. Therefore, in this section, I elect to run the TfidfVectorizer` on single words and bigrams, as its consideration of word weights allows it to punish terms that are commonly found across all classes (review scores in this case).</p>
 <p><strong>The plan going forward:</strong></p>
 <ul>
@@ -459,12 +468,12 @@ window.Quarto = {
 <li>Test out BERT’s <code>SentenceTransformer</code> tool for full sentence embedding, and see if this produces any interesting results</li>
 <li>Perform clustering on the two best sets of reduced data.</li>
 </ul>
-<section id="preliminary-tests-t-sne-vs-pca" class="level3">
-<h3 class="anchored" data-anchor-id="preliminary-tests-t-sne-vs-pca">Preliminary Tests: t-SNE vs PCA</h3>
+<section id="basline-t-sne-vs-pca" class="level3">
+<h3 class="anchored" data-anchor-id="basline-t-sne-vs-pca">Basline: t-SNE vs PCA</h3>
 <p>To start off, lets create two simple plots of the data, using each of our two different dimension reduction techniques and TF-IDF embedding. To speed up the process, I will add a <code>N_SAMPLES</code> constant to allow for faster execution</p>
 <p><strong>Sample TF-IDF Matrix</strong></p>
-<div id="cell-8" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>N_SAMPLES <span class="op">=</span> <span class="dv">10000</span></span>
+<div id="cell-8" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>N_SAMPLES <span class="op">=</span> <span class="dv">2500</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sampled_reviews <span class="op">=</span> reviews.sample(n<span class="op">=</span>N_SAMPLES, random_state<span class="op">=</span><span class="dv">5000</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Using tf-idf embedding</span></span>
@@ -472,7 +481,7 @@ window.Quarto = {
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>X_tfidf <span class="op">=</span> tfidf.fit_transform(sampled_reviews[<span class="st">'reviewTextClean'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Standard PCA and t-SNE Reduction</strong></p>
-<div id="cell-10" class="cell" data-execution_count="13">
+<div id="cell-10" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initializing PCA object </span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">5000</span>) <span class="co">#Default params for our case: 2 principal components</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting to our embedded text</span></span>
@@ -484,11 +493,11 @@ window.Quarto = {
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>tsne_data <span class="op">=</span> tsne.fit_transform(X_tfidf.toarray())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Plotting Results</strong></p>
-<div id="cell-12" class="cell" data-execution_count="16">
+<div id="cell-12" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting PCA results</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(pca_data[:, <span class="dv">0</span>], pca_data[:, <span class="dv">1</span>])</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"PCA on TF-IDF (Unigrams and Bigrams)"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"PCA on TF-IDF (Unigrams and Bigrams, n = 2500)"</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"PC1"</span>)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"PC2"</span>)</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -501,11 +510,11 @@ window.Quarto = {
 </div>
 </div>
 <p>The above PCA plot demonstrates a very strong linear structure, where most of the data poinrs are concentrated along a single dominant direction. The most likely reason for this is that our princple components analysis was heavily influenced by a small group of dominant features. When thinking about this within the context of our reviews data, it makes sense that there are especially strong features, as reviews are often repetitive and contain a lot of the same content, especially adjectives and in this case names of standard electronics (i.e.&nbsp;batteries, keyboards, storage, etc.)</p>
-<div id="cell-14" class="cell" data-execution_count="17">
+<div id="cell-14" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting t-SNE results</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(tsne_data[:, <span class="dv">0</span>], tsne_data[:, <span class="dv">1</span>])</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"t-SNE on TF-IDF (Unigrams and Bigrams)"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"t-SNE on TF-IDF (Unigrams and Bigrams, n = 2500)"</span>)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Dim 1"</span>)</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Dim 2"</span>)</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -520,151 +529,460 @@ window.Quarto = {
 <p>In contrast to our PCA plot, the t-SNE plot above shows a bit more promise. Ignoring the massive circle of points on the outer ring of the plot, we can see that t-SNE is able to better capture localized groups in the data, which makes it more ideal for clustering. Of course, we will have to tune some parameters to get a better result, but this is a strong first step. Going into this first stage, I had a feeling that t-SNE would outperform PCA when collapsing our TF-IDF embeddings.</p>
 <p>Moving forward, I will shift my focus toward refining our t-SNE reduction process. Below, I outline a function that I will use to help speed up the process.</p>
 </section>
-<section id="parameter-optimization" class="level3">
-<h3 class="anchored" data-anchor-id="parameter-optimization">Parameter Optimization</h3>
+</section>
+<section id="parameter-optimization-dimension-reduction" class="level2">
+<h2 class="anchored" data-anchor-id="parameter-optimization-dimension-reduction">Parameter Optimization: Dimension Reduction</h2>
 <p>Below, I define the following functions:</p>
 <ul>
-<li><code>plot_embeddings()</code> : helper function that creates scatterplot of data across dimensions returned by t-SNE</li>
-<li><code>reduction_and</code></li>
+<li><strong><code>plot_embeddings()</code></strong> : A helper function that creates scatterplot of data across dimensions returned by t-SNE</li>
+<li><strong><code>reduce_and_visualize()</code></strong>: Our main function that handles parameter adjustment for both t-SNE reduction and TF-IDF embedding. Controls sample size as well for quick iteration</li>
 </ul>
-<div id="cell-18" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_embeddings(data, title, labels<span class="op">=</span><span class="va">None</span>, hover_data<span class="op">=</span><span class="va">None</span>, top_terms<span class="op">=</span><span class="va">None</span>):</span>
+<p><strong>Note:</strong> <em>For the <code>plot_embeddings()</code> function, I consulted an LLM to help write the code that produced the parameters table. At the bottom of this page, I provuide the original function used to display the plots, as well as a citation that includes my prompt<span class="citation" data-cites="gpt4o_textfunc"><sup><a href="#ref-gpt4o_textfunc" role="doc-biblioref">8</a></sup></span>.</em></p>
+<div id="cell-18" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_embeddings(data, title, labels<span class="op">=</span><span class="va">None</span>, params<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Creates an interactive scatter plot using Plotly with hover data.</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">        data (np.array): 2D array of reduced data (e.g., PCA or t-SNE output).</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">        title (str): Title of the plot.</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">        labels (pd.Series or None): Numeric labels for coloring the plot (e.g., reviewRating).</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">        hover_data (pd.DataFrame or None): DataFrame with hover information (optional).</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">        top_terms (list of str): List of most important terms for each review.</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a DataFrame for the plot</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    plot_df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'Dim 1'</span>, <span class="st">'Dim 2'</span>])</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> labels <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        plot_df[<span class="st">'Rating'</span>] <span class="op">=</span> labels</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> hover_data <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        plot_df <span class="op">=</span> pd.concat([plot_df, hover_data.reset_index(drop<span class="op">=</span><span class="va">True</span>)], axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> top_terms <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        plot_df[<span class="st">'Top Term'</span>] <span class="op">=</span> top_terms</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate the scatter plot</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> px.scatter(</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        plot_df, </span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">'Dim 1'</span>, y<span class="op">=</span><span class="st">'Dim 2'</span>, </span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">'Rating'</span>,  <span class="co"># Points are colored by the review rating</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        hover_data<span class="op">=</span>[<span class="st">'Top Term'</span>],  <span class="co"># Only show the most important term on hover</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        color_continuous_scale<span class="op">=</span><span class="st">'viridis'</span>,  <span class="co"># Use a color gradient for review ratings</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span>title</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    fig.update_traces(marker<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">8</span>, opacity<span class="op">=</span><span class="fl">0.7</span>))</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    fig.update_layout(title<span class="op">=</span><span class="bu">dict</span>(x<span class="op">=</span><span class="fl">0.5</span>), legend<span class="op">=</span><span class="bu">dict</span>(orientation<span class="op">=</span><span class="st">"h"</span>, y<span class="op">=-</span><span class="fl">0.2</span>))</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function creates a scatterplot of t-SNE reduced, TF-IDF embedded text data</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    'data': np.array object (2D). contains our t-SNE output </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    'title': the name for our plot</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    'labels': the condition we use to color our points (column in the data set)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">    'params': is a dictionary that we define in redude_and_visualize() containing all of the parameters that we used</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">              in this function, it is used to plot them in a table next to our visualization.</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initializing figure</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plt.figure(figsize=(10,6))</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>,<span class="dv">6</span>), gridspec_kw<span class="op">=</span>{<span class="st">"width_ratios"</span>: [<span class="dv">3</span>, <span class="dv">1</span>]})</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    scatter <span class="op">=</span> ax[<span class="dv">0</span>].scatter(data[:, <span class="dv">0</span>], data[:, <span class="dv">1</span>], <span class="co"># First and second axes produced by t-SNE</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                          c <span class="op">=</span> labels, <span class="co"># Fill condition (if any)</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                          cmap <span class="op">=</span> <span class="st">"viridis"</span>, <span class="co"># color scale</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                          s <span class="op">=</span> <span class="dv">10</span>, <span class="co"># Size of points</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                          alpha <span class="op">=</span> <span class="fl">0.8</span>) <span class="co"># Opacity of points</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_title(title)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_xlabel(<span class="st">"Dimension 1"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Dimension 2"</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    fig.colorbar(scatter, ax<span class="op">=</span>ax[<span class="dv">0</span>], label <span class="op">=</span> <span class="st">"Rating"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Handling params table</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> params:</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        param_table <span class="op">=</span> pd.DataFrame(<span class="bu">list</span>(params.items()), columns<span class="op">=</span>[<span class="st">"PARAMETER"</span>, <span class="st">"VALUE"</span>])</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].axis(<span class="st">"off"</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        table <span class="op">=</span> ax[<span class="dv">1</span>].table(cellText<span class="op">=</span>param_table.values, colLabels<span class="op">=</span>param_table.columns, loc<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        table.auto_set_font_size(<span class="va">False</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        table.set_fontsize(<span class="dv">10</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        table.auto_set_column_width(col<span class="op">=</span><span class="bu">list</span>(<span class="bu">range</span>(<span class="bu">len</span>(param_table.columns))))</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-19" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reduce_and_visualize(reviews, method<span class="op">=</span><span class="st">"tsne"</span>, sample_size<span class="op">=</span><span class="dv">1000</span>, random_state<span class="op">=</span><span class="dv">42</span>, perplexity<span class="op">=</span><span class="dv">30</span>, intermediate_pca<span class="op">=</span><span class="va">True</span>):</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Reduces dimensionality using PCA or t-SNE and visualizes the results with points colored by review rating.</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">        reviews (pd.DataFrame): Original dataset containing 'reviewText' and 'reviewRating'.</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">        method (str): The dimensionality reduction method ('pca' or 'tsne').</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_size (int): Number of rows to sample for testing.</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">        random_state (int): Random state for reproducibility.</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">        perplexity (int): Perplexity value for t-SNE.</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">        intermediate_pca (bool): Whether to apply PCA before t-SNE.</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample the dataset for testing</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sample_size <span class="op">&lt;</span> <span class="bu">len</span>(reviews):</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        sampled_reviews <span class="op">=</span> reviews.sample(n<span class="op">=</span>sample_size, random_state<span class="op">=</span>random_state).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        sampled_reviews <span class="op">=</span> reviews.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the relevant columns after sampling</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    review_texts <span class="op">=</span> sampled_reviews[<span class="st">'reviewTextClean'</span>]</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    review_ratings <span class="op">=</span> sampled_reviews[<span class="st">'reviewRating'</span>]  <span class="co"># Correctly aligned with reviewTextClean</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    review_text <span class="op">=</span> sampled_reviews[<span class="st">'reviewText'</span>]</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Simplified parameter grid</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    param_grid <span class="op">=</span> {</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">'max_features'</span>: [<span class="dv">500</span>],                <span class="co"># Single value for faster processing</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">'ngram_range'</span>: [(<span class="dv">1</span>, <span class="dv">2</span>)],              <span class="co"># Focus on bigrams</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">'min_df'</span>: [<span class="dv">1</span>],                        <span class="co"># Single min_df value</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">'max_df'</span>: [<span class="fl">0.9</span>]                       <span class="co"># Single max_df value</span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> max_features, ngram_range, min_df, max_df <span class="kw">in</span> product(</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'max_features'</span>], </span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'ngram_range'</span>], </span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'min_df'</span>], </span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'max_df'</span>]</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    ):</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Testing Parameters: max_features=</span><span class="sc">{</span>max_features<span class="sc">}</span><span class="ss">, ngram_range=</span><span class="sc">{</span>ngram_range<span class="sc">}</span><span class="ss">, min_df=</span><span class="sc">{</span>min_df<span class="sc">}</span><span class="ss">, max_df=</span><span class="sc">{</span>max_df<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize TF-IDF</span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>        tfidf <span class="op">=</span> TfidfVectorizer(</span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>            max_features<span class="op">=</span>max_features,</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>            ngram_range<span class="op">=</span>ngram_range,</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>            min_df<span class="op">=</span>min_df,</span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>            max_df<span class="op">=</span>max_df</span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Fit and transform the data</span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>            X_tfidf <span class="op">=</span> tfidf.fit_transform(review_texts)</span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extract the most important term for each review</span></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>            feature_names <span class="op">=</span> np.array(tfidf.get_feature_names_out())</span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>            top_terms <span class="op">=</span> feature_names[np.argmax(X_tfidf.toarray(), axis<span class="op">=</span><span class="dv">1</span>)]</span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Intermediate PCA step for t-SNE</span></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> intermediate_pca <span class="kw">and</span> method.lower() <span class="op">==</span> <span class="st">"tsne"</span>:</span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">"Applying intermediate PCA..."</span>)</span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>                pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">50</span>, random_state<span class="op">=</span>random_state)</span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>                X_reduced <span class="op">=</span> pca.fit_transform(X_tfidf.toarray())</span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>                X_reduced <span class="op">=</span> X_tfidf.toarray()</span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Dimensionality reduction</span></span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> method.lower() <span class="op">==</span> <span class="st">"pca"</span>:</span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>                reducer <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>random_state)</span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>                reduced_data <span class="op">=</span> reducer.fit_transform(X_reduced)</span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="ss">f"PCA: max_features=</span><span class="sc">{</span>max_features<span class="sc">}</span><span class="ss">, ngram_range=</span><span class="sc">{</span>ngram_range<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> method.lower() <span class="op">==</span> <span class="st">"tsne"</span>:</span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>                reducer <span class="op">=</span> TSNE(n_components<span class="op">=</span><span class="dv">2</span>, perplexity<span class="op">=</span>perplexity, random_state<span class="op">=</span>random_state, n_iter<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>                reduced_data <span class="op">=</span> reducer.fit_transform(X_reduced)</span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="ss">f"t-SNE: max_features=</span><span class="sc">{</span>max_features<span class="sc">}</span><span class="ss">, ngram_range=</span><span class="sc">{</span>ngram_range<span class="sc">}</span><span class="ss">, perplexity=</span><span class="sc">{</span>perplexity<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Invalid method. Choose 'pca' or 'tsne'."</span>)</span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Prepare hover data</span></span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>            hover_data <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>                <span class="st">'reviewText'</span>: review_text,  <span class="co"># Original review text</span></span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>            })</span>
+<p>Now, for our main function <code>reduce_and_visualize()</code>, we use the following parameters</p>
+<ul>
+<li><strong>reviews:</strong> our pandas dataframe containing the target ‘reviewTextClean’ column</li>
+<li><strong>sample_size:</strong> the number of samples we want to take from the dataframe</li>
+<li><strong>random_state:</strong> our seed for random processes (sampling and t-SNE)</li>
+<li><strong>perplexity:</strong> the perplexity value for our t-SNE process (Outlined above)</li>
+<li><strong>n_iter:</strong> Number of iterations for t-SNE</li>
+<li><strong>max_features:</strong> maximum number of TF-IDF features</li>
+<li><strong>ngram_range</strong> N-gram range for TF-IDF (i.e.&nbsp;(1,1) is unigrams only, (1,2) is both unigrams and bigrams, and (2,2) is only bigrams)</li>
+<li><strong>min_df:</strong> Minimum document frequency for TF-IDF</li>
+<li><strong>max_df:</strong> Maximum document frequency for TF-IDF</li>
+<li><strong>intermediate_pca:</strong> A boolean that states whether or not we use PCA before running t-SNE</li>
+<li><strong>return_df:</strong> A boolean that states whether or not we return our collapsed dataframe (Will use this later If we want to keep the results)</li>
+</ul>
+<p>The <a href="https://scikit-learn.org/dev/modules/generated/sklearn.manifold.TSNE.html">scikit-learn documentation on t-SNE</a> highly recommends that we use another form of dimension reduction before running t-SNE to speed up the process of computation. Therefore, in this function I include the <code>intermediate_pca</code> parameter, which allows me to decide whether or not I run principal components analysis on the data before feeding it into t-SNE. The documentation advices that this process should reduce our data to a ‘reasonable’ amount of dimensions<span class="citation" data-cites="scikitTSNE"><sup><a href="#ref-scikitTSNE" role="doc-biblioref">9</a></sup></span>. In this function, I elect to go for 50 principle components. However, in future iterations I intend to optimize this parameter as well. For now, I will keep it static.</p>
+<div id="cell-20" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reduce_and_visualize(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        reviews,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        sample_size<span class="op">=</span><span class="dv">2500</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        random_state<span class="op">=</span><span class="dv">5000</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        perplexity<span class="op">=</span><span class="dv">30</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        n_iter<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        max_features<span class="op">=</span><span class="dv">500</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        ngram_range<span class="op">=</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        min_df<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        max_df<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        intermediate_pca<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        return_df <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">    This function:</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">    1) applies TF-IDF embedding to our text data</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">    2) (if intermediate_pca = True) runs intermediate PCA with n_components set to 50 </span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">    3) Takes either raw data or PCA-reduced data and feeds it into t-SNE with set params</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Our first step is to break off our predefined sample data (defined in sample_size)</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sample_size <span class="op">&lt;</span> <span class="bu">len</span>(reviews):</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        sampled_reviews <span class="op">=</span> reviews.sample(n<span class="op">=</span>sample_size, random_state<span class="op">=</span>random_state).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        sampled_reviews <span class="op">=</span> reviews.reset_index(drop<span class="op">=</span><span class="va">True</span>) </span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Next we need to extract the relevant columns</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    review_texts <span class="op">=</span> sampled_reviews[<span class="st">'reviewTextClean'</span>]</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    review_ratings <span class="op">=</span> sampled_reviews[<span class="st">'reviewRating'</span>]</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Now we can initialize our TF-IDF object and fit it to our cleaned review text</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    tfidf <span class="op">=</span> TfidfVectorizer(</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        max_features<span class="op">=</span>max_features,</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        ngram_range<span class="op">=</span>ngram_range,</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        min_df<span class="op">=</span>min_df,</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        max_df<span class="op">=</span>max_df,    </span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    X_tfidf <span class="op">=</span> tfidf.fit_transform(review_texts)</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Now, we handle intermediate PCA conditions, converting our sparse matrix into a dense numpy array in both cases using .toarray()</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> intermediate_pca:</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Applying intermediate PCA..."</span>)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize PCA object</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>        pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">50</span>, random_state<span class="op">=</span>random_state)</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Applying to X_tfidf</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        X_reduced <span class="op">=</span> pca.fit_transform(X_tfidf.toarray()) </span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>        X_reduced <span class="op">=</span> X_tfidf.toarray()</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Once that is handled, we can feed our dense array into t-SNE</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Applying t-SNE..."</span>)</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    tsne <span class="op">=</span> TSNE(n_components<span class="op">=</span><span class="dv">2</span>, perplexity<span class="op">=</span>perplexity, random_state<span class="op">=</span>random_state, n_iter<span class="op">=</span>n_iter) <span class="co"># Here we collapse to 2-Dimensions, but in some cases we may need 3</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    reduced_data <span class="op">=</span> tsne.fit_transform(X_reduced)</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creating a dataframe for later clustering </span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>    reduced_df <span class="op">=</span> pd.DataFrame(reduced_data, columns<span class="op">=</span>[<span class="st">"Dim1"</span>, <span class="st">"Dim2"</span>])</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>    reduced_df[<span class="st">"Rating"</span>] <span class="op">=</span> review_ratings.values</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Gathering our parameters for the plot</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Sample Size"</span>: sample_size,</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Perplexity"</span>: perplexity,</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Iterations"</span>: n_iter,</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Max Features"</span>: max_features,</span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>        <span class="st">"N-gram Range"</span>: ngram_range,</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Min DF"</span>: min_df,</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Max DF"</span>: max_df,</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Intermediate PCA"</span>: intermediate_pca</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>    <span class="co"># After all of that, we can now plot our results...</span></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Plotting results..."</span>)</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>    plot_embeddings(</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>        reduced_data,</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> <span class="ss">f"t-SNE With TF-IDF Embeddings"</span>,</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>        labels <span class="op">=</span> review_ratings,</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>        params <span class="op">=</span> params</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Plot the reduced data with points colored by review rating</span></span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>            plot_embeddings(</span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>                reduced_data, </span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>                title, </span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>                labels<span class="op">=</span>review_ratings,  <span class="co"># Points are colored by review ratings</span></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>                hover_data<span class="op">=</span>hover_data,</span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>                top_terms<span class="op">=</span>top_terms</span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Failed for parameters: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(</span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>    reviews<span class="op">=</span>reviews,            <span class="co"># Pass the full dataset</span></span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"tsne"</span>,              <span class="co"># Choose "tsne" for t-SNE or "pca" for PCA</span></span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>    sample_size<span class="op">=</span><span class="dv">5000</span>,           <span class="co"># Test on a sample of 2000 reviews</span></span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,            <span class="co"># Set a random state for reproducibility</span></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>    perplexity<span class="op">=</span><span class="dv">100</span>,              <span class="co"># Set the perplexity for t-SNE</span></span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>    intermediate_pca<span class="op">=</span><span class="va">True</span>       <span class="co"># Apply PCA before t-SNE</span></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return reduced dataframe</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> return_df:</span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> reduced_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="test-1-intermediate-pca" class="level3">
+<h3 class="anchored" data-anchor-id="test-1-intermediate-pca">Test 1: Intermediate PCA</h3>
+<p>Let’s test out this function with all of the same paremeters as our base case while also including intermediate PCA</p>
+<div id="cell-23" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Testing out this code</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(reviews)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Applying intermediate PCA...
+Applying t-SNE...
+Plotting results...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-11-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ths plot above shows results of our algorithm, when using all of the same parameters as our default case above, with the only difference being the inclusion of intermediate PCA. At a glance, this result seems to drastically improve our standard t-SNE process by a long-shot. The data points are much more spread out, and there are nice clusters beginning to form. The first method was able to extract some local structure, but it also yielded a massive spiral of points around said structure.</p>
+<p>Taking this back to the context of our data, we unfortuately see litle to no relationship between cluster groupings and ratings score - meaning that the rating associated with a given review may not be related to the location of the review’s most important word in a high dimensional space. Nonetheless, there are clusters in this data, and the sections below will help us identify what they represent.</p>
+</section>
+<section id="test-2-no-intermediate-pca" class="level3">
+<h3 class="anchored" data-anchor-id="test-2-no-intermediate-pca">Test 2: No Intermediate PCA</h3>
+<p>In this test, I will apply all of the same parameters without the use of intermediate PCA. The goal here its usefulness in extracting local relationships in our text data</p>
+<div id="cell-26" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(reviews, intermediate_pca<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Applying t-SNE...
+Plotting results...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-12-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The plot above confirms that intermediate PCA is a critical step in producing useful results when reducing our data</p>
+</section>
+<section id="test-3-adjusting-perplexity" class="level3">
+<h3 class="anchored" data-anchor-id="test-3-adjusting-perplexity">Test 3: Adjusting Perplexity</h3>
+<p>In this section, I will apply low and high <code>perplexity</code> parameters to our algorithm, and check performance for both. As a refresher, perplexity controls the size of each data point’s neighborhood. For a more robust explanation, please refer to the <a href="https://opentsne.readthedocs.io/en/latest/parameters.html">openTSNE</a> documentation.</p>
+<p><strong>Higher <code>perplexity</code> (100)</strong></p>
+<div id="cell-29" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(reviews, perplexity<span class="op">=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Applying intermediate PCA...
+Applying t-SNE...
+Plotting results...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-13-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Lower <code>perplexity</code> (10)</strong></p>
+<div id="cell-31" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(reviews, perplexity<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Applying intermediate PCA...
+Applying t-SNE...
+Plotting results...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-14-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretation</strong></p>
+<p>The first plot uses standard parameters, with a higher <code>perplexity</code> value of 100. In this plot, the distribution of points is more spread out, with larger clusters than our initial plot where <code>perplexity</code> was set to 30. Increased perplexity is synonymous with increased neighborhood size. Therefore, it makes sense to see more global groupings with fewer local clusters as a result. In the second plot, I lower <code>perplexity</code> from 30 to 10, which results in much tighter and local clusters. In the second case, we are lowering the size of a data point’s neighborhood, wich allows t-SNE to capture more localized groups. In the latter case, there is almost too much emphasis placed on local groups, which may yield more clusters when modeling than what would be appropriate. Therefore, from here I elect to use a value of <code>perplexity</code> that is high enough to maintain global relationships, while not being too high to ignore more nuanced local relationships</p>
+</section>
+<section id="test-4-adjusting-document-frequency-in-tf-idf-embedding" class="level3">
+<h3 class="anchored" data-anchor-id="test-4-adjusting-document-frequency-in-tf-idf-embedding">Test 4: Adjusting Document Frequency in TF-IDF Embedding</h3>
+<p>In this section, I will tweak the <code>max_df</code> parameter that applies to our initial TF-IDF embedding. The <code>max_df</code> parameter sets an upper bound on the document frequency calculated for certain terms (both unigrams and bigrams in our case). In other words, lowering the value for <code>max_df</code> will drop the threshold for which terms are dropped based on their document frequency. The rationale behind lowering this value is to ignore terms that are common in our data, which may help to create more well-defined clusters</p>
+<p><strong>Lower <code>max_df</code> (0.8)</strong></p>
+<div id="cell-34" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(reviews, perplexity<span class="op">=</span><span class="dv">100</span>, max_df<span class="op">=</span><span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Applying intermediate PCA...
+Applying t-SNE...
+Plotting results...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-15-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Not much of a change compared to plot above, let’s try an even lower value:</p>
+<p><strong>Lower <code>max_df</code> (0.6)</strong></p>
+<div id="cell-36" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(reviews, perplexity<span class="op">=</span><span class="dv">100</span>, max_df<span class="op">=</span><span class="fl">0.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Applying intermediate PCA...
+Applying t-SNE...
+Plotting results...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-16-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Not much of a change in either case. Let’s move on to tweaking our next parameter: <code>max_features</code></p>
+</section>
+<section id="test-5-tweaking-number-of-iterations-in-t-sne" class="level3">
+<h3 class="anchored" data-anchor-id="test-5-tweaking-number-of-iterations-in-t-sne">Test 5: Tweaking Number of Iterations in t-SNE</h3>
+<p>The t-SNE parameter <code>n_iter</code> adjusts the number of iterations that the t-SNE algorithm runs through in order to optimize KL-Divergence<span class="citation" data-cites="scikitTSNE"><sup><a href="#ref-scikitTSNE" role="doc-biblioref">9</a></sup></span>. In this test, I will raise the value of <code>n_iter</code> to increase the number of iterations t-SNE uses when trying to collapse dimensions</p>
+<p><strong>Increasing <code>n_iter</code> (2000)</strong></p>
+<div id="cell-38" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(reviews, perplexity<span class="op">=</span><span class="dv">100</span>, n_iter<span class="op">=</span><span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Applying intermediate PCA...
+Applying t-SNE...
+Plotting results...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-17-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Again, we don’t see much change compared to plots with less iterations.</p>
+</section>
+<section id="fine-tuning-perplexity" class="level3">
+<h3 class="anchored" data-anchor-id="fine-tuning-perplexity">Fine-tuning Perplexity</h3>
+<p>After all of that, it seems that adjusting our <code>perplexity</code> parameter seems to impact our results the most. Thus, in this section I will test different perplexity values that are all greater than 30 - saving the dataset that yields the most promising results.</p>
+<p><strong>Testing Different Perplexity Values</strong></p>
+<div id="cell-41" class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set values to test</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>perplexities <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">40</span>, <span class="dv">140</span>, <span class="dv">20</span>)]</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [40, 60, 80, 100, 120]</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Looping through values </span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">## for value in perplexities:</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">##     print(f"PERPLEXITY VALUE: {value}")</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">##     reduce_and_visualize(reviews, perplexity=value)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For the sake of saving space, I omit the resulting plots from this process. In short, this loop yielded more dispersion between points as our perplexity parameter increased. When looking at the results for each, the plot corresponding to a <code>perplexity</code> of 100 provided the best balance between global and local groups.</p>
+<p>Having said all of that, the dataset that I will use for clustering comes from the following configuration from the <code>reduce_and_visualize</code> function:</p>
+<ul>
+<li>Perplexity: 100</li>
+<li>Iterations: 1000</li>
+<li>Max Features: 500</li>
+<li>N-gram Range: (1,2) (Unigrams and Bigrams)</li>
+<li>Minimum Document Freq: 1</li>
+<li>Maximum Document Freq: 1.0</li>
+<li>Intermediate PCA: True (n_components = 50)</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="beak" class="level1">
+<h1>Beak</h1>
+<div id="cell-44" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_embeddings(data, title, labels<span class="op">=</span><span class="va">None</span>, hover_data<span class="op">=</span><span class="va">None</span>, top_terms<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Creates an interactive scatter plot using Plotly with hover data.</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">        data (np.array): 2D array of reduced data (e.g., PCA or t-SNE output).</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">        title (str): Title of the plot.</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">        labels (pd.Series or None): Numeric labels for coloring the plot (e.g., reviewRating).</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">        hover_data (pd.DataFrame or None): DataFrame with hover information (optional).</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">        top_terms (list of str): List of most important terms for each review.</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a DataFrame for the plot</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    plot_df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'Dim 1'</span>, <span class="st">'Dim 2'</span>])</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> labels <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        plot_df[<span class="st">'Rating'</span>] <span class="op">=</span> labels</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> hover_data <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>        plot_df <span class="op">=</span> pd.concat([plot_df, hover_data.reset_index(drop<span class="op">=</span><span class="va">True</span>)], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> top_terms <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>        plot_df[<span class="st">'Top Term'</span>] <span class="op">=</span> top_terms</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate the scatter plot</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> px.scatter(</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>        plot_df, </span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">'Dim 1'</span>, y<span class="op">=</span><span class="st">'Dim 2'</span>, </span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">'Rating'</span>,  <span class="co"># Points are colored by the review rating</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>        hover_data<span class="op">=</span>[<span class="st">'Top Term'</span>],  <span class="co"># Only show the most important term on hover</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>        color_continuous_scale<span class="op">=</span><span class="st">'viridis'</span>,  <span class="co"># Use a color gradient for review ratings</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span>title</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>    fig.update_traces(marker<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">8</span>, opacity<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    fig.update_layout(title<span class="op">=</span><span class="bu">dict</span>(x<span class="op">=</span><span class="fl">0.5</span>), legend<span class="op">=</span><span class="bu">dict</span>(orientation<span class="op">=</span><span class="st">"h"</span>, y<span class="op">=-</span><span class="fl">0.2</span>))</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>    fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-45" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reduce_and_visualize(reviews, method<span class="op">=</span><span class="st">"tsne"</span>, sample_size<span class="op">=</span><span class="dv">1000</span>, random_state<span class="op">=</span><span class="dv">42</span>, perplexity<span class="op">=</span><span class="dv">30</span>, intermediate_pca<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Reduces dimensionality using PCA or t-SNE and visualizes the results with points colored by review rating.</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">        reviews (pd.DataFrame): Original dataset containing 'reviewText' and 'reviewRating'.</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">        method (str): The dimensionality reduction method ('pca' or 'tsne').</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_size (int): Number of rows to sample for testing.</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">        random_state (int): Random state for reproducibility.</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">        perplexity (int): Perplexity value for t-SNE.</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">        intermediate_pca (bool): Whether to apply PCA before t-SNE.</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample the dataset for testing</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sample_size <span class="op">&lt;</span> <span class="bu">len</span>(reviews):</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        sampled_reviews <span class="op">=</span> reviews.sample(n<span class="op">=</span>sample_size, random_state<span class="op">=</span>random_state).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>        sampled_reviews <span class="op">=</span> reviews.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the relevant columns after sampling</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    review_texts <span class="op">=</span> sampled_reviews[<span class="st">'reviewTextClean'</span>]</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    review_ratings <span class="op">=</span> sampled_reviews[<span class="st">'reviewRating'</span>]  <span class="co"># Correctly aligned with reviewTextClean</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    review_text <span class="op">=</span> sampled_reviews[<span class="st">'reviewText'</span>]</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Simplified parameter grid</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    param_grid <span class="op">=</span> {</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">'max_features'</span>: [<span class="dv">500</span>],                <span class="co"># Single value for faster processing</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">'ngram_range'</span>: [(<span class="dv">1</span>, <span class="dv">2</span>)],              <span class="co"># Focus on bigrams</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">'min_df'</span>: [<span class="dv">1</span>],                        <span class="co"># Single min_df value</span></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">'max_df'</span>: [<span class="fl">0.9</span>]                       <span class="co"># Single max_df value</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> max_features, ngram_range, min_df, max_df <span class="kw">in</span> product(</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'max_features'</span>], </span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'ngram_range'</span>], </span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'min_df'</span>], </span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">'max_df'</span>]</span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Testing Parameters: max_features=</span><span class="sc">{</span>max_features<span class="sc">}</span><span class="ss">, ngram_range=</span><span class="sc">{</span>ngram_range<span class="sc">}</span><span class="ss">, min_df=</span><span class="sc">{</span>min_df<span class="sc">}</span><span class="ss">, max_df=</span><span class="sc">{</span>max_df<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize TF-IDF</span></span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>        tfidf <span class="op">=</span> TfidfVectorizer(</span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>            max_features<span class="op">=</span>max_features,</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>            ngram_range<span class="op">=</span>ngram_range,</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>            min_df<span class="op">=</span>min_df,</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>            max_df<span class="op">=</span>max_df</span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Fit and transform the data</span></span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>            X_tfidf <span class="op">=</span> tfidf.fit_transform(review_texts)</span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extract the most important term for each review</span></span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>            feature_names <span class="op">=</span> np.array(tfidf.get_feature_names_out())</span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>            top_terms <span class="op">=</span> feature_names[np.argmax(X_tfidf.toarray(), axis<span class="op">=</span><span class="dv">1</span>)]</span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Intermediate PCA step for t-SNE</span></span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> intermediate_pca <span class="kw">and</span> method.lower() <span class="op">==</span> <span class="st">"tsne"</span>:</span>
+<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">"Applying intermediate PCA..."</span>)</span>
+<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>                pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">50</span>, random_state<span class="op">=</span>random_state)</span>
+<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>                X_reduced <span class="op">=</span> pca.fit_transform(X_tfidf.toarray())</span>
+<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb25-62"><a href="#cb25-62" aria-hidden="true" tabindex="-1"></a>                X_reduced <span class="op">=</span> X_tfidf.toarray()</span>
+<span id="cb25-63"><a href="#cb25-63" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb25-64"><a href="#cb25-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Dimensionality reduction</span></span>
+<span id="cb25-65"><a href="#cb25-65" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> method.lower() <span class="op">==</span> <span class="st">"pca"</span>:</span>
+<span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a>                reducer <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>random_state)</span>
+<span id="cb25-67"><a href="#cb25-67" aria-hidden="true" tabindex="-1"></a>                reduced_data <span class="op">=</span> reducer.fit_transform(X_reduced)</span>
+<span id="cb25-68"><a href="#cb25-68" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="ss">f"PCA: max_features=</span><span class="sc">{</span>max_features<span class="sc">}</span><span class="ss">, ngram_range=</span><span class="sc">{</span>ngram_range<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb25-69"><a href="#cb25-69" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb25-70"><a href="#cb25-70" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> method.lower() <span class="op">==</span> <span class="st">"tsne"</span>:</span>
+<span id="cb25-71"><a href="#cb25-71" aria-hidden="true" tabindex="-1"></a>                reducer <span class="op">=</span> TSNE(n_components<span class="op">=</span><span class="dv">2</span>, perplexity<span class="op">=</span>perplexity, random_state<span class="op">=</span>random_state, n_iter<span class="op">=</span><span class="dv">500</span>)</span>
+<span id="cb25-72"><a href="#cb25-72" aria-hidden="true" tabindex="-1"></a>                reduced_data <span class="op">=</span> reducer.fit_transform(X_reduced)</span>
+<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="ss">f"t-SNE: max_features=</span><span class="sc">{</span>max_features<span class="sc">}</span><span class="ss">, ngram_range=</span><span class="sc">{</span>ngram_range<span class="sc">}</span><span class="ss">, perplexity=</span><span class="sc">{</span>perplexity<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb25-74"><a href="#cb25-74" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb25-75"><a href="#cb25-75" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb25-76"><a href="#cb25-76" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Invalid method. Choose 'pca' or 'tsne'."</span>)</span>
+<span id="cb25-77"><a href="#cb25-77" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Prepare hover data</span></span>
+<span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a>            hover_data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb25-80"><a href="#cb25-80" aria-hidden="true" tabindex="-1"></a>                <span class="st">'reviewText'</span>: review_text,  <span class="co"># Original review text</span></span>
+<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a>            })</span>
+<span id="cb25-82"><a href="#cb25-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-83"><a href="#cb25-83" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Plot the reduced data with points colored by review rating</span></span>
+<span id="cb25-84"><a href="#cb25-84" aria-hidden="true" tabindex="-1"></a>            plot_embeddings(</span>
+<span id="cb25-85"><a href="#cb25-85" aria-hidden="true" tabindex="-1"></a>                reduced_data, </span>
+<span id="cb25-86"><a href="#cb25-86" aria-hidden="true" tabindex="-1"></a>                title, </span>
+<span id="cb25-87"><a href="#cb25-87" aria-hidden="true" tabindex="-1"></a>                labels<span class="op">=</span>review_ratings,  <span class="co"># Points are colored by review ratings</span></span>
+<span id="cb25-88"><a href="#cb25-88" aria-hidden="true" tabindex="-1"></a>                hover_data<span class="op">=</span>hover_data,</span>
+<span id="cb25-89"><a href="#cb25-89" aria-hidden="true" tabindex="-1"></a>                top_terms<span class="op">=</span>top_terms</span>
+<span id="cb25-90"><a href="#cb25-90" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb25-91"><a href="#cb25-91" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb25-92"><a href="#cb25-92" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb25-93"><a href="#cb25-93" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Failed for parameters: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-94"><a href="#cb25-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(</span>
+<span id="cb25-97"><a href="#cb25-97" aria-hidden="true" tabindex="-1"></a>    reviews<span class="op">=</span>reviews,            <span class="co"># Pass the full dataset</span></span>
+<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"tsne"</span>,              <span class="co"># Choose "tsne" for t-SNE or "pca" for PCA</span></span>
+<span id="cb25-99"><a href="#cb25-99" aria-hidden="true" tabindex="-1"></a>    sample_size<span class="op">=</span><span class="dv">5000</span>,           <span class="co"># Test on a sample of 2000 reviews</span></span>
+<span id="cb25-100"><a href="#cb25-100" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,            <span class="co"># Set a random state for reproducibility</span></span>
+<span id="cb25-101"><a href="#cb25-101" aria-hidden="true" tabindex="-1"></a>    perplexity<span class="op">=</span><span class="dv">100</span>,              <span class="co"># Set the perplexity for t-SNE</span></span>
+<span id="cb25-102"><a href="#cb25-102" aria-hidden="true" tabindex="-1"></a>    intermediate_pca<span class="op">=</span><span class="va">True</span>       <span class="co"># Apply PCA before t-SNE</span></span>
+<span id="cb25-103"><a href="#cb25-103" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Testing Parameters: max_features=500, ngram_range=(1, 2), min_df=1, max_df=0.9
 Applying intermediate PCA...</code></pre>
@@ -673,11 +991,25 @@ Applying intermediate PCA...</code></pre>
 <pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
 </div>
 </div>
+<p><strong>Original <code>plot_embeddings()</code> function that I gave to GPT-4o:</strong></p>
+<pre><code>def plot_embeddings(data, title, labels=None):
+    """
+    This function creates a scatterplot of t-SNE reduced, TF-IDF embedded text data
+
+    'data': np.array object (2D). contains our t-SNE output 
+    'title': the name for our plot
+    'labels': the condition we use to color our points (column in the data set)
+    """
+    plt.figure(figsize=(12, 6))
+    scatter = plt.scatter(data[:, 0], data[:, 1], c=labels, cmap="viridis", s=10, alpha=0.7)
+    plt.colorbar(scatter, label="Rating")
+    plt.title(title)
+    plt.xlabel("Dim 1")
+    plt.ylabel("Dim 2")
+    plt.show()</code></pre>
 
 
 
-</section>
-</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
@@ -701,6 +1033,12 @@ Applying intermediate PCA...</code></pre>
 </div>
 <div id="ref-eps" class="csl-entry" role="listitem">
 <div class="csl-left-margin">7. </div><div class="csl-right-inline"><a href="https://www.geeksforgeeks.org/dbscan-clustering-in-ml-density-based-clustering/">DBSCAN clustering in ML | density based clustering</a>.</div>
+</div>
+<div id="ref-gpt4o_textfunc" class="csl-entry" role="listitem">
+<div class="csl-left-margin">8. </div><div class="csl-right-inline"><span>“Prompt: Using a dictionary called ’params”</span> that contains the parameters used in my function reduce_and_visualize(), can you add a table containing said params to this plotting function [pasted]?‘ ChatGPT, version-4o, OpenAI, dec-11, 2024, chat.openai.com.</div>
+</div>
+<div id="ref-scikitTSNE" class="csl-entry" role="listitem">
+<div class="csl-left-margin">9. </div><div class="csl-right-inline"><a href="https://scikit-learn.org/dev/modules/generated/sklearn.manifold.TSNE.html">Scikit-learn TSNE documentation</a>.</div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
