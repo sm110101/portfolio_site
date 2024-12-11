@@ -308,7 +308,11 @@ window.Quarto = {
   <li><a href="#hierarchical-clustering-1" id="toc-hierarchical-clustering-1" class="nav-link" data-scroll-target="#hierarchical-clustering-1">Hierarchical Clustering</a></li>
   <li><a href="#dbscan-1" id="toc-dbscan-1" class="nav-link" data-scroll-target="#dbscan-1">DBSCAN</a></li>
   </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a>
+  <ul class="collapse">
+  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1215,7 +1219,10 @@ Applying t-SNE...</code></pre>
 </section>
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p><strong>Original <code>plot_embeddings()</code> function that I gave to GPT-4o:</strong></p>
+<section id="challenges" class="level2">
+<h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
+<p><span style="text-decoration: underline;"><strong>Plotting Parameters Table</strong></span></p>
+<p>As I outlined above, I had to leverage the help of OpenAI’s GPT-4o<span class="citation" data-cites="gpt4o_tablefunc"><sup><a href="#ref-gpt4o_tablefunc" role="doc-biblioref">11</a></sup></span> model to assist in writing code that produces a side table containing the parameters used in the <code>reduce_and_visualize()</code> function. Here is the original function that I pasted into that prompt:</p>
 <pre><code>def plot_embeddings(data, title, labels=None):
     """
     This function creates a scatterplot of t-SNE reduced, TF-IDF embedded text data
@@ -1231,9 +1238,16 @@ Applying t-SNE...</code></pre>
     plt.xlabel("Dim 1")
     plt.ylabel("Dim 2")
     plt.show()</code></pre>
+<p><span style="text-decoration: underline;"><strong>DBSCAN Problems</strong></span></p>
+<p>It is highly likely (even after processing) that my <code>reviewTextClean</code> column may typos, informal language, or otherwise irrelevant content that may impede model performance down the line.</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p><strong>Next Section: <a href="../../technical-details/supervised-learning/main.html">Supervised Learning</a></strong></p>
 
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
@@ -1259,13 +1273,16 @@ Applying t-SNE...</code></pre>
 <div class="csl-left-margin">7. </div><div class="csl-right-inline"><a href="https://www.geeksforgeeks.org/dbscan-clustering-in-ml-density-based-clustering/">DBSCAN clustering in ML | density based clustering</a>.</div>
 </div>
 <div id="ref-gpt4o_textfunc" class="csl-entry" role="listitem">
-<div class="csl-left-margin">8. </div><div class="csl-right-inline"><span>“Prompt: Using a dictionary called ’params”</span> that contains the parameters used in my function reduce_and_visualize(), can you add a table containing said params to this plotting function [pasted]?‘ ChatGPT, version-4o, OpenAI, dec-11, 2024, chat.openai.com.</div>
+<div class="csl-left-margin">8. </div><div class="csl-right-inline">‘Prompt: How can i optimize the execution speed of this function [pasted]?‘ ChatGPT, version-4o, OpenAI, dec-7, 2024, chat.openai.com.</div>
 </div>
 <div id="ref-scikitTSNE" class="csl-entry" role="listitem">
 <div class="csl-left-margin">9. </div><div class="csl-right-inline"><a href="https://scikit-learn.org/dev/modules/generated/sklearn.manifold.TSNE.html">Scikit-learn TSNE documentation</a>.</div>
 </div>
 <div id="ref-inertia" class="csl-entry" role="listitem">
 <div class="csl-left-margin">10. </div><div class="csl-right-inline"><a href="https://victorleungtw.com/2023/12/16/inertia/">Understanding inertia and silhouette coefficient - key metrics in clustering analysis</a>.</div>
+</div>
+<div id="ref-gpt4o_tablefunc" class="csl-entry" role="listitem">
+<div class="csl-left-margin">11. </div><div class="csl-right-inline"><span>“Prompt: Using a dictionary called ’params”</span> that contains the parameters used in my function reduce_and_visualize(), can you add a table containing said params to this plotting function [pasted]?‘ ChatGPT, version-4o, OpenAI, dec-11, 2024, chat.openai.com.</div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

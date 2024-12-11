@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Progress log – Sean Morris</title>
+<title>LLM usage log – Sean Morris</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -179,7 +199,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#member-1-sean" id="toc-member-1-sean" class="nav-link active" data-scroll-target="#member-1-sean">Member-1: Sean</a></li>
+  <li><a href="#brainstorming" id="toc-brainstorming" class="nav-link active" data-scroll-target="#brainstorming">Brainstorming</a></li>
+  <li><a href="#writing" id="toc-writing" class="nav-link" data-scroll-target="#writing">Writing:</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code:</a></li>
   </ul>
 </nav>
     </div>
@@ -188,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Progress log</h1>
+<h1 class="title">LLM usage log</h1>
 </div>
 
 
@@ -205,68 +227,48 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This page serves as a progress log for my DSAN5000 final project</p>
-<section id="member-1-sean" class="level2">
-<h2 class="anchored" data-anchor-id="member-1-sean">Member-1: <a href="../index.html">Sean</a></h2>
-<p><strong>Weekly project contribution log:</strong></p>
-<p><strong>12-14-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox">Improve website formatting</label></li>
-<li><label><input type="checkbox">Correct typos/poor writing on all pages</label></li>
+<p>This page can serve as a “catch-all” for LLM use cases that don’t involve content creation, such as reformatting your own ideas, commenting code that you wrote, or proofreading text, PDF summarization.</p>
+<p>LLM tools were used in the following way for the tasks below</p>
+<section id="brainstorming" class="level2">
+<h2 class="anchored" data-anchor-id="brainstorming">Brainstorming</h2>
+<ul>
+<li>To create the initial idea, LLM tools were used to brainstorm ideas and provide feedback and refine the project plan.</li>
 </ul>
-<p><strong>12-13-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox">Quadruple check project guidelines to ensure proper adherence</label></li>
-<li><label><input type="checkbox">Finish first draft of report</label></li>
+</section>
+<section id="writing" class="level2">
+<h2 class="anchored" data-anchor-id="writing">Writing:</h2>
+<ul>
+<li>Reformating text from bulleted lists into proses</li>
+<li>Proofreading</li>
+<li>Text summarization for literature review</li>
 </ul>
-<p><strong>12-12-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox">Outline plan for report (build out structure, collect meaningful img/assets)</label></li>
-<li><label><input type="checkbox">Finish first draft of supervised learning page</label></li>
+</section>
+<section id="code" class="level2">
+<h2 class="anchored" data-anchor-id="code">Code:</h2>
+<ul>
+<li><p>On the <a href="../technical-details/data-cleaning/main.html">Data Cleaning</a> page, I leveraged the use of OpenAI’s GPT-4o model to help streamline the execution time of my <code>clean_review()</code> function. Below is the formal citation<span class="citation" data-cites="gpt4o_textfunc"><sup><a href="#ref-gpt4o_textfunc" role="doc-biblioref">1</a></sup></span>.</p></li>
+<li><p>On the <a href="../technical-details/eda/main.html">EDA</a> page, I use GPT-4o to help with formatting visualizations, including setting up a grid structure for my subplots<span class="citation" data-cites="GridVisualization"><sup><a href="#ref-GridVisualization" role="doc-biblioref">2</a></sup></span> and removing an unwanted blank plot in the bottom right-hand corner<span class="citation" data-cites="SubplotRemoval"><sup><a href="#ref-SubplotRemoval" role="doc-biblioref">3</a></sup></span></p></li>
+<li><p>On the <a href="../technical-details/unsupervised-learning/main.html">Unsupervised Learning</a> page, I use GPT-4o to help me improve the ‘plot_embeddings()’ function by adding a table containing parameters that I assigned in the ‘reduce_and_visualize()’ function<span class="citation" data-cites="gpt4o_tablefunc"><sup><a href="#ref-gpt4o_tablefunc" role="doc-biblioref">4</a></sup></span></p></li>
 </ul>
-<p><strong>12-11-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox">Ouline plan for structuring supervised learning</label></li>
-<li><label><input type="checkbox">Finish first draft of unsupervised learning page</label></li>
-</ul>
-<p><strong>12-10-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox" checked="">Begin unsupervised learning page (Write-ups on PCA t-SNE, Clustring techniques)</label></li>
-</ul>
-<p><strong>12-9-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox" checked="">add a picture of review data in raw JSON format</label></li>
-<li><label><input type="checkbox" checked="">Outline a plan for structuring unsupervised model page</label></li>
-<li><label><input type="checkbox" checked="">Finish first draft of EDA page</label></li>
-</ul>
-<p><strong>12-8-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox" checked="">Begin brainstorming ideas for EDA page</label></li>
-</ul>
-<p><strong>12-7-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox" checked="">Re-download data using webscraping method via requests libary</label></li>
-<li><label><input type="checkbox" checked="">Finish first draft of Data Cleaning page</label></li>
-</ul>
-<p><strong>12-6-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox" checked="">Finish first draft of Data Collection page</label></li>
-<li><label><input type="checkbox" checked="">Finished literature reviews for articles</label></li>
-</ul>
-<p><strong>12-5-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox" checked="">Fix problems with GU Domains publishing</label></li>
-</ul>
-<p><strong>10-16-2024</strong></p>
-<ul class="task-list">
-<li><label><input type="checkbox" checked="">Download Amazon reviews Corpus for initial look at the data</label></li>
-<li><label><input type="checkbox" checked="">Explore initial topics and brainstorm methods</label></li>
-</ul>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-gpt4o_textfunc" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">‘Prompt: How can i optimize the execution speed of this function [pasted]?‘ ChatGPT, version-4o, OpenAI, dec-7, 2024, chat.openai.com.</div>
+</div>
+<div id="ref-GridVisualization" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">‘Prompt: I want to visualize data for a variable that has a varying number of unique categories. The visualizations should be laid out in a grid format, with two columns per row and the number of rows calculated dynamically based on the number of unique categories. Can you help me write code that determines the number of rows and columns required for such a grid layout?‘ ChatGPT, version-4o, OpenAI, dec-9, 2024, chat.openai.com.</div>
+</div>
+<div id="ref-SubplotRemoval" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">‘Prompt: How can i dynamically remove unused subplots from a grid to clean up the visualization when there are fewer categories than grid spaces?‘ ChatGPT, version-4o, OpenAI, dec-9, 2024, chat.openai.com.</div>
+</div>
+<div id="ref-gpt4o_tablefunc" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline"><span>“Prompt: Using a dictionary called ’params”</span> that contains the parameters used in my function reduce_and_visualize(), can you add a table containing said params to this plotting function [pasted]?‘ ChatGPT, version-4o, OpenAI, dec-11, 2024, chat.openai.com.</div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -28,7 +28,7 @@ This page serves as a progress log for my DSAN5000 final project
 **12-11-2024**
 
 * [ ] Ouline plan for structuring supervised learning
-* [ ] Finish first draft of unsupervised learning page
+* [X] Finish first draft of unsupervised learning page
 
 **12-10-2024**
 

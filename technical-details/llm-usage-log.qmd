@@ -21,3 +21,5 @@ LLM tools were used in the following way for the tasks below
 * On the [Data Cleaning](../technical-details/data-cleaning/main.ipynb) page, I leveraged the use of OpenAI's GPT-4o model to help streamline the execution time of my `clean_review()` function. Below is the formal citation[@gpt4o_textfunc].
 
 * On the [EDA](../technical-details/eda/main.ipynb) page, I use GPT-4o to help with formatting visualizations, including setting up a grid structure for my subplots[@GridVisualization] and removing an unwanted blank plot in the bottom right-hand corner[@SubplotRemoval]
+
+* On the [Unsupervised Learning](../technical-details/unsupervised-learning/main.ipynb) page, I use GPT-4o to help me improve the 'plot_embeddings()' function by adding a table containing parameters that I assigned in the 'reduce_and_visualize()' function[@gpt4o_tablefunc]

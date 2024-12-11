@@ -200,7 +200,7 @@
     "href": "technical-details/llm-usage-log.html#code",
     "title": "LLM usage log",
     "section": "Code:",
-    "text": "Code:\n\nOn the Data Cleaning page, I leveraged the use of OpenAI’s GPT-4o model to help streamline the execution time of my clean_review() function. Below is the formal citation1.\nOn the EDA page, I use GPT-4o to help with formatting visualizations, including setting up a grid structure for my subplots2 and removing an unwanted blank plot in the bottom right-hand corner3"
+    "text": "Code:\n\nOn the Data Cleaning page, I leveraged the use of OpenAI’s GPT-4o model to help streamline the execution time of my clean_review() function. Below is the formal citation1.\nOn the EDA page, I use GPT-4o to help with formatting visualizations, including setting up a grid structure for my subplots2 and removing an unwanted blank plot in the bottom right-hand corner3\nOn the Unsupervised Learning page, I use GPT-4o to help me improve the ‘plot_embeddings()’ function by adding a table containing parameters that I assigned in the ‘reduce_and_visualize()’ function4"
   },
   {
     "objectID": "technical-details/unsupervised-learning/instructions.html",
@@ -677,6 +677,20 @@
     "title": "Unsupervised Learning",
     "section": "DBSCAN",
     "text": "DBSCAN\nIn the beginning of this page, I predicted that DBSCAN would outperform the other two clustering methods. Unfortunately, the results I obtained using DBSCAN are rather underwhelming. There is pretty much zero separation between the over 600 clusters. The data points are scattered, with no clear structure or meaningful differentiation between the clusters. Upon further reflection, I believe the issue stems from not optimizing the eps and min_samples hyperparameters effectively. DBSCAN’s reliance on these parameters makes it sensitive to how they are set, and any miscalibration can result in an over-segmentation of the data or a failure to detect meaningful clusters. While this plot is pretty to look at, the clusters don’t provde any real context into the structure of the data points. In the future, I plan to revisit the parameter optimization above with hopes to improve this model’s performace, but for now, I leave you with this storm cloud of data.\n\n# DBSCAN Plotly Plot\nfig_dbscan = px.scatter(reduced_df, x='Dim1', y='Dim2', color='DBSCAN_Cluster', \n                        hover_data=['Rating', 'Most_Important_Term'], title=\"DBSCAN Clustering\")\nfig_dbscan.show()\n\nFig 1: DBSCAN Results"
+  },
+  {
+    "objectID": "technical-details/unsupervised-learning/main.html#challenges",
+    "href": "technical-details/unsupervised-learning/main.html#challenges",
+    "title": "Unsupervised Learning",
+    "section": "Challenges",
+    "text": "Challenges\nPlotting Parameters Table\nAs I outlined above, I had to leverage the help of OpenAI’s GPT-4o11 model to assist in writing code that produces a side table containing the parameters used in the reduce_and_visualize() function. Here is the original function that I pasted into that prompt:\ndef plot_embeddings(data, title, labels=None):\n    \"\"\"\n    This function creates a scatterplot of t-SNE reduced, TF-IDF embedded text data\n\n    'data': np.array object (2D). contains our t-SNE output \n    'title': the name for our plot\n    'labels': the condition we use to color our points (column in the data set)\n    \"\"\"\n    plt.figure(figsize=(12, 6))\n    scatter = plt.scatter(data[:, 0], data[:, 1], c=labels, cmap=\"viridis\", s=10, alpha=0.7)\n    plt.colorbar(scatter, label=\"Rating\")\n    plt.title(title)\n    plt.xlabel(\"Dim 1\")\n    plt.ylabel(\"Dim 2\")\n    plt.show()\nDBSCAN Problems\nIt is highly likely (even after processing) that my reviewTextClean column may typos, informal language, or otherwise irrelevant content that may impede model performance down the line."
+  },
+  {
+    "objectID": "technical-details/unsupervised-learning/main.html#section",
+    "href": "technical-details/unsupervised-learning/main.html#section",
+    "title": "Unsupervised Learning",
+    "section": "",
+    "text": "Next Section: Supervised Learning"
   },
   {
     "objectID": "instructions/github-usage.html",
