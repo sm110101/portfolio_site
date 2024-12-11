@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Welcome – Sean Morris</title>
+<title>Data Collection – Sean Morris</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -43,25 +77,25 @@ div.csl-indent {
 }</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./assets/sm_logo.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/sm_logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -90,35 +124,6 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -129,10 +134,10 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./assets/sm_logo.png" alt="" class="navbar-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/sm_logo.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Sean Morris</span>
     </a>
   </div>
@@ -143,15 +148,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./instructions/overview.html"> 
+    <a class="nav-link" href="../../instructions/overview.html"> 
 <span class="menu-text">Instructions</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./report/report.html"> 
+    <a class="nav-link" href="../../report/report.html"> 
 <span class="menu-text">Report</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -160,31 +165,31 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-technical-details">    
         <li>
-    <a class="dropdown-item" href="./technical-details/data-collection/main.html">
+    <a class="dropdown-item" href="../../technical-details/data-collection/main.html">
  <span class="dropdown-text">Data-collection</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./technical-details/data-cleaning/main.html">
+    <a class="dropdown-item" href="../../technical-details/data-cleaning/main.html">
  <span class="dropdown-text">Data-cleaning</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./technical-details/eda/main.html">
+    <a class="dropdown-item" href="../../technical-details/eda/main.html">
  <span class="dropdown-text">Exploratory Data Analysis</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./technical-details/unsupervised-learning/main.html">
+    <a class="dropdown-item" href="../../technical-details/unsupervised-learning/main.html">
  <span class="dropdown-text">Unsupervised Learning</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./technical-details/supervised-learning/main.html">
+    <a class="dropdown-item" href="../../technical-details/supervised-learning/main.html">
  <span class="dropdown-text">Supervised Learning</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./technical-details/progress-log.html">
+    <a class="dropdown-item" href="../../technical-details/progress-log.html">
  <span class="dropdown-text">Progress Log</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./technical-details/llm-usage-log.html">
+    <a class="dropdown-item" href="../../technical-details/llm-usage-log.html">
  <span class="dropdown-text">LLM usage Log</span></a>
   </li>  
     </ul>
@@ -228,22 +233,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#purpose-and-scope" id="toc-purpose-and-scope" class="nav-link active" data-scroll-target="#purpose-and-scope">Purpose and Scope</a></li>
-  <li><a href="#about-me" id="toc-about-me" class="nav-link" data-scroll-target="#about-me">🔍 About Me</a></li>
-  <li><a href="#final-project" id="toc-final-project" class="nav-link" data-scroll-target="#final-project">📊 Final Project</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#data-structure-and-format" id="toc-data-structure-and-format" class="nav-link" data-scroll-target="#data-structure-and-format">Data Structure and Format</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a>
   <ul class="collapse">
-  <li><a href="#observing-and-predicting-the-relationship-between-customer-reviews-and-ratings-on-amazon" id="toc-observing-and-predicting-the-relationship-between-customer-reviews-and-ratings-on-amazon" class="nav-link" data-scroll-target="#observing-and-predicting-the-relationship-between-customer-reviews-and-ratings-on-amazon">Observing and Predicting the Relationship Between Customer Reviews and Ratings on Amazon</a>
-  <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a></li>
-  <li><a href="#key-topics" id="toc-key-topics" class="nav-link" data-scroll-target="#key-topics">Key Topics</a></li>
+  <li><a href="#api-based-data-retrieval-using-requests-library" id="toc-api-based-data-retrieval-using-requests-library" class="nav-link" data-scroll-target="#api-based-data-retrieval-using-requests-library">API-Based Data Retrieval Using <code>requests</code> Library**</a></li>
+  <li><a href="#importing-packages-and-loading-data" id="toc-importing-packages-and-loading-data" class="nav-link" data-scroll-target="#importing-packages-and-loading-data">Importing Packages and Loading Data</a></li>
+  <li><a href="#zipping-data" id="toc-zipping-data" class="nav-link" data-scroll-target="#zipping-data">Zipping Data</a></li>
   </ul></li>
-  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">Literature Review</a>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a>
   <ul class="collapse">
-  <li><a href="#a-gpt-based-approach-for-sentiment-analysis-and-bakery-rating-prediction" id="toc-a-gpt-based-approach-for-sentiment-analysis-and-bakery-rating-prediction" class="nav-link" data-scroll-target="#a-gpt-based-approach-for-sentiment-analysis-and-bakery-rating-prediction">A GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction</a></li>
-  <li><a href="#machine-learning-based-new-approach-to-films-review" id="toc-machine-learning-based-new-approach-to-films-review" class="nav-link" data-scroll-target="#machine-learning-based-new-approach-to-films-review">Machine learning-based new approach to films review</a></li>
-  <li><a href="#incorporating-topic-membership-in-review-rating-prediction-from-unstructured-data-a-gradient-boosting-approach" id="toc-incorporating-topic-membership-in-review-rating-prediction-from-unstructured-data-a-gradient-boosting-approach" class="nav-link" data-scroll-target="#incorporating-topic-membership-in-review-rating-prediction-from-unstructured-data-a-gradient-boosting-approach">Incorporating Topic Membership in Review Rating Prediction from Unstructured Data: A Gradient Boosting Approach</a></li>
-  </ul></li>
+  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -253,7 +254,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Welcome</h1>
+<h1 class="title">Data Collection</h1>
 </div>
 
 
@@ -270,107 +271,141 @@ window.Quarto = {
 </header>
 
 
+<p><br> <br></p>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>The data from this project is open source and available via a github repository. A very big thank you to the repo owner, <a href="https://x.com/jianmo_ni">Jianmo Ni</a>, who is a former UCSD student that compiled over 233.1 million amazon reviews for their paper on recommendation systems<span class="citation" data-cites="DataArticle"><sup><a href="#ref-DataArticle" role="doc-biblioref">1</a></sup></span>.</p>
+<p>The repo owner offers this data to the public under one condition - that anyone who uses it cites their original work, which I have included in the references section below. Alternatively, this <a href="https://cseweb.ucsd.edu/~jmcauley/pdfs/emnlp19a.pdf">link</a> will take you directly to the original paper that used this data. The raw data used in this report can be downloaded at the original <a href="https://nijianmo.github.io/amazon/index.html">repo</a>.</p>
+<p>Due to limited storage and computational capacity, I have elected to only conduct my analysis on the “5-core” version of Amazon Electronics reviews within the repository. The raw data is in json format, and therefore needs to be parsed and stored in a dataframe before any modeling or EDA can be done. For this process, I use the <code>parse()</code> and <code>getDF()</code> functions defined in the repository which is linked above.</p>
+<p>In case you are not familiar, the term “5-core” is in reference to dense subsets, and in this case it means that the data below has been filtered such that the remaining users and items have 5 reviews each.</p>
+</section>
+<section id="data-structure-and-format" class="level1">
+<h1>Data Structure and Format</h1>
+<p>Before we begin collection and clearning, here an example of a single json object contained in the raw data file:</p>
 <p><br></p>
-<blockquote class="blockquote">
-<h4 id="the-only-way-to-do-great-work-is-to-love-what-you-do" class="anchored">“The only way to do great work is to love what you do”</h4>
-<p><strong>- Steve Jobs</strong></p>
-</blockquote>
+<p><img src="../../xtra/multiclass-portfolio-website/images/raw_data_json.png" class="img-fluid" width="800"></p>
+<p>Source: <a href="https://cseweb.ucsd.edu/~jmcauley/datasets/amazon/links.html">The repo above</a></p>
 <p><br></p>
-<section id="purpose-and-scope" class="level1">
-<h1>Purpose and Scope</h1>
-<p>This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Analytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please start <a href="./technical-details/data-collection/main.html">here</a>.</p>
+<p>Within this dictionary, we observe the following characteristics: - <code>overall</code>: Rating - <code>vote</code>: Amount of community votes given to the review. Users will often vote when they find a review helpful - <code>verified</code>: Boolean variable that indicates whether an account is verified or not - <code>reviewTime</code>: Time of the review (raw) - <code>reviewerID</code>: ID of the reviewer - <code>asin</code>: Id of the product - <code>style</code>: Key-value object. In this case, describing product attributes - <code>reviewerName</code>: Name of the reviewer - <code>reviewText</code>: Raw, unprocessed text contents of the review - <code>summary</code>: The title of the user’s review - <code>unixReviewTime</code>: Time of the review in unix time (Measures time “based by the number of non-leap seconds that have elapsed since 00:00:00 UTC”)<span class="citation" data-cites="UnixTime"><sup><a href="#ref-UnixTime" role="doc-biblioref">2</a></sup></span>. - <code>image</code>: Image path (if any)</p>
+<p>The raw dataset contains a total of around 6.7 million of these entries (one for each review).</p>
 </section>
-<section id="about-me" class="level1">
-<h1>🔍 About Me</h1>
-<p><img src="xtra/multiclass-portfolio-website/images/my_photo.png" class="img-fluid" width="400"></p>
-<p>Hi, I’m Sean Morris — a data science graduate student at Georgetown University with a passion for blending analytics and creativity to solve complex problems. My background spans economics, software development and data science, and blockchain technology. I thrive at the intersection of technology and innovation, having developed tools like the Python packages and predictive models for Formula One races.</p>
-<p>Previously, I co-founded Georgetown Blockchain, revitalizing the organization into a vibrant hub for tech enthusiasts. Currently, I’m delving into natural language processing, probabilistic modeling, and novel ways to value blockchain ecosystems though the lens of economics.</p>
-<p>When I’m not coding or exploring new tech, you might find me running, fishing with my family down in florida, or searching for the next meme coin fad. Whether it’s optimizing workflows or brainstorming product-translatable ideas, I’m driven to turn concepts into impactful solutions.</p>
+<section id="code" class="level1">
+<h1>Code</h1>
+<section id="api-based-data-retrieval-using-requests-library" class="level2">
+<h2 class="anchored" data-anchor-id="api-based-data-retrieval-using-requests-library">API-Based Data Retrieval Using <code>requests</code> Library**</h2>
+<p>The following code uses an API-based retrieval method to download the data directly from the github repository. The pull code itself is provided by OpenAI’s GPT-4o Model<span class="citation" data-cites="gpt4o"><sup><a href="#ref-gpt4o" role="doc-biblioref">3</a></sup></span>. After numerous attempts at debugging and testing the code in another environment, the LLM added a tweak in the code to disable SSL verification. While this ended up working, this is an unsafe practice, and you should always use discretion before trying it in your own analysis.</p>
+<div id="cell-5" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests <span class="co">#Importing requests library for  api-based retrieval</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-6" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dataset URL</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://jmcauley.ucsd.edu/data/amazon_v2/categoryFilesSmall/Electronics_5.json.gz"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Output file</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>output_file <span class="op">=</span> <span class="st">"../../data/raw-data/Electronics_5.json.gz"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the dataset with SSL verification disabled</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, stream<span class="op">=</span><span class="va">True</span>, verify<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if the request was successful</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(output_file, <span class="st">"wb"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> chunk <span class="kw">in</span> response.iter_content(chunk_size<span class="op">=</span><span class="dv">1024</span>):</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="bu">file</span>.write(chunk)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Dataset downloaded and saved as </span><span class="sc">{</span>output_file<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Failed to download dataset. HTTP Status Code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dataset downloaded and saved as ../../data/raw-data/Electronics_5.json.gz</code></pre>
+</div>
+</div>
 </section>
-<section id="final-project" class="level1">
-<h1>📊 Final Project</h1>
-<section id="observing-and-predicting-the-relationship-between-customer-reviews-and-ratings-on-amazon" class="level2">
-<h2 class="anchored" data-anchor-id="observing-and-predicting-the-relationship-between-customer-reviews-and-ratings-on-amazon">Observing and Predicting the Relationship Between Customer Reviews and Ratings on Amazon</h2>
-<section id="overview" class="level3">
-<h3 class="anchored" data-anchor-id="overview">Overview</h3>
-<p>In this project, I look into a moderately large corpus of Amazon product reviews under the “Electronics” category. The raw dataset is available online <a href="https://nijianmo.github.io/amazon/index.html">via</a> a public github repository owned by former UCSD student <a href="https://x.com/jianmo_ni">Jianmo Ni</a> who, alongside their colleagues, helped to produce a massive database containing over 233 million individual Amazon reviews. To manage computational constraints (as this project must run on my personal machine), I analyze a subset of 100,000 electronics reviews. My overarching goals for this project are to explore user sentiment, product perceptions, and the high-dimensional structures and relationships that underpin textual data.</p>
-<p>I begin my analysis by <a href="./technical-details/data-collection/main.html">collecting</a> and <a href="./technical-details/data-cleaning/main.html">preprocessing</a> the data using API-based retrieval for collection, and standard natural language preprocessing techniques for cleaning. Following that, I dive into exploratory data analysis (<a href="./technical-details/eda/main.html">EDA</a>) where I discover interesting patterns with regards to how pairs of words show up across different product review ratings (1-5). Finally, I tie the study together by applying unsupervised and supervised learning methods to the data. In the <a href="./technical-details/unsupervised-learning/main.html">unsupervised learning</a> section, I set out with the goal of understanding where certain product groups and terms cluster together, and whether these clusters are useful in predicting a product’s review rating. In the <a href="./technical-details/supervised-learning/main.html">supervised learning</a> section, I try to predict a review’s sentiment and rating using regression and classification methods.</p>
-</section>
-<section id="research-questions" class="level3">
-<h3 class="anchored" data-anchor-id="research-questions">Research Questions</h3>
-<p>This project focuses on answering several core questions:</p>
+<section id="importing-packages-and-loading-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-packages-and-loading-data">Importing Packages and Loading Data</h2>
+<p>Here, we begin the process by loading in our data. as stated above, The initial <code>parse()</code> and <code>getDF()</code> functions are borrowed from the link above as well. However, when initially trying to load and parse this data, I ran into serious memory issues that rendered my machine unable to successfully convert the data into a dataframe. Therefore, I elected to use the <code>orjson</code> library over the traditional <code>json</code>, which cut my import time dramatically. For reference to that repository, please head <a href="https://github.com/ijl/orjson">here</a>.</p>
+<div id="cell-8" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing necessary packages</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> orjson</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading in the data</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Defining function that parses the json file</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_orjson(path):</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> gzip.<span class="bu">open</span>(path, <span class="st">'rb'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> g:</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> orjson.loads(l)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Defining function to load the json data into a pandas dataframe</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getDF_orjson(path):</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> {}</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> d <span class="kw">in</span> parse_orjson(path):</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        df[i] <span class="op">=</span> d</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame.from_dict(df, orient<span class="op">=</span><span class="st">'index'</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieving data</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> getDF_orjson(<span class="st">'../../data/raw-data/Electronics_5.json.gz'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Checking Dimensions</strong></p>
 <ul>
-<li>Is it possible to predict a product’s review rating based solely on a short piece of review text?</li>
-<li>How can we effectively extract contextual information about different products using only text?</li>
-<li>What patterns in sentiment (polarity and subjectivity) can we discover accross different review ratings?</li>
-<li>Can we detect sarcasm and negation patterns in reviews?</li>
-<li>What are some of the most common linguistic patterns associated with different review scores?</li>
+<li>Now that the data has been loaded, let’s check the shape</li>
+</ul>
+<div id="cell-11" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing the data shape</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>(6739590, 12)</code></pre>
+</div>
+</div>
+<ul>
+<li>6,739,590 reviews, which coincides with the count in the original repository.</li>
 </ul>
 </section>
-<section id="key-topics" class="level3">
-<h3 class="anchored" data-anchor-id="key-topics">Key Topics</h3>
-<p>For the full scope of each of these topics, I link to the page where they get used.</p>
-<p><strong>Text Embedding</strong></p>
+<section id="zipping-data" class="level2">
+<h2 class="anchored" data-anchor-id="zipping-data">Zipping Data</h2>
 <ul>
-<li><a href="./technical-details/eda/main.html">Bag-of-Words/Document Term Matrix</a></li>
-<li><a href="./technical-details/unsupervised-learning/main.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a></li>
+<li>With that out of the way, we can zip up our data and continue on with the process</li>
 </ul>
-<p><strong>Dimension Reduction</strong></p>
+<div id="cell-15" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'../../data/raw-data/ElectronicsReviews.csv.gz'</span>, index<span class="op">=</span><span class="va">False</span>, compression<span class="op">=</span><span class="st">'gzip'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Moving Forward</strong></p>
 <ul>
-<li><a href="./technical-details/unsupervised-learning/main.html">T-Distributed Stochastic Neighbor Embedding (t-SNE)</a></li>
-<li><a href="./technical-details/unsupervised-learning/main.html">Principal Components Analysis (PCA)</a></li>
-</ul>
-<p><strong>Clustering</strong></p>
-<ul>
-<li><a href="./technical-details/unsupervised-learning/main.html">KMeans Clustering</a></li>
-<li><a href="./technical-details/unsupervised-learning/main.html">Hierarchical Clustering</a></li>
-<li><a href="./technical-details/unsupervised-learning/main.html">DBSCAN</a></li>
+<li>Now that our data has been successfully collected and loaded, we can now move on to cleaning it in the <a href="../../technical-details/data-cleaning/instructions.html">next</a> section.</li>
 </ul>
 </section>
 </section>
-<section id="literature-review" class="level2">
-<h2 class="anchored" data-anchor-id="literature-review">Literature Review</h2>
-<section id="a-gpt-based-approach-for-sentiment-analysis-and-bakery-rating-prediction" class="level3">
-<h3 class="anchored" data-anchor-id="a-gpt-based-approach-for-sentiment-analysis-and-bakery-rating-prediction">A GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction</h3>
-<p>Magdelano et al.&nbsp;take adopt an intriguing angle in their approach to modeling sentiment analysis in text. In the study, they work with bakery reviews collected from Google Places data. In their approach, they construct a model that uses OpenAI’s GPT-3.5-Turbo model as a “linguistic component” that takes on the task of labelling sentiments for each text input<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">1</a></sup></span>. From there, the authors feed the outputs into a multilayer perceptron (in layman’s, “a neural network that can be used to perform regression”)<span class="citation" data-cites="MLPDefinintion"><sup><a href="#ref-MLPDefinintion" role="doc-biblioref">2</a></sup></span> used to offer a final star-based prediction on a given review. The authors use the popular 5-point Likert Scale (Excellent, Good, Neutral, Bad, Horrible) within the context of their assigned dataset categories: Flavor (F), Variety (V), Freshness of Bread (FoB), Customer Service (CS), and Price (P)<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">1</a></sup></span>. The authors note their initial struggles with high polarity in the data. In other words, they encountered a disproportionate amount of five-star ratings in comparison to others. In order to account for these imbalances, the researchers used an approach called undersampling in which they selectively remove observations with the skewed characteristic before training and testing the model<span class="citation" data-cites="Magdelano2024"><sup><a href="#ref-Magdelano2024" role="doc-biblioref">1</a></sup></span>. In their conclusion, they do not cite any notable differences in model performance between the full and filtered samples. Finally the researchers consistently identified the computational costs of including both a LLM and MLP layer in their model.</p>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<p>In this section, I loaded in raw data in JSON form containing a corppus of over 6 million Amazon product reviews under the ‘Electronics’ category. With the help of custom functions provided in the dataset’s source repository, I parsed the data and passed it into a pandas dataframe. As a final step, I zipped the file and moved it into the <code>data/raw-data/</code> directory.</p>
+<section id="challenges" class="level2">
+<h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
+<p><span style="text-decoration: underline;"><strong>Memory and Processing Bottlenecks</strong></span></p>
+<p>Due to the massive size of the raw data file, I had to try a bunch of new methods to successfully load it in. In the end, I elected to use a refined version of the <code>json</code> package called <a href="https://github.com/ijl/orjson"><code>orjson</code></a>. Where <code>json</code> is the base python library for working with JSON formatted files, <code>orjson</code> is a third-party library build in Rust, and optimized for procedures that require rapid serialization of large-scale JSON files.</p>
 </section>
-<section id="machine-learning-based-new-approach-to-films-review" class="level3">
-<h3 class="anchored" data-anchor-id="machine-learning-based-new-approach-to-films-review">Machine learning-based new approach to films review</h3>
-<p>In this report, the authors set forth with the goal to develop a supervised learning model that accurately classifies the sentiment of a given set of movie reviews as either positive or negative. They source around 50,000 reviews from an IMDB dataset, where the amount of positive and negative sentiment-labelled records are approximately equal. For their feature extraction process, the authors elect use term frequency (TF) and term frequency-inverse document frequency (TF-IDF), where “term-frequency” refers to the number of appearances a given word or term has in a document and “inverse document frequency” is calculated by taking the log of the ratio between the total number of documents analyzed and the number of documents containing the given term. Finally, TF-IDF is the product of these two metrics<span class="citation" data-cites="TFIDF"><sup><a href="#ref-TFIDF" role="doc-biblioref">3</a></sup></span>.</p>
-<p>In equation form<span class="citation" data-cites="TFIDF"><sup><a href="#ref-TFIDF" role="doc-biblioref">3</a></sup></span>: <span class="math display">\[
-\text{TF}(t,d) = \frac{\text{Number of times term t appears in document d}}{\text{Total number of terms in document d}}
-\]</span> <span class="math display">\[
-\text{IDF}(t,D) = log_{e}\frac{\text{Total number of documents D in corpus}}{\text{Number of documents containing term t}}
-\]</span> <span class="math display">\[
-\text{TF-IDF} = TF(t,d) \cdot IDF(t,D)
-\]</span></p>
-<p>From there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accuracy (88.33%)<span class="citation" data-cites="Jassim2023"><sup><a href="#ref-Jassim2023" role="doc-biblioref">4</a></sup></span></p>
-</section>
-<section id="incorporating-topic-membership-in-review-rating-prediction-from-unstructured-data-a-gradient-boosting-approach" class="level3">
-<h3 class="anchored" data-anchor-id="incorporating-topic-membership-in-review-rating-prediction-from-unstructured-data-a-gradient-boosting-approach">Incorporating Topic Membership in Review Rating Prediction from Unstructured Data: A Gradient Boosting Approach</h3>
-<p>Authors Yang et al.&nbsp;leverage a bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat<span class="citation" data-cites="yang2023"><sup><a href="#ref-yang2023" role="doc-biblioref">5</a></sup></span>. This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predict amazon customer review scores across six million reviews. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are extracting semantic information from a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as features in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores<span class="citation" data-cites="yang2023"><sup><a href="#ref-yang2023" role="doc-biblioref">5</a></sup></span>.</p>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p><strong>Next Section: <a href="../../technical-details/data-cleaning/main.html">Data Cleaning</a></strong></p>
 
 
 
-</section>
 </section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
-<div id="ref-Magdelano2024" class="csl-entry" role="listitem">
-<div class="csl-left-margin">1. </div><div class="csl-right-inline">Magdaleno, D., Montes, M., Estrada, B. &amp; Ochoa-Zezzatti, A. A GPT-based approach for sentiment analysis and bakery rating prediction. in <em>Advances in computational intelligence. MICAI 2023 international workshops</em> (eds. Calvo, H. et al.) 61–76 (Springer Nature Switzerland, 2024).</div>
+<div id="ref-DataArticle" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Jianmo Ni, J. M., Jiacheng Li. Justifying recommendations using distantly-labeled reviews and fine-grained aspects. (2019).</div>
 </div>
-<div id="ref-MLPDefinintion" class="csl-entry" role="listitem">
-<div class="csl-left-margin">2. </div><div class="csl-right-inline"><a href="https://learn.flucoma.org/reference/mlpregressor/">MLPRegressor</a>.</div>
+<div id="ref-UnixTime" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline"><a href="https://en.wikipedia.org/wiki/Unix_time">Wikipedia - unix time</a>.</div>
 </div>
-<div id="ref-TFIDF" class="csl-entry" role="listitem">
-<div class="csl-left-margin">3. </div><div class="csl-right-inline"><a href="https://www.activeloop.ai/resources/glossary/term-frequency-inverse-document-frequency-tf-idf/#:~:text=The%20TF%20is%20calculated%20by,of%20documents%20containing%20the%20term">Term frequency-inverse document frequency (TF-IDF)</a>.</div>
-</div>
-<div id="ref-Jassim2023" class="csl-entry" role="listitem">
-<div class="csl-left-margin">4. </div><div class="csl-right-inline">Jassim, A., M. A. Machine learning-based new approach to films review. <em>Social Network Analysis and Mining</em> <strong>13</strong>, (2023).</div>
-</div>
-<div id="ref-yang2023" class="csl-entry" role="listitem">
-<div class="csl-left-margin">5. </div><div class="csl-right-inline">Yang, J. &amp; Korfiatis, N. et al. Incorporating topic membership in review rating prediction from unstructured data. <em>Annals of Operations Research</em> <strong>339</strong>, 631–662 (2023).</div>
+<div id="ref-gpt4o" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">ChatGPT, version-4o, OpenAI, may-13, 2024, chat.openai.com.</div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

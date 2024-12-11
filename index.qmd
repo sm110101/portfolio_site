@@ -11,7 +11,7 @@ title: Welcome
 
 # Purpose and Scope
 
-This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Anlytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please start [here](./technical-details/data-collection/main.ipynb).
+This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Analytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please start [here](./technical-details/data-collection/main.ipynb).
 
 
 # 🔍 About Me 
@@ -32,7 +32,7 @@ When I’m not coding or exploring new tech, you might find me running, fishing 
 
 In this project, I look into a moderately large corpus of Amazon product reviews under the "Electronics" category. The raw dataset is available online [via](https://nijianmo.github.io/amazon/index.html) a public github repository owned by former UCSD student [Jianmo Ni](https://x.com/jianmo_ni) who, alongside their colleagues, helped to produce a massive database containing over 233 million individual Amazon reviews. To manage computational constraints (as this project must run on my personal machine), I analyze a subset of 100,000 electronics reviews. My overarching goals for this project are to explore user sentiment, product perceptions, and the high-dimensional structures and relationships that underpin textual data. 
 
-I begin my analysis by [collecting](./technical-details/data-collection/main.ipynb) and [preprocessing](./technical-details/data-cleaning/main.ipynb) the data using API-based retreival for collection, and standard natural langauge preprocessing techniques for cleaning. Following that, I dive into exploratory data analysis ([EDA](./technical-details/eda/main.ipynb)) where I discover interesting patterns with regards to how pairs of words show up accross different product review ratings (1-5). Finally, I tie the study together by applying unsupervised and supervised learning methods to the data. In the [unsupervised learning](./technical-details/unsupervised-learning/main.ipynb) section, I set out with the goal of understanding where certain product groups and terms cluster together, and wether these clusters are useful in predicting a product's review rating. In the [supervised learning](./technical-details/supervised-learning/main.ipynb) section, I try to predict a review's sentiment and rating using regression and classification methods. 
+I begin my analysis by [collecting](./technical-details/data-collection/main.ipynb) and [preprocessing](./technical-details/data-cleaning/main.ipynb) the data using API-based retrieval for collection, and standard natural language preprocessing techniques for cleaning. Following that, I dive into exploratory data analysis ([EDA](./technical-details/eda/main.ipynb)) where I discover interesting patterns with regards to how pairs of words show up across different product review ratings (1-5). Finally, I tie the study together by applying unsupervised and supervised learning methods to the data. In the [unsupervised learning](./technical-details/unsupervised-learning/main.ipynb) section, I set out with the goal of understanding where certain product groups and terms cluster together, and whether these clusters are useful in predicting a product's review rating. In the [supervised learning](./technical-details/supervised-learning/main.ipynb) section, I try to predict a review's sentiment and rating using regression and classification methods. 
 
 ### Research Questions
 
@@ -42,20 +42,23 @@ This project focuses on answering several core questions:
 * How can we effectively extract contextual information about different products using only text?
 * What patterns in sentiment (polarity and subjectivity) can we discover accross different review ratings?
 * Can we detect sarcasm and negation patterns in reviews?
-* What are some of the most common linguistic patterns associaetd with different review scores?
+* What are some of the most common linguistic patterns associated with different review scores?
 
 ### Key Topics
 For the full scope of each of these topics, I link to the page where they get used.
 
 **Text Embedding**
+
 * [Bag-of-Words/Document Term Matrix](./technical-details/eda/main.ipynb)
 * [Term Frequency-Inverse Document Frequency (TF-IDF)](./technical-details/unsupervised-learning/main.ipynb)
 
 **Dimension Reduction**
+
 * [T-Distributed Stochastic Neighbor Embedding (t-SNE)](./technical-details/unsupervised-learning/main.ipynb)
 * [Principal Components Analysis (PCA)](./technical-details/unsupervised-learning/main.ipynb)
 
 **Clustering**
+
 * [KMeans Clustering](./technical-details/unsupervised-learning/main.ipynb)
 * [Hierarchical Clustering](./technical-details/unsupervised-learning/main.ipynb)
 * [DBSCAN](./technical-details/unsupervised-learning/main.ipynb)
@@ -68,7 +71,7 @@ For the full scope of each of these topics, I link to the page where they get us
 
 ### A GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction
 
-Magdelano et al. take adopt an intruiging angle in their approach to modeling sentiment analysis in text. In the study, they work with bakery reviews collected from Google Places data. In their approach, they construct a model that uses OpenAI's GPT-3.5-Turbo model as a "linguistic component" that takes on the task of labelling sentiments for each text input [@Magdelano2024]. From there, the authors feed the outputs into a multilayer perceptron (in laymans, "a neural network that can be used to perform regression")[@MLPDefinintion] used to offer a final star-based prediction on a given review. The authors use the popular 5-point Likert Scale (Excellent, Good, Neutral, Bad, Horrible) within the context of their assigned dataset categories: Flavor (F), Variety (V), Freshness of Bread (FoB), Customer Service (CS), and Price (P)[@Magdelano2024]. The authors note their initial struggles with high polarity in the data. In orther words, they encountered a disproportionate amount of five-star ratings in comparison to others. In order to account for these imbalances, the researchers used an approach called undersampling in which they selectively remove observations with the overpresent characteristic before training and testing the model[@Magdelano2024]. In their conclusion, they do not cite any notable differences in model performance between the full and filtered samples. Finally the reasearchers consistently identified the computational costs of including both a LLM and MLP layer in their model.
+Magdelano et al. take adopt an intriguing angle in their approach to modeling sentiment analysis in text. In the study, they work with bakery reviews collected from Google Places data. In their approach, they construct a model that uses OpenAI's GPT-3.5-Turbo model as a "linguistic component" that takes on the task of labelling sentiments for each text input [@Magdelano2024]. From there, the authors feed the outputs into a multilayer perceptron (in layman's, "a neural network that can be used to perform regression")[@MLPDefinintion] used to offer a final star-based prediction on a given review. The authors use the popular 5-point Likert Scale (Excellent, Good, Neutral, Bad, Horrible) within the context of their assigned dataset categories: Flavor (F), Variety (V), Freshness of Bread (FoB), Customer Service (CS), and Price (P)[@Magdelano2024]. The authors note their initial struggles with high polarity in the data. In other words, they encountered a disproportionate amount of five-star ratings in comparison to others. In order to account for these imbalances, the researchers used an approach called undersampling in which they selectively remove observations with the skewed characteristic before training and testing the model[@Magdelano2024]. In their conclusion, they do not cite any notable differences in model performance between the full and filtered samples. Finally the researchers consistently identified the computational costs of including both a LLM and MLP layer in their model.
 
 
 ### Machine learning-based new approach to films review
@@ -86,10 +89,10 @@ $$
 \text{TF-IDF} = TF(t,d) \cdot IDF(t,D)
 $$
 
-From there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accurary (88.33%)[@Jassim2023]
+From there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accuracy (88.33%)[@Jassim2023]
 
 
-### Incorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach
+### Incorporating Topic Membership in Review Rating Prediction from Unstructured Data: A Gradient Boosting Approach
 
 Authors Yang et al. leverage a bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat [@yang2023]. This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predict amazon customer review scores across six million reviews. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are extracting semantic information from a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as features in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores [@yang2023].
 
