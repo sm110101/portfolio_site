@@ -903,12 +903,12 @@ Applying t-SNE...</code></pre>
 <section id="kmeans-clustering" class="level3">
 <h3 class="anchored" data-anchor-id="kmeans-clustering">KMeans Clustering</h3>
 <p><strong>Elbow Method (inertia) and Silhouette Score</strong></p>
-<p>In case you are unfamiliar, “inertia” measures the squared cumulative distance of each data point to its respective cluster. For example, a lower value for inertia represents tighter clusters (or lower intracluster distances)<span class="citation" data-cites="inertia"><sup><a href="#ref-inertia" role="doc-biblioref"><strong>inertia?</strong></a></sup></span>. When selecting an optimal number of clusters based on inertia, it is important to select the lowest number of clusters for which inertia is most drastically reduced. The reason being that inertia will continue to decrease as we add more clusters. This is precisely why we refer to this process as the “Elbow Method,” as we selecting a number of clusters <span class="math inline">\(k\)</span> where the marginal reduction of inertia by adding another cluster begins to tend towards zero.</p>
+<p>In case you are unfamiliar, “inertia” measures the squared cumulative distance of each data point to its respective cluster. For example, a lower value for inertia represents tighter clusters (or lower intracluster distances)<span class="citation" data-cites="inertia"><sup><a href="#ref-inertia" role="doc-biblioref">10</a></sup></span>. When selecting an optimal number of clusters based on inertia, it is important to select the lowest number of clusters for which inertia is most drastically reduced. The reason being that inertia will continue to decrease as we add more clusters. This is precisely why we refer to this process as the “Elbow Method,” as we selecting a number of clusters <span class="math inline">\(k\)</span> where the marginal reduction of inertia by adding another cluster begins to tend towards zero.</p>
 <p><span class="math display">\[
 \text{Inertia} \ = \sum_{i=1}^{k} \sum_{i \in C_{i}} ||x - \mu_{i}||^2
 \]</span></p>
 <p>Source: <a href="https://medium.com/@jeffzyme/understanding-inertia-distortion-and-silhouette-scores-and-their-differences-key-metrics-for-458fe28ce2aa">Medium</a></p>
-<p>On the other hand, the silhouette score measures how similar a data point is to its own cluster in comparison to other clusters. The value of this metric falls in the range [-1, 1], where high values represnet well-matched data points and low-values represent poorly-matched ones<span class="citation" data-cites="inertia"><sup><a href="#ref-inertia" role="doc-biblioref"><strong>inertia?</strong></a></sup></span>.</p>
+<p>On the other hand, the silhouette score measures how similar a data point is to its own cluster in comparison to other clusters. The value of this metric falls in the range [-1, 1], where high values represnet well-matched data points and low-values represent poorly-matched ones<span class="citation" data-cites="inertia"><sup><a href="#ref-inertia" role="doc-biblioref">10</a></sup></span>.</p>
 <ul>
 <li>Where <span class="math inline">\(a\)</span> is the mean distance between a sample and all other points in the same cluster</li>
 <li>and <span class="math inline">\(b\)</span> is the mean distance between a sample and all other points in the nearest cluster</li>
@@ -916,7 +916,7 @@ Applying t-SNE...</code></pre>
 <p><span class="math display">\[
 \text{Silhouette} \ = \frac{b - a}{max(a,b)}
 \]</span></p>
-<p>Source: <a href="https://napsterinblue.github.io/notes/machine_learning/unsupervised/advanced_silhouettes/"><span class="citation" data-cites="Napsterinblue"><sup><span><strong>Napsterinblue?</strong></span></sup></span></a> (github)</p>
+<p>Source: <a href="https://napsterinblue.github.io/notes/machine_learning/unsupervised/advanced_silhouettes/">‘<span class="citation" data-cites="Napsterinblue"><sup><span><strong>Napsterinblue?</strong></span></sup></span>’</a> (github)</p>
 <div id="cell-45" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a range of clusters to test</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>k_clusters <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">30</span>)]</span>
@@ -1263,6 +1263,9 @@ Applying t-SNE...</code></pre>
 </div>
 <div id="ref-scikitTSNE" class="csl-entry" role="listitem">
 <div class="csl-left-margin">9. </div><div class="csl-right-inline"><a href="https://scikit-learn.org/dev/modules/generated/sklearn.manifold.TSNE.html">Scikit-learn TSNE documentation</a>.</div>
+</div>
+<div id="ref-inertia" class="csl-entry" role="listitem">
+<div class="csl-left-margin">10. </div><div class="csl-right-inline"><a href="https://victorleungtw.com/2023/12/16/inertia/">Understanding inertia and silhouette coefficient - key metrics in clustering analysis</a>.</div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
