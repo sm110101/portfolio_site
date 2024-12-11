@@ -305,7 +305,10 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#kmeans" id="toc-kmeans" class="nav-link" data-scroll-target="#kmeans">Kmeans</a></li>
   </ul></li>
+  <li><a href="#hierarchical-clustering-1" id="toc-hierarchical-clustering-1" class="nav-link" data-scroll-target="#hierarchical-clustering-1">Hierarchical Clustering</a></li>
+  <li><a href="#dbscan-1" id="toc-dbscan-1" class="nav-link" data-scroll-target="#dbscan-1">DBSCAN</a></li>
   </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -916,7 +919,7 @@ Applying t-SNE...</code></pre>
 <p><span class="math display">\[
 \text{Silhouette} \ = \frac{b - a}{max(a,b)}
 \]</span></p>
-<p>Source: <a href="https://napsterinblue.github.io/notes/machine_learning/unsupervised/advanced_silhouettes/">‘<span class="citation" data-cites="Napsterinblue"><sup><span><strong>Napsterinblue?</strong></span></sup></span>’</a> (github)</p>
+<p>Source: <a href="https://napsterinblue.github.io/notes/machine_learning/unsupervised/advanced_silhouettes/">Napsterinblue</a> via Github</p>
 <div id="cell-45" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a range of clusters to test</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>k_clusters <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">30</span>)]</span>
@@ -1165,54 +1168,53 @@ Applying t-SNE...</code></pre>
 <h2 class="anchored" data-anchor-id="plotting-clustering-results">Plotting Clustering Results</h2>
 <section id="kmeans" class="level3">
 <h3 class="anchored" data-anchor-id="kmeans">Kmeans</h3>
-<div id="cell-58" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(reduced_df[<span class="st">'Dim1'</span>], reduced_df[<span class="st">'Dim2'</span>], c<span class="op">=</span>reduced_df[<span class="st">'KMeans_25_Clusters'</span>], cmap<span class="op">=</span><span class="st">'viridis'</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'KMeans Clustering (k = 25)'</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Dim1'</span>)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dim2'</span>)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Cluster ID'</span>)</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="main_files/figure-html/cell-27-output-1.png" class="img-fluid figure-img"></p>
-</figure>
+<p>The results for KMeans lookings promising! Unfortunately, the web development software that I am working with wont let me display interactive plots, so I took the liberty of posting some screenshots of my results below. In each of these screenshots, you can see where I highlight a certain point in different clusters. In the first case, the data point that I hover over has “camera” as its most important word. Interestingly, most of the other points in this cluster also contain other contextually-related words to “camera”, like “lenses”, “picture”, and “tripod”. Similarly, in the second image, I hover over a point in a different cluster in which the most important term is “excellent”. Unlike the previous cluster, this one contains words that convey emotion and description, like “awesome” and “highly recommend”. In the third image, move to a different cluster and hover over a point in which the most important term is “TV”. Like our first example, this cluster contains many terms related to “TV”, like “sony”, “antenna”, “cable”, and “mount”. Unfortunately, this process was not completely immune to error. There are several cases where clusters all contain a single word (e.g.&nbsp;every point in the top purple cluster has “good” as its most important term). In the future, I will try to correct these mistakes by using more sophisticated embedding techniques like <a href="https://huggingface.co/docs/transformers/main/en/model_doc/bert"><code>BERT</code></a>.</p>
+<div id="cell-58" class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interactive plot for k_means</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># KMeans Plotly Plot</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>fig_kmeans <span class="op">=</span> px.scatter(reduced_df, x<span class="op">=</span><span class="st">'Dim1'</span>, y<span class="op">=</span><span class="st">'Dim2'</span>, color<span class="op">=</span><span class="st">'KMeans_25_Clusters'</span>,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                        hover_data<span class="op">=</span>[<span class="st">'Rating'</span>, <span class="st">'Most_Important_Term'</span>], title<span class="op">=</span><span class="st">"KMeans Clustering (k = 25)"</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>fig_kmeans.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>Fig 1: KMeans Clustering - The Camera Cluster</strong></p>
+<p><img src="../../xtra/multiclass-portfolio-website/images/kmeans_interactive/KMeans_camera.png" class="img-fluid" width="800"></p>
+<p><strong>Fig 2: KMeans Clustering - The Emotions &amp; Descriptors</strong></p>
+<p><img src="../../xtra/multiclass-portfolio-website/images/kmeans_interactive/KMeans_happy.png" class="img-fluid" width="800"></p>
+<p><strong>Fig 3: KMeans Clustering - The TV Cluster</strong></p>
+<p><img src="../../xtra/multiclass-portfolio-website/images/kmeans_interactive/KMeans_tv.png" class="img-fluid" width="800"></p>
+</section>
+</section>
+<section id="hierarchical-clustering-1" class="level2">
+<h2 class="anchored" data-anchor-id="hierarchical-clustering-1">Hierarchical Clustering</h2>
+<p>Similar to KMeans, hierarchical clustering performed well when applied to our dimension-reduced data. In the first example below, you can see a point on the plot where its most important term is “speakers”. The other points in this cluster also share contextually-similar most important terms like “sound”, “wireless”, “ear”, “headphones”, and “music”. In the second plot, we see a point in another cluster whose most important term is “harddrive”. Once again, we observe an interesting pattern within its neighboring points, whose most important terms include words like “data”, “gb”, “files”, and “ssd”. Finally, similar to the KMeans results, we again observe flaws in the clustering results. In the third image, I provide a screenshot of what I call “the good cluster”, in which every data point’s most important term is “good”. This cluster was picked up by both the KMeans, and hierarchical models - which further reinforces the need to conduct more robust preprocessing in the future.</p>
+<div id="cell-61" class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Agglomerative Plotly Plot</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>fig_agglo <span class="op">=</span> px.scatter(reduced_df, x<span class="op">=</span><span class="st">'Dim1'</span>, y<span class="op">=</span><span class="st">'Dim2'</span>, color<span class="op">=</span><span class="st">'Agglo_22_Clusters'</span>, </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                       hover_data<span class="op">=</span>[<span class="st">'Rating'</span>, <span class="st">'Most_Important_Term'</span>], title<span class="op">=</span><span class="st">"Hierarchical Clustering (k = 22)"</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>fig_agglo.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>Fig 1: Hierarchical Clustering - The Music/Sound Device Cluster</strong></p>
+<p><img src="../../xtra/multiclass-portfolio-website/images/agglo_interactive/agglo_speakers.png" class="img-fluid" width="800"></p>
+<p><strong>Fig 2: Hierarchical Clustering - The Data Storage Cluster</strong></p>
+<p><img src="../../xtra/multiclass-portfolio-website/images/agglo_interactive/agglo_harddrive.png" class="img-fluid" width="800"></p>
+<p><strong>Fig 3 Hierarchical Clustering - “The Good Cluster”:</strong></p>
+<p><img src="../../xtra/multiclass-portfolio-website/images/agglo_interactive/agglo_good.png" class="img-fluid" width="800"></p>
+</section>
+<section id="dbscan-1" class="level2">
+<h2 class="anchored" data-anchor-id="dbscan-1">DBSCAN</h2>
+<p>In the beginning of this page, I predicted that DBSCAN would outperform the other two clustering methods. Unfortunately, the results I obtained using DBSCAN are rather underwhelming. There is pretty much zero separation between the over 600 clusters. The data points are scattered, with no clear structure or meaningful differentiation between the clusters. Upon further reflection, I believe the issue stems from not optimizing the <code>eps</code> and <code>min_samples</code> hyperparameters effectively. DBSCAN’s reliance on these parameters makes it sensitive to how they are set, and any miscalibration can result in an over-segmentation of the data or a failure to detect meaningful clusters. While this plot is pretty to look at, the clusters don’t provde any real context into the structure of the data points. In the future, I plan to revisit the parameter optimization above with hopes to improve this model’s performace, but for now, I leave you with this storm cloud of data.</p>
+<div id="cell-64" class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DBSCAN Plotly Plot</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>fig_dbscan <span class="op">=</span> px.scatter(reduced_df, x<span class="op">=</span><span class="st">'Dim1'</span>, y<span class="op">=</span><span class="st">'Dim2'</span>, color<span class="op">=</span><span class="st">'DBSCAN_Cluster'</span>, </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                        hover_data<span class="op">=</span>[<span class="st">'Rating'</span>, <span class="st">'Most_Important_Term'</span>], title<span class="op">=</span><span class="st">"DBSCAN Clustering"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>fig_dbscan.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-59" class="cell" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(reduced_df[<span class="st">'Dim1'</span>], reduced_df[<span class="st">'Dim2'</span>], c<span class="op">=</span>reduced_df[<span class="st">'Agglo_22_Clusters'</span>], cmap<span class="op">=</span><span class="st">'viridis'</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Agglomerative Clustering (k = 22)'</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Dim1'</span>)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dim2'</span>)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Cluster ID'</span>)</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="main_files/figure-html/cell-28-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="cell-60" class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(reduced_df[<span class="st">'Dim1'</span>], reduced_df[<span class="st">'Dim2'</span>], c<span class="op">=</span>reduced_df[<span class="st">'DBSCAN_Cluster'</span>], cmap<span class="op">=</span><span class="st">'viridis'</span>)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'DBSCAN Clustering'</span>)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Dim1'</span>)</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dim2'</span>)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Cluster ID'</span>)</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="main_files/figure-html/cell-29-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
+<p><strong>Fig 1: DBSCAN Results</strong></p>
+<p><img src="../../xtra/multiclass-portfolio-website/images/DBSCAN_clustering_results.png" class="img-fluid" width="800"></p>
+</section>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
 <p><strong>Original <code>plot_embeddings()</code> function that I gave to GPT-4o:</strong></p>
 <pre><code>def plot_embeddings(data, title, labels=None):
     """
@@ -1232,8 +1234,6 @@ Applying t-SNE...</code></pre>
 
 
 
-</section>
-</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
