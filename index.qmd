@@ -1,5 +1,5 @@
 ---
-title: Welcome!
+title: Welcome
 ---
 
 <br>
@@ -11,7 +11,7 @@ title: Welcome!
 
 # Purpose and Scope
 
-This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Anlytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please head over [here](report/report.qmd).
+This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Anlytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please start [here](./technical-details/data-collection/main.ipynb).
 
 
 # 🔍 About Me 
@@ -28,10 +28,21 @@ When I’m not coding or exploring new tech, you might find me running, fishing 
 # 📊 Final Project
 ## Observing and Predicting the Relationship Between Customer Reviews and Ratings on Amazon
 
+### Overview
 
-- Summarize your topic, its significance, related work, and the questions you plan to explore.
-- Draft an introduction with at least **5 research questions**. These may evolve as your project progresses, since data science is an iterative process.
-- Include your data science questions on this page.
+In this project, I look into a moderately large corpus of Amazon product reviews under the "Electronics" category. The raw dataset is available online [via](https://nijianmo.github.io/amazon/index.html) a public github repository owned by former UCSD student [Jianmo Ni](https://x.com/jianmo_ni) who, alongside their colleagues, helped to produce a massive database containing over 233 million individual Amazon reviews. To manage computational constraints (as this project must run on my personal machine), I analyze a subset of 100,000 electronics reviews. My overarching goals for this project are to explore user sentiment, product perceptions, and the high-dimensional structures and relationships that underpin textual data. 
+
+I begin my analysis by [collecting](./technical-details/data-collection/main.ipynb) and [preprocessing](./technical-details/data-cleaning/main.ipynb) the data using API-based retreival for collection, and standard natural langauge preprocessing techniques for cleaning. Following that, I dive into exploratory data analysis ([EDA](./technical-details/eda/main.ipynb)) where I discover interesting patterns with regards to how pairs of words show up accross different product review ratings (1-5). Finally, I tie the study together by applying unsupervised and supervised learning methods to the data. In the [unsupervised learning](./technical-details/unsupervised-learning/main.ipynb) section, I set out with the goal of understanding where certain product groups and terms cluster together, and wether these clusters are useful in predicting a product's review rating. In the [supervised learning](./technical-details/supervised-learning/main.ipynb) section, I try to predict review sentiment and rating using regression and classification methods. 
+
+### Research Questions
+
+This project focuses on answering several core questions:
+- Is it possible to predict a product's review rating based solely on a short piece of review text?
+- How can we effectively extract contextual information about different products using only text?
+- What patterns in sentiment (polarity and subjectivity) can we discover accross different review ratings?
+- Can we detect sarcasm and negation patterns in reviews?
+- What are some of the most common linguistic patterns associaetd with different review scores?
+
 
 
 ## Literature Review
