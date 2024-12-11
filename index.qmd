@@ -44,6 +44,23 @@ This project focuses on answering several core questions:
 * Can we detect sarcasm and negation patterns in reviews?
 * What are some of the most common linguistic patterns associaetd with different review scores?
 
+### Key Topics
+For the full scope of each of these topics, I link to the page where they get used.
+
+**Text Embedding**
+* [Bag-of-Words/Document Term Matrix](./technical-details/eda/main.ipynb)
+* [Term Frequency-Inverse Document Frequency (TF-IDF)](./technical-details/unsupervised-learning/main.ipynb)
+
+**Dimension Reduction**
+* [T-Distributed Stochastic Neighbor Embedding (t-SNE)](./technical-details/unsupervised-learning/main.ipynb)
+* [Principal Components Analysis (PCA)](./technical-details/unsupervised-learning/main.ipynb)
+
+**Clustering**
+* [KMeans Clustering](./technical-details/unsupervised-learning/main.ipynb)
+* [Hierarchical Clustering](./technical-details/unsupervised-learning/main.ipynb)
+* [DBSCAN](./technical-details/unsupervised-learning/main.ipynb)
+
+
 
 
 ## Literature Review
@@ -79,15 +96,3 @@ Authors Yang et al. leverage a bayesian network called Latent Dirichlet Allocati
 
 
 
-
-## Additional Ideas for things to include 
-
-- **Audience**: Who is this for? Data professionals, businesses, researchers, or curious readers.
-- **Headline**: A captivating title introducing the data science theme (e.g., "Unlocking Insights Through Data Stories").
-- **Introduction**: A brief, engaging overview of what the website offers (e.g., data-driven stories, insights, or case studies).
-- **Questions You Are Addressing**: What do you hope to learn?
-- **Motivation**: Explain why this topic matters, highlighting the importance of data in solving real-world problems.
-- **Key Topics**: List the main focus areas (e.g., machine learning, data visualization, predictive modeling).
-- **Use Cases/Examples**: A brief teaser of compelling stories or case studies you’ve worked on.
-- **Call to Action**: Invite visitors to explore the content, follow along, or contact you for more information.
-- **Visual/Infographic**: Add a simple graphic or visual element to make the page more dynamic.

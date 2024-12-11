@@ -236,6 +236,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a></li>
+  <li><a href="#key-topics" id="toc-key-topics" class="nav-link" data-scroll-target="#key-topics">Key Topics</a></li>
   </ul></li>
   <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">Literature Review</a>
   <ul class="collapse">
@@ -243,7 +244,6 @@ window.Quarto = {
   <li><a href="#machine-learning-based-new-approach-to-films-review" id="toc-machine-learning-based-new-approach-to-films-review" class="nav-link" data-scroll-target="#machine-learning-based-new-approach-to-films-review">Machine learning-based new approach to films review</a></li>
   <li><a href="#incorporating-topic-membership-in-review-rating-prediction-from-unsructured-data-a-gradient-boosting-approach" id="toc-incorporating-topic-membership-in-review-rating-prediction-from-unsructured-data-a-gradient-boosting-approach" class="nav-link" data-scroll-target="#incorporating-topic-membership-in-review-rating-prediction-from-unsructured-data-a-gradient-boosting-approach">Incorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach</a></li>
   </ul></li>
-  <li><a href="#additional-ideas-for-things-to-include" id="toc-additional-ideas-for-things-to-include" class="nav-link" data-scroll-target="#additional-ideas-for-things-to-include">Additional Ideas for things to include</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -307,6 +307,13 @@ window.Quarto = {
 <li>What are some of the most common linguistic patterns associaetd with different review scores?</li>
 </ul>
 </section>
+<section id="key-topics" class="level3">
+<h3 class="anchored" data-anchor-id="key-topics">Key Topics</h3>
+<p>For the full scope of each of these topics, I link to the page where they get used.</p>
+<p><strong>Text Embedding</strong> * <a href="./technical-details/eda/main.html">Bag-of-Words/Document Term Matrix</a> * <a href="./technical-details/unsupervised-learning/main.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a></p>
+<p><strong>Dimension Reduction</strong> * <a href="./technical-details/unsupervised-learning/main.html">T-Distributed Stochastic Neighbor Embedding (t-SNE)</a> * <a href="./technical-details/unsupervised-learning/main.html">Principal Components Analysis (PCA)</a></p>
+<p><strong>Clustering</strong> * <a href="./technical-details/unsupervised-learning/main.html">KMeans Clustering</a> * <a href="./technical-details/unsupervised-learning/main.html">Hierarchical Clustering</a> * <a href="./technical-details/unsupervised-learning/main.html">DBSCAN</a></p>
+</section>
 </section>
 <section id="literature-review" class="level2">
 <h2 class="anchored" data-anchor-id="literature-review">Literature Review</h2>
@@ -329,24 +336,10 @@ window.Quarto = {
 <section id="incorporating-topic-membership-in-review-rating-prediction-from-unsructured-data-a-gradient-boosting-approach" class="level3">
 <h3 class="anchored" data-anchor-id="incorporating-topic-membership-in-review-rating-prediction-from-unsructured-data-a-gradient-boosting-approach">Incorporating Topic Membership in Review Rating Prediction from Unsructured Data: A Gradient Boosting Approach</h3>
 <p>Authors Yang et al.&nbsp;leverage a bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat<span class="citation" data-cites="yang2023"><sup><a href="#ref-yang2023" role="doc-biblioref">5</a></sup></span>. This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predict amazon customer review scores across six million reviews. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are extracting semantic information from a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as features in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores<span class="citation" data-cites="yang2023"><sup><a href="#ref-yang2023" role="doc-biblioref">5</a></sup></span>.</p>
+
+
+
 </section>
-</section>
-<section id="additional-ideas-for-things-to-include" class="level2">
-<h2 class="anchored" data-anchor-id="additional-ideas-for-things-to-include">Additional Ideas for things to include</h2>
-<ul>
-<li><strong>Audience</strong>: Who is this for? Data professionals, businesses, researchers, or curious readers.</li>
-<li><strong>Headline</strong>: A captivating title introducing the data science theme (e.g., “Unlocking Insights Through Data Stories”).</li>
-<li><strong>Introduction</strong>: A brief, engaging overview of what the website offers (e.g., data-driven stories, insights, or case studies).</li>
-<li><strong>Questions You Are Addressing</strong>: What do you hope to learn?</li>
-<li><strong>Motivation</strong>: Explain why this topic matters, highlighting the importance of data in solving real-world problems.</li>
-<li><strong>Key Topics</strong>: List the main focus areas (e.g., machine learning, data visualization, predictive modeling).</li>
-<li><strong>Use Cases/Examples</strong>: A brief teaser of compelling stories or case studies you’ve worked on.</li>
-<li><strong>Call to Action</strong>: Invite visitors to explore the content, follow along, or contact you for more information.</li>
-<li><strong>Visual/Infographic</strong>: Add a simple graphic or visual element to make the page more dynamic.</li>
-</ul>
-
-
-
 </section>
 </section>
 
