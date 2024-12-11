@@ -12,6 +12,10 @@ LLM tools were used in the following way for the tasks below
 
 ## Writing: 
 
+* On the pretty much every page, I used GPT-4o to help find typos, which I then corrected. My prompt was always the same: "[copied in webpage], can you just tell me what words are spelled wrong here." From there, I just used command-f to find them all and replace them with the correct spelling
+
+* For the literature review on the [homepage](../index.qmd), I used GPT-4o to quickly summarize the text. I then took that summary and put it into my own words on the literature review.
+
 * Reformating text from bulleted lists into proses 
 * Proofreading
 * Text summarization for literature review 

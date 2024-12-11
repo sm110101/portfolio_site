@@ -193,7 +193,7 @@
     "href": "technical-details/llm-usage-log.html#writing",
     "title": "LLM usage log",
     "section": "Writing:",
-    "text": "Writing:\n\nReformating text from bulleted lists into proses\nProofreading\nText summarization for literature review"
+    "text": "Writing:\n\nOn the pretty much every page, I used GPT-4o to help find typos, which I then corrected. My prompt was always the same: “[copied in webpage], can you just tell me what words are spelled wrong here.” From there, I just used command-f to find them all and replace them with the correct spelling\nFor the literature review on the homepage, I used GPT-4o to quickly summarize the text. I then took that summary and put it into my own words on the literature review.\nReformating text from bulleted lists into proses\nProofreading\nText summarization for literature review"
   },
   {
     "objectID": "technical-details/llm-usage-log.html#code",
