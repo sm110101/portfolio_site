@@ -274,14 +274,14 @@ div.csl-indent {
 <p><br> <br></p>
 <section id="overview" class="level1">
 <h1>Overview</h1>
-<p>The data from this project is open source and available via a github repository. A very big thank you to the repo owner, <a href="https://x.com/jianmo_ni">Jianmo Ni</a>, who is a former UCSD student that compiled over 233.1 million amazon reviews for their paper on recommendation systems<span class="citation" data-cites="DataArticle"><sup><a href="#ref-DataArticle" role="doc-biblioref">1</a></sup></span>.</p>
+<p>The data from this project is open source and available via a GitHub repository. A very big thank you to the repo owner, <a href="https://x.com/jianmo_ni">Jianmo Ni</a>, who is a former UCSD student that compiled over 233.1 million Amazon reviews for their paper on recommendation systems<span class="citation" data-cites="DataArticle"><sup><a href="#ref-DataArticle" role="doc-biblioref">1</a></sup></span>.</p>
 <p>The repo owner offers this data to the public under one condition - that anyone who uses it cites their original work, which I have included in the references section below. Alternatively, this <a href="https://cseweb.ucsd.edu/~jmcauley/pdfs/emnlp19a.pdf">link</a> will take you directly to the original paper that used this data. The raw data used in this report can be downloaded at the original <a href="https://nijianmo.github.io/amazon/index.html">repo</a>.</p>
 <p>Due to limited storage and computational capacity, I have elected to only conduct my analysis on the “5-core” version of Amazon Electronics reviews within the repository. The raw data is in json format, and therefore needs to be parsed and stored in a dataframe before any modeling or EDA can be done. For this process, I use the <code>parse()</code> and <code>getDF()</code> functions defined in the repository which is linked above.</p>
 <p>In case you are not familiar, the term “5-core” is in reference to dense subsets, and in this case it means that the data below has been filtered such that the remaining users and items have 5 reviews each.</p>
 </section>
 <section id="data-structure-and-format" class="level1">
 <h1>Data Structure and Format</h1>
-<p>Before we begin collection and clearning, here an example of a single json object contained in the raw data file:</p>
+<p>Before we begin collection and cleaning, here an example of a single JSON object contained in the raw data file:</p>
 <p><br></p>
 <p><img src="../../xtra/multiclass-portfolio-website/images/raw_data_json.png" class="img-fluid" width="800"></p>
 <p>Source: <a href="https://cseweb.ucsd.edu/~jmcauley/datasets/amazon/links.html">The repo above</a></p>
@@ -386,7 +386,7 @@ div.csl-indent {
 <section id="challenges" class="level2">
 <h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
 <p><span style="text-decoration: underline;"><strong>Memory and Processing Bottlenecks</strong></span></p>
-<p>Due to the massive size of the raw data file, I had to try a bunch of new methods to successfully load it in. In the end, I elected to use a refined version of the <code>json</code> package called <a href="https://github.com/ijl/orjson"><code>orjson</code></a>. Where <code>json</code> is the base python library for working with JSON formatted files, <code>orjson</code> is a third-party library build in Rust, and optimized for procedures that require rapid serialization of large-scale JSON files.</p>
+<p>Due to the massive size of the raw data file, I had to try a bunch of new methods to successfully load it in. In the end, I elected to use a refined version of the <code>json</code> package called <a href="https://github.com/ijl/orjson"><code>orjson</code></a>. Where <code>json</code> is the base python library for working with JSON formatted files, <code>orjson</code> is a third-party library built in Rust, and optimized for procedures that require rapid serialization of large-scale JSON files.</p>
 </section>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section"></h2>

@@ -6,7 +6,7 @@ In this section, I loaded in raw data in JSON form containing a corppus of over 
 
 [**Memory and Processing Bottlenecks**]{style="text-decoration: underline;"}
 
-Due to the massive size of the raw data file, I had to try a bunch of new methods to successfully load it in. In the end, I elected to use a refined version of the `json` package called [`orjson`](https://github.com/ijl/orjson). Where `json` is the base python library for working with JSON formatted files, `orjson` is a third-party library build in Rust, and optimized for procedures that require rapid serialization of large-scale JSON files.
+Due to the massive size of the raw data file, I had to try a bunch of new methods to successfully load it in. In the end, I elected to use a refined version of the `json` package called [`orjson`](https://github.com/ijl/orjson). Where `json` is the base python library for working with JSON formatted files, `orjson` is a third-party library built in Rust, and optimized for procedures that require rapid serialization of large-scale JSON files.
 
 ##
 

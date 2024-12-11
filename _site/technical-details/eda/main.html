@@ -321,7 +321,7 @@ window.Quarto = {
 <h1>Overview</h1>
 <p>Now that I have finally loaded in and cleaned the data, it’s time for the fun part. In this section, I dive into the the Amazon Electronics reviews dataset. My objectives are as follows:</p>
 <ul>
-<li>Ucover any potential issues in the data set</li>
+<li>Uncover any potential issues in the data set</li>
 <li>Summarize key characteristics of the data</li>
 <li>Identify any patterns or anomalies</li>
 <li>Prepare for the upcoming modeling stages</li>
@@ -484,7 +484,7 @@ window.Quarto = {
 </ul>
 <section id="looking-at-reviewrating-and-number-of-community-votes-vote" class="level3">
 <h3 class="anchored" data-anchor-id="looking-at-reviewrating-and-number-of-community-votes-vote">Looking at <code>reviewRating</code> and number of community votes (<code>vote</code>)</h3>
-<p>First, lets look at a summary of our two main nunmerical columns <code>reviewRating</code> and <code>vote</code>. When cleaning the data initially, I noticed that there are a lot of reviews that have no community votes. To address that, I will create a temporary data set called <code>reviews_votes</code> that drops all rows where no votes are placed. Then, we can use the pandas <code>.describe()</code> function, to print out the following summary statistics for each column:</p>
+<p>First, lets look at a summary of our two main numerical columns <code>reviewRating</code> and <code>vote</code>. When cleaning the data initially, I noticed that there are a lot of reviews that have no community votes. To address that, I will create a temporary data set called <code>reviews_votes</code> that drops all rows where no votes are placed. Then, we can use the pandas <code>.describe()</code> function, to print out the following summary statistics for each column:</p>
 <ul>
 <li><code>count</code> (Number of observations)</li>
 <li><code>mean</code> (Average value)</li>
@@ -590,7 +590,7 @@ Kurtosis of Vote Counts: 4208.537902609067</code></pre>
 </section>
 <section id="plotting-distribution-of-raw-vs-clean-review-text-lengths" class="level3">
 <h3 class="anchored" data-anchor-id="plotting-distribution-of-raw-vs-clean-review-text-lengths">Plotting Distribution of Raw vs Clean Review Text Lengths</h3>
-<p>Let’s move on now to looking at the distributions of the <code>reviewText</code> and <code>reviewTextClean</code> columns. The goal for this section is to gain some initial intuition into whether our text processing in the data cleaning section actually worked as intended. In order to do this, I will count the number of words and number of characters in each column and place them into two different plots showing the overlapping distributions of characters counts and word counts between the raw and cleaneed text.</p>
+<p>Let’s move on now to looking at the distributions of the <code>reviewText</code> and <code>reviewTextClean</code> columns. The goal for this section is to gain some initial intuition into whether our text processing in the data cleaning section actually worked as intended. In order to do this, I will count the number of words and number of characters in each column and place them into two different plots showing the overlapping distributions of characters counts and word counts between the raw and cleaned text.</p>
 <div id="cell-18" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting distributions of word counts:</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span>
@@ -891,8 +891,8 @@ LOWEST: Work well!
 <section id="summary" class="level1">
 <h1>Summary</h1>
 <p>In this section, perform exploratory data analysis (EDA) on 100,000 samples drawn from a large dataset containing details on Amazon electronics reviews. In the analysis, I looked at the characteristics of the quantitative variables in the dataset (<code>reviewRating</code> and <code>vote</code>) - Where <code>reviewRating</code> corresponds to the rating (1-5) assigned by a user to a product in a single review, and <code>vote</code> represents the amount of community votes given to a review. In both cases, I discovered heavy skewness and tailedness in their distributions, with the sample of reviews with non-zero votes having extremely high skewness (58.07) and kurtosis (4208.54).</p>
-<p>In the next section of this page, I look at the prevalance of different terms across all five review ratings. When looking only at single term frequency, I struggled to gather any useful context. To reconcile this, I instead chose to look at frequency of word-pairs across all review ratings, which proved far more useful in understanding the linguistic patterns across the review classes.</p>
-<p>Finally, I took advantage of the <code>textblob</code> library to find the polarity and subjectivity of each review. In this section, I discovered that reviews in this dataset are typically posess higher polarity values (more positive). I then shifted my focus toward the subjectivity of the reviews, where I uncovered an interesting phenomenon where there was a disproportionately high frequency of reviews with high and low subjectivity values. With only that in mind, I conjectured that higher subjectivity may coincicide with low polarity (i.e.&nbsp;a reviewer’s emotions may run high when writing a negative review). However, after creating a scatterplot that compared the two variables, I found this to be untrue. Instead, subjectivity tends to increase with more extreme values of polarity, regardless of direction.</p>
+<p>In the next section of this page, I look at the prevalence of different terms across all five review ratings. When looking only at single term frequency, I struggled to gather any useful context. To reconcile with this, I instead chose to look at frequency of word-pairs across all review ratings, which proved far more useful in understanding the linguistic patterns across the review classes.</p>
+<p>Finally, I took advantage of the <code>textblob</code> library to find the polarity and subjectivity of each review. In this section, I discovered that reviews in this dataset are typically possess higher polarity values (more positive). I then shifted my focus toward the subjectivity of the reviews, where I uncovered an interesting phenomenon where there was a disproportionately high frequency of reviews with high and low subjectivity values. With only that in mind, I conjectured that higher subjectivity may coincide with low polarity (i.e.&nbsp;a reviewer’s emotions may run high when writing a negative review). However, after creating a scatterplot that compared the two variables, I found this to be untrue. Instead, subjectivity tends to increase with more extreme values of polarity, regardless of direction.</p>
 <section id="modeling-implications" class="level2">
 <h2 class="anchored" data-anchor-id="modeling-implications">Modeling Implications</h2>
 <p><strong>Potential use of TF-IDF for single term feature</strong></p>

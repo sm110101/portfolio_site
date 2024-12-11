@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>closing – Sean Morris</title>
+<title>instructions – Sean Morris</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -179,10 +179,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a>
+  <li><a href="#instructions" id="toc-instructions" class="nav-link active" data-scroll-target="#instructions">Instructions</a>
   <ul class="collapse">
-  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#suggested-page-structure" id="toc-suggested-page-structure" class="nav-link" data-scroll-target="#suggested-page-structure">Suggested page structure</a></li>
+  <li><a href="#what-to-address" id="toc-what-to-address" class="nav-link" data-scroll-target="#what-to-address">What to address</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -193,17 +193,90 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="summary" class="level1">
-<h1>Summary</h1>
-<p>In this section, I loaded in raw data in JSON form containing a corppus of over 6 million Amazon product reviews under the ‘Electronics’ category. With the help of custom functions provided in the dataset’s source repository, I parsed the data and passed it into a pandas dataframe. As a final step, I zipped the file and moved it into the <code>data/raw-data/</code> directory.</p>
-<section id="challenges" class="level2">
-<h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
-<p><span style="text-decoration: underline;"><strong>Memory and Processing Bottlenecks</strong></span></p>
-<p>Due to the massive size of the raw data file, I had to try a bunch of new methods to successfully load it in. In the end, I elected to use a refined version of the <code>json</code> package called <a href="https://github.com/ijl/orjson"><code>orjson</code></a>. Where <code>json</code> is the base python library for working with JSON formatted files, <code>orjson</code> is a third-party library built in Rust, and optimized for procedures that require rapid serialization of large-scale JSON files.</p>
+<section id="instructions" class="level1">
+<h1>Instructions</h1>
+<p><code>Note</code>: You should remove these instructions once you have read and understood them. They should not be included in your final submission.</p>
+<p><code>Remember:</code> Exactly what do you put on this page will be specific you your project and data. Some things might “make more sense” on one page rather than another, depending on your workflow. Organize your project in a logical way that makes the most sense to you.</p>
+<section id="suggested-page-structure" class="level2">
+<h2 class="anchored" data-anchor-id="suggested-page-structure">Suggested page structure</h2>
+<p>Here’s one suggested structure for organizing your technical pages. You can adjust this as needed:</p>
+<p><code>Audience</code>:Remember that these are written for a technical audience. Assume they have completed the DSAN program, but would appreciate refreshers of the important concepts.</p>
+<ul>
+<li><strong>Introduction and Motivation:</strong> Briefly outline your plan. What are you doing on this page, and why? Provide context and explain the goals of your analysis.</li>
+<li><strong>Overview of Methods:</strong> Give a concise explanation of the methods used. For example, if using K-Means clustering, describe what it is, how it works, the inputs and outputs, and key hyperparameters.</li>
+<li><strong>Code:</strong> Include the code you used to implement your workflow.</li>
+<li><strong>Summary and Interpretation of Results:</strong> Summarize your findings, interpret the results, and discuss their technical implications.</li>
+</ul>
 </section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
-<p><strong>Next Section: <a href="../../technical-details/data-cleaning/main.html">Data Cleaning</a></strong></p>
+<section id="what-to-address" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-address">What to address</h2>
+<p>The following is a list of some of the things you should address on this page. This list is not exhaustive, and you should use your judgment to decide what is most relevant to your project.</p>
+<p>The <strong>EDA (Exploratory Data Analysis)</strong> tab in your portfolio serves as a crucial foundation for your project. It provides a thorough overview of the dataset, highlights patterns, identifies potential issues, and prepares the data for further analysis. Follow these instructions to document your EDA effectively:</p>
+<p>The goal of EDA is to gain a deeper understanding of the dataset and its relevance to your project’s objectives. It involves summarizing key data characteristics, identifying patterns, anomalies, and preparing for future analysis phases.</p>
+<p>Here are suggestions for things to include on this page</p>
+<p><strong>Univariate Analysis</strong>:</p>
+<ul>
+<li><strong>Numerical Variables</strong>:
+<ul>
+<li>Provide summary statistics (mean, median, standard deviation).</li>
+<li>Visualize distributions using histograms or density plots.</li>
+</ul></li>
+<li><strong>Categorical Variables</strong>:
+<ul>
+<li>Present frequency counts and visualize distributions using bar charts or pie charts.</li>
+</ul></li>
+<li><strong>Key Insights</strong>:
+<ul>
+<li>Highlight any notable trends or patterns observed.</li>
+</ul></li>
+</ul>
+<p><strong>Bivariate and Multivariate Analysis</strong>:</p>
+<ul>
+<li><strong>Correlation Analysis</strong>:
+<ul>
+<li>Analyze relationships between numerical variables using a correlation matrix.</li>
+<li>Visualize with heatmaps or pair plots and discuss any strong correlations.</li>
+</ul></li>
+<li><strong>Crosstabulations</strong>:
+<ul>
+<li>For categorical variables, use crosstabs to explore relationships and visualize them with grouped bar plots.</li>
+</ul></li>
+<li><strong>Feature Pairings</strong>:
+<ul>
+<li>Analyze relationships between key variables, particularly those related to your target.</li>
+<li>Visualize with scatter plots, box plots, or violin plots.</li>
+</ul></li>
+</ul>
+<p><strong>Data Distribution and Normalization</strong>:</p>
+<ul>
+<li><strong>Skewness and Kurtosis</strong>:</li>
+<li>Analyze and discuss the distribution of variables.</li>
+<li>Apply transformations (e.g., log transformation) if needed for skewed data.</li>
+<li><strong>Normalization</strong>:</li>
+<li>Apply normalization or scaling techniques (e.g., min-max scaling, z-score).</li>
+<li>Document and visualize the impact of normalization.</li>
+</ul>
+<p><strong>Statistical Insights</strong>:</p>
+<ul>
+<li>Conduct basic statistical tests (e.g., T-tests, ANOVA, chi-square) to explore relationships between variables.</li>
+<li>Summarize the statistical results and their implications for your analysis.</li>
+</ul>
+<p><strong>Data Visualization and Storytelling</strong>:</p>
+<ul>
+<li><strong>Visual Summary</strong>:</li>
+<li>Present key insights using charts and visualizations (e.g., Matplotlib, Seaborn, Plotly).</li>
+<li>Ensure all visualizations are well-labeled and easy to interpret.</li>
+<li><strong>Interactive Visualizations (Optional)</strong>:</li>
+<li>Include interactive elements (e.g., Plotly, Bokeh) to allow users to explore the data further.</li>
+</ul>
+<p><strong>Conclusions and Next Steps</strong>:</p>
+<ul>
+<li><strong>Summary of EDA Findings</strong>:</li>
+<li>Highlight the main takeaways from the EDA process (key trends, patterns, data quality issues).</li>
+<li><strong>Implications for Modeling</strong>:</li>
+<li>Discuss how your EDA informs the next steps in your project (e.g., feature selection, data transformations).</li>
+<li>Outline any further data cleaning or preparation required before moving into modeling.</li>
+</ul>
 
 
 </section>
