@@ -10,33 +10,37 @@ This page serves as a progress log for my DSAN5000 final project
 
 
 
-**12-13-2024
+**12-14-2024**
 
 * [ ] Improve website formatting
 * [ ] Correct typos/poor writing on all pages
 
-**12-12-2024
+**12-13-2024**
 
 * [ ] Quadruple check project guidelines to ensure proper adherence
 * [ ] Finish first draft of report
 
-**12-11-2024
+**12-12-2024**
 
 * [ ] Outline plan for report (build out structure, collect meaningful img/assets)
-* [ ] Finish first draft of supervised learning page
+* [ ] Finish first draft of supervised learning page 
 
-**12-10-2024
+**12-11-2024**
 
-* [ ] Ouline plan for structuring supervised learning 
+* [ ] Ouline plan for structuring supervised learning
 * [ ] Finish first draft of unsupervised learning page
 
-**12-9-2024
+**12-10-2024**
+
+* [X] Begin unsupervised learning page (Write-ups on PCA t-SNE, Clustring techniques)
+
+**12-9-2024**
 
 * [X] add a picture of review data in raw JSON format 
-* [ ] Outline a plan for structuring unsupervised model page
+* [X] Outline a plan for structuring unsupervised model page
 * [X] Finish first draft of EDA page
 
-**12-8-2024
+**12-8-2024**
 
 * [X] Begin brainstorming ideas for EDA page
 
