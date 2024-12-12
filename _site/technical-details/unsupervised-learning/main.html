@@ -474,12 +474,11 @@ window.Quarto = {
 <li>Conduct some preliminary baseline tests using PCA and t-SNE, and see which performs better when given our reviews data</li>
 <li>Take the higher performer of the two, and build out a refined function that can be used to iteratively test different parameters</li>
 <li>Once I find a result that I like, save it to a new variable for modeling down the line</li>
-<li>Test out BERT’s <code>SentenceTransformer</code> tool for full sentence embedding, and see if this produces any interesting results</li>
 <li>Perform clustering on the two best sets of reduced data.</li>
 </ul>
 <section id="basline-t-sne-vs-pca" class="level3">
 <h3 class="anchored" data-anchor-id="basline-t-sne-vs-pca">Basline: t-SNE vs PCA</h3>
-<p>To start off, lets create two simple plots of the data, using each of our two different dimension reduction techniques and TF-IDF embedding. To speed up the process, I will add a <code>N_SAMPLES</code> constant to allow for faster execution</p>
+<p>To start off, let’s create two simple plots of the data, using each of our two different dimension reduction techniques and TF-IDF embedding. To speed up the process, I will add a <code>N_SAMPLES</code> constant to allow for faster execution</p>
 <p><strong>Sample TF-IDF Matrix</strong></p>
 <div id="cell-8" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>N_SAMPLES <span class="op">=</span> <span class="dv">2500</span></span>
@@ -550,41 +549,42 @@ window.Quarto = {
 <div id="cell-18" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_embeddings(data, title, labels<span class="op">=</span><span class="va">None</span>, params<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function creates a scatterplot of t-SNE reduced, TF-IDF embedded text data</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    'data': np.array object (2D). contains our t-SNE output </span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    'title': the name for our plot</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    'labels': the condition we use to color our points (column in the data set)</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">    'params': is a dictionary that we define in redude_and_visualize() containing all of the parameters that we used</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">              in this function, it is used to plot them in a table next to our visualization.</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initializing figure</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plt.figure(figsize=(10,6))</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>,<span class="dv">6</span>), gridspec_kw<span class="op">=</span>{<span class="st">"width_ratios"</span>: [<span class="dv">3</span>, <span class="dv">1</span>]})</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    scatter <span class="op">=</span> ax[<span class="dv">0</span>].scatter(data[:, <span class="dv">0</span>], data[:, <span class="dv">1</span>], <span class="co"># First and second axes produced by t-SNE</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                          c <span class="op">=</span> labels, <span class="co"># Fill condition (if any)</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                          cmap <span class="op">=</span> <span class="st">"viridis"</span>, <span class="co"># color scale</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                          s <span class="op">=</span> <span class="dv">10</span>, <span class="co"># Size of points</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                          alpha <span class="op">=</span> <span class="fl">0.8</span>) <span class="co"># Opacity of points</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_title(title)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_xlabel(<span class="st">"Dimension 1"</span>)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Dimension 2"</span>)</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    fig.colorbar(scatter, ax<span class="op">=</span>ax[<span class="dv">0</span>], label <span class="op">=</span> <span class="st">"Rating"</span>)</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Handling params table</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> params:</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        param_table <span class="op">=</span> pd.DataFrame(<span class="bu">list</span>(params.items()), columns<span class="op">=</span>[<span class="st">"PARAMETER"</span>, <span class="st">"VALUE"</span>])</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].axis(<span class="st">"off"</span>)</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        table <span class="op">=</span> ax[<span class="dv">1</span>].table(cellText<span class="op">=</span>param_table.values, colLabels<span class="op">=</span>param_table.columns, loc<span class="op">=</span><span class="st">"center"</span>)</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        table.auto_set_font_size(<span class="va">False</span>)</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        table.set_fontsize(<span class="dv">10</span>)</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        table.auto_set_column_width(col<span class="op">=</span><span class="bu">list</span>(<span class="bu">range</span>(<span class="bu">len</span>(param_table.columns))))</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">    1) Creates a scatterplot of t-SNE reduced, TF-IDF embedded text data    </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    'data': Our t-SNE output </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    'title': name for our plot</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">    'labels': the condition we use to color our points (column in the data set)</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">    'params': is a dictionary that we define in redude_and_visualize() containing all of the parameters that we used</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">              in this function, it is used to plot them in a table next to our visualization.</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initializing figure</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plt.figure(figsize=(10,6))</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>,<span class="dv">6</span>), gridspec_kw<span class="op">=</span>{<span class="st">"width_ratios"</span>: [<span class="dv">3</span>, <span class="dv">1</span>]})</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    scatter <span class="op">=</span> ax[<span class="dv">0</span>].scatter(data[:, <span class="dv">0</span>], data[:, <span class="dv">1</span>], <span class="co"># First and second axes produced by t-SNE</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                          c <span class="op">=</span> labels, <span class="co"># Fill condition (if any)</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                          cmap <span class="op">=</span> <span class="st">"viridis"</span>, <span class="co"># color scale</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                          s <span class="op">=</span> <span class="dv">10</span>, <span class="co"># Size of points</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                          alpha <span class="op">=</span> <span class="fl">0.8</span>) <span class="co"># Opacity of points</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_title(title)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_xlabel(<span class="st">"Dimension 1"</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Dimension 2"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    fig.colorbar(scatter, ax<span class="op">=</span>ax[<span class="dv">0</span>], label <span class="op">=</span> <span class="st">"Rating"</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Handling params table</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> params:</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        param_table <span class="op">=</span> pd.DataFrame(<span class="bu">list</span>(params.items()), columns<span class="op">=</span>[<span class="st">"PARAMETER"</span>, <span class="st">"VALUE"</span>])</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].axis(<span class="st">"off"</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        table <span class="op">=</span> ax[<span class="dv">1</span>].table(cellText<span class="op">=</span>param_table.values, colLabels<span class="op">=</span>param_table.columns, loc<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        table.auto_set_font_size(<span class="va">False</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        table.set_fontsize(<span class="dv">10</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>        table.auto_set_column_width(col<span class="op">=</span><span class="bu">list</span>(<span class="bu">range</span>(<span class="bu">len</span>(param_table.columns))))</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now, for our main function <code>reduce_and_visualize()</code>, we use the following parameters</p>
+<p>Now, for our main function <code>reduce_and_visualize()</code>, I use the following parameters</p>
 <ul>
 <li><strong>reviews:</strong> our pandas dataframe containing the target ‘reviewTextClean’ column</li>
 <li><strong>sample_size:</strong> the number of samples we want to take from the dataframe</li>
@@ -718,7 +718,7 @@ Plotting results...</code></pre>
 </section>
 <section id="test-2-no-intermediate-pca" class="level3">
 <h3 class="anchored" data-anchor-id="test-2-no-intermediate-pca">Test 2: No Intermediate PCA</h3>
-<p>In this test, I will apply all of the same parameters without the use of intermediate PCA. The goal here its usefulness in extracting local relationships in our text data</p>
+<p>In this test, I will apply all of the same parameters without the use of intermediate PCA. The goal here is to confirm that intermediate PCA was indeed the step that led to better extraction of the local relationships in our text data.</p>
 <div id="cell-26" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>reduce_and_visualize(reviews, intermediate_pca<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -902,12 +902,12 @@ Applying t-SNE...</code></pre>
 <section id="kmeans-clustering" class="level3">
 <h3 class="anchored" data-anchor-id="kmeans-clustering">KMeans Clustering</h3>
 <p><strong>Elbow Method (inertia) and Silhouette Score</strong></p>
-<p>In case you are unfamiliar, “inertia” measures the squared cumulative distance of each data point to its respective cluster. For example, a lower value for inertia represents tighter clusters (or lower intracluster distances)<span class="citation" data-cites="inertia"><sup><a href="#ref-inertia" role="doc-biblioref">10</a></sup></span>. When selecting an optimal number of clusters based on inertia, it is important to select the lowest number of clusters for which inertia is most drastically reduced. The reason being that inertia will continue to decrease as we add more clusters. This is precisely why we refer to this process as the “Elbow Method,” as we selecting a number of clusters <span class="math inline">\(k\)</span> where the marginal reduction of inertia by adding another cluster begins to tend towards zero.</p>
+<p>In case you are unfamiliar, “inertia” measures the squared cumulative distance of each data point to its respective cluster. For example, a lower value for inertia represents tighter clusters (or lower intracluster distances)<span class="citation" data-cites="inertia"><sup><a href="#ref-inertia" role="doc-biblioref">10</a></sup></span>. When selecting an optimal number of clusters based on inertia, it is important to select the lowest number of clusters for which inertia is most drastically reduced. The reason being that inertia will continue to decrease as we add more clusters. This is precisely why we refer to this process as the “Elbow Method,” as we are selecting a number of clusters <span class="math inline">\(k\)</span> where the marginal reduction of inertia by adding another cluster begins to tend towards zero.</p>
 <p><span class="math display">\[
 \text{Inertia} \ = \sum_{i=1}^{k} \sum_{i \in C_{i}} ||x - \mu_{i}||^2
 \]</span></p>
 <p>Source: <a href="https://medium.com/@jeffzyme/understanding-inertia-distortion-and-silhouette-scores-and-their-differences-key-metrics-for-458fe28ce2aa">Medium</a></p>
-<p>On the other hand, the silhouette score measures how similar a data point is to its own cluster in comparison to other clusters. The value of this metric falls in the range [-1, 1], where high values represnet well-matched data points and low-values represent poorly-matched ones<span class="citation" data-cites="inertia"><sup><a href="#ref-inertia" role="doc-biblioref">10</a></sup></span>.</p>
+<p>On the other hand, the silhouette score measures how similar a data point is to its own cluster in comparison to other clusters. The value of this metric falls in the range [-1, 1], where high values represent well-matched data points and low-values represent poorly-matched ones<span class="citation" data-cites="inertia"><sup><a href="#ref-inertia" role="doc-biblioref">10</a></sup></span>.</p>
 <ul>
 <li>Where <span class="math inline">\(a\)</span> is the mean distance between a sample and all other points in the same cluster</li>
 <li>and <span class="math inline">\(b\)</span> is the mean distance between a sample and all other points in the nearest cluster</li>
@@ -1118,7 +1118,7 @@ Applying t-SNE...</code></pre>
 </section>
 <section id="dbscan" class="level2">
 <h2 class="anchored" data-anchor-id="dbscan">DBSCAN</h2>
-<p>DBCAN requires the parameters <code>eps</code> - or the maximum distance between two samples for them to be considered in the same neighborhood, and <code>min_samples</code> - or the number of samples in a neighborhood for a point to be considered the “core” point. Below, I will optimize each of these parameters using a set of potential</p>
+<p>DBCAN requires the parameters <code>eps</code> - or the maximum distance between two samples for them to be considered in the same neighborhood, and <code>min_samples</code> - or the number of samples in a neighborhood for a point to be considered the “core” point<span class="citation" data-cites="eps"><sup><a href="#ref-eps" role="doc-biblioref">7</a></sup></span>. Below, I will optimize each of these parameters using a set of potential</p>
 <p><strong>Optimizing DBSCAN Hyperparams</strong></p>
 <div id="cell-54" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initializing list of potential eps and min_sample values </span></span>
@@ -1164,7 +1164,9 @@ Applying t-SNE...</code></pre>
 <h2 class="anchored" data-anchor-id="plotting-clustering-results">Plotting Clustering Results</h2>
 <section id="kmeans" class="level3">
 <h3 class="anchored" data-anchor-id="kmeans">Kmeans</h3>
-<p>The results for KMeans lookings promising! Unfortunately, the web development software that I am working with wont let me display interactive plots, so I took the liberty of posting some screenshots of my results below. In each of these screenshots, you can see where I highlight a certain point in different clusters. In the first case, the data point that I hover over has “camera” as its most important word. Interestingly, most of the other points in this cluster also contain other contextually-related words to “camera”, like “lenses”, “picture”, and “tripod”. Similarly, in the second image, I hover over a point in a different cluster in which the most important term is “excellent”. Unlike the previous cluster, this one contains words that convey emotion and description, like “awesome” and “highly recommend”. In the third image, move to a different cluster and hover over a point in which the most important term is “TV”. Like our first example, this cluster contains many terms related to “TV”, like “sony”, “antenna”, “cable”, and “mount”. Unfortunately, this process was not completely immune to error. There are several cases where clusters all contain a single word (e.g.&nbsp;every point in the top purple cluster has “good” as its most important term). In the future, I will try to correct these mistakes by using more sophisticated embedding techniques like <a href="https://huggingface.co/docs/transformers/main/en/model_doc/bert"><code>BERT</code></a>.</p>
+<p>The results for KMeans looks promising! Unfortunately, the web development software that I am working with won’t let me display interactive plots, so I took the liberty of posting some screenshots of my results below. In each of these screenshots, you can see where I highlight a certain point in different clusters. In the first case, the data point that I hover over has “camera” as its most important word. Interestingly, most of the other points in this cluster also contain other contextually-related words to “camera”, like “lenses”, “picture”, and “tripod”.</p>
+<p>Similarly, in the second image, I hover over a point in a different cluster in which the most important term is “excellent”. Unlike the previous cluster, this one contains words that convey emotion and description, like “awesome” and “highly recommend”.</p>
+<p>In the third image, I move to a different cluster and hover over a point where the most important term is “TV”. Like our first example, this cluster contains many terms related to “TV”, like “sony”, “antenna”, “cable”, and “mount”. Unfortunately, this process was not completely immune to error. There are several cases where clusters all contain a single word (e.g.&nbsp;every point in the top purple cluster has “good” as its most important term). In the future, I will try to correct these mistakes by using more sophisticated embedding techniques like <a href="https://huggingface.co/docs/transformers/main/en/model_doc/bert"><code>BERT</code></a>.</p>
 <div id="cell-58" class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interactive plot for k_means</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># KMeans Plotly Plot</span></span>
@@ -1182,7 +1184,9 @@ Applying t-SNE...</code></pre>
 </section>
 <section id="hierarchical-clustering-1" class="level2">
 <h2 class="anchored" data-anchor-id="hierarchical-clustering-1">Hierarchical Clustering</h2>
-<p>Similar to KMeans, hierarchical clustering performed well when applied to our dimension-reduced data. In the first example below, you can see a point on the plot where its most important term is “speakers”. The other points in this cluster also share contextually-similar most important terms like “sound”, “wireless”, “ear”, “headphones”, and “music”. In the second plot, we see a point in another cluster whose most important term is “harddrive”. Once again, we observe an interesting pattern within its neighboring points, whose most important terms include words like “data”, “gb”, “files”, and “ssd”. Finally, similar to the KMeans results, we again observe flaws in the clustering results. In the third image, I provide a screenshot of what I call “the good cluster”, in which every data point’s most important term is “good”. This cluster was picked up by both the KMeans, and hierarchical models - which further reinforces the need to conduct more robust preprocessing in the future.</p>
+<p>Similar to KMeans, hierarchical clustering performed well when applied to our dimension-reduced data. In the first example below, you can see a point on the plot where its most important term is “speakers”. The other points in this cluster also share contextually-similar terms like “sound”, “wireless”, “ear”, “headphones”, and “music”.</p>
+<p>In the second plot, we see a point in another cluster whose most important term is “harddrive”. Once again, we observe an interesting pattern within its neighboring points, whose most important terms include words like “data”, “gb”, “files”, and “ssd”.</p>
+<p>Finally, similar to the KMeans results, we again observe flaws in the clustering results. In the third image, I provide a screenshot of what I call “the good cluster”, in which every data point’s most important term is “good”. This cluster was picked up by both the KMeans, and hierarchical models - which further reinforces the need to conduct more robust preprocessing in the future.</p>
 <div id="cell-61" class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Agglomerative Plotly Plot</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>fig_agglo <span class="op">=</span> px.scatter(reduced_df, x<span class="op">=</span><span class="st">'Dim1'</span>, y<span class="op">=</span><span class="st">'Dim2'</span>, color<span class="op">=</span><span class="st">'Agglo_22_Clusters'</span>, </span>
@@ -1211,6 +1215,9 @@ Applying t-SNE...</code></pre>
 </section>
 <section id="summary" class="level1">
 <h1>Summary</h1>
+<p>In this section, I start off by performing two different dimension reduction methods on my TF-IDF embedded review text data. In both cases (<strong>PCA</strong> and <strong>t-SNE</strong>) I used their default parameters. After running the two baseline reduction techniques, I plotted the results of each, and discovered that PCA’s linear reduction fell short in collapsing our text data into a meaningful representation. On the other hand, t-SNE showed promise with its ability to capture local groups in the data. However, the baseline function had to be refined in order to produce more meaningful results.</p>
+<p>In the next section, refined the dimension reduction process by building a custom function that performec TF-IDF and t-SNE using custom preset parameters. From there, I tweaked a few different function parameters until I arrived at a configuration that I liked. After saving the best configuration’s result to the dataset ’reduced_df<code>, I went ahead with clustering. For KMeans clustering, I optimized the</code>n_clusters<code>hyperparameter using the Elbow Method and Silhouette scores. For hierarchical clustering, I optimized using only silhouette scores. Finally, for DBSCAN, I optimized silhouette scores by using a grid search approach where I tried different combinations of the hyperparameters</code>eps<code>and</code>min_samples`, continuously updating their best values each time a higher silhouette score was found.</p>
+<p>When looking results from my clustering of Amazon Electronics revies shows, I can say with relative confidence that the different regions/clusters in the text data do not have any real influence on review score. Instead, it’s more likely that each cluster relates to a different type of electronic good or subcategory like I mention above. Moving forward, I am not sure if these cluster assignments will be of any use when we try supervised learning.</p>
 <section id="challenges" class="level2">
 <h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
 <p><span style="text-decoration: underline;"><strong>Plotting Parameters Table</strong></span></p>
