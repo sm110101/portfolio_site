@@ -936,27 +936,8 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="model-selection">Model Selection</h2>
 <section id="pipeline-1-binary-classification" class="level3">
 <h3 class="anchored" data-anchor-id="pipeline-1-binary-classification">Pipeline 1: Binary Classification</h3>
-<section id="logistic-regression" class="level4">
-<h4 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h4>
-<ul>
-<li><strong>Overview</strong></li>
-</ul>
-<p>Logistic regression is a type of supervised learning technique that is often used to predict a binary outcome (A or B). The model does this by taking in a set of independent variables for a given observation, and calculating the probability that they belong to a certain target class. Logistic regressions use a <a href="https://www.linkedin.com/pulse/understanding-sigmoid-function-logistic-regression-piduguralla/">sigmoid function</a> that maps the linear combination of inputs to a final probability in the range [0, 1].<span class="citation" data-cites="sigmoid"><sup><a href="#ref-sigmoid" role="doc-biblioref">4</a></sup></span> If the value returned by the sigmoid function is <span class="math inline">\(\geq 0.5\)</span>, then the model assigns the observation to the target class (in our case it assigns the value <span class="math inline">\(1\)</span> to reviews that it believes are positive)</p>
-<p><strong>Sigmoid Function:</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/sigmoid.png" class="img-fluid" width="500"> <br> Source: <a href="https://www.dailydoseofds.com/why-do-we-use-sigmoid-in-logistic-regression/">Daily Dose of Data Science</a></p>
-<ul>
-<li><strong>Model Rationale</strong></li>
-</ul>
-<p>When selecting which binary classification models I wanted to use for predicting <code>sentiment</code>, logistic regression stood out as an obvious baseline. The model’s simplicity, and direct probabilistic output makes it a reliable and lightweight option for running predictions using TF-IDF embeddings.</p>
-</section>
-<section id="random-forest" class="level4">
-<h4 class="anchored" data-anchor-id="random-forest">Random Forest</h4>
-<ul>
-<li><strong>Overview</strong></li>
-</ul>
-<p>Random forests are a <a href="https://en.wikipedia.org/wiki/Decision_tree">decision tree</a> based approach to machine learning. However, instead of constructing a</p>
-<ul>
-<li><strong>Model Rationale</strong></li>
-</ul>
+<p><strong>Logistic Regression</strong></p>
+<p><strong>Random Forest</strong></p>
 <div id="cell-29" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> binary_classification(df, target<span class="op">=</span><span class="st">'sentiment'</span>, selected_features<span class="op">=</span><span class="va">None</span>, include_tfidf<span class="op">=</span><span class="va">False</span>, test_size <span class="op">=</span> <span class="fl">0.20</span>, random_state <span class="op">=</span> <span class="dv">5000</span>):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1054,7 +1035,6 @@ Cell <span class="ansi-green-fg">In[26], line 2</span>
 </div>
 </div>
 </section>
-</section>
 <section id="pipeline-2-multiclass-classification" class="level3">
 
 
@@ -1073,9 +1053,6 @@ Cell <span class="ansi-green-fg">In[26], line 2</span>
 </div>
 <div id="ref-scikitTFIDF" class="csl-entry" role="listitem">
 <div class="csl-left-margin">3. </div><div class="csl-right-inline"><a href="https://scikit-learn.org/dev/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer">Scikit-learn TfidfVectorizer documentation</a>.</div>
-</div>
-<div id="ref-sigmoid" class="csl-entry" role="listitem">
-<div class="csl-left-margin">4. </div><div class="csl-right-inline"><a href="https://www.linkedin.com/pulse/understanding-sigmoid-function-logistic-regression-piduguralla/">Understanding the sigmoid function in logistic regression: Mapping inputs to probabilities</a>.</div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
