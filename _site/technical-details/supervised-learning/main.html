@@ -330,6 +330,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#challenges-1" id="toc-challenges-1" class="nav-link" data-scroll-target="#challenges-1">Challenges</a></li>
   </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1702,7 +1703,7 @@ Confusion Matrix:</code></pre>
 </section>
 <section id="modeling-results" class="level2">
 <h2 class="anchored" data-anchor-id="modeling-results">Modeling Results</h2>
-<p>Similar to the classification section, I will run my regression pipeline using two feature subsets. The first will use only my TF-IDF embeddings to predict polarity, the second will include all features to see whether including variables unrelated to review contents have any additional predictive power when modeling polarity. I chose not to run the models with only the three descriptive variables since</p>
+<p>Similar to the classification section, I will run my regression pipeline using two feature subsets. The first will use only my TF-IDF embeddings to predict polarity, the second will include all features to see whether including variables unrelated to review contents have any additional predictive power when modeling polarity. I chose not to run the models with only the three descriptive variables since their lack of direct textual information about the reviews severely reduces the model’s ability to capture semantic context, which is a core component of TextBlob’s <a href="https://textblob.readthedocs.io/en/dev/quickstart.html">polarity score</a>.</p>
 <section id="tf-idf-features-only-2" class="level3">
 <h3 class="anchored" data-anchor-id="tf-idf-features-only-2">TF-IDF features only</h3>
 <p>First, let’s run the regression models using only our TF-IDF features</p>
@@ -1741,11 +1742,14 @@ Random Forest:
 </div>
 </div>
 </div>
+<p><em>Runtime: 21m 15.9s</em></p>
+<p>In our ridge and random forest regressions that predict polarity using only the TF-IDF embeddings, we get an <span class="math inline">\(R^2\)</span> value of 0.6386 for ridge and 0.6734 for RF, which indicates a moderately good fit. In case you are not familiar, <span class="math inline">\(R^2\)</span> measures the proportion of variance in the target variable that can be explained by our features. Given the complex nature of our text data, this is a pretty good result especially for our roughly tuned, out of the box ridge model. As for the error rates, both models have reasonable low MSE/RMSE values, where “mean squared error” represents the average disparity between predicted values and true values.</p>
+<p>However, these results are not all promising, as both models have a a very mean absolute percentage error of around 200%. This is an indication that our models struggled with extreme outliers in the data. Furthermore, the residual plot displays a strange linear boundary. It’s possible that this happened when I chose to scale the polarity variable before modeling.</p>
 </section>
 <section id="full-feature-model" class="level3">
 <h3 class="anchored" data-anchor-id="full-feature-model">Full Feature Model</h3>
 <p>Below, I run the regression pipeline using the full feature set.</p>
-<div id="cell-66" class="cell" data-execution_count="51">
+<div id="cell-67" class="cell" data-execution_count="51">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>full_feature_regression <span class="op">=</span> regression(</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    df<span class="op">=</span>reviews_tfidf,</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span><span class="st">'polarity'</span>,</span>
@@ -1782,6 +1786,7 @@ Random Forest:
 </div>
 </div>
 <p><em>Runtime: 19m 55.1s</em></p>
+<p>Above, we see the results from our ridge and random forest regressions when predicting polarity using all features. In these results, we see about the same performance from ridge, along a slight reduction in performance from the RF regression. In this case and the case above, we observe abnormally high MAPE values - again hinting that extreme outliers may have impacted model performance. Further, we once again oberserve an abnormal linear boundary in the residual plot for both models.</p>
 </section>
 </section>
 </section>
@@ -1826,12 +1831,25 @@ Random Forest:
 <section id="challenges-1" class="level3">
 <h3 class="anchored" data-anchor-id="challenges-1">Challenges</h3>
 <ul>
-<li></li>
+<li><strong>Runtime</strong></li>
 </ul>
-
-
-
+<p>In both cases when running our regression pipeline, we experienced moderately long execution times of around 20 minnutes each. These slow runtimes were likely due to the large scale of our feature space, as well as the intermediate step that optimized the <code>alpha</code> parameter used in the ridge regression. In future implementations I will try to reconcile this by running a separate process to optimize the ridge regression parameters.</p>
+<ul>
+<li><strong>High MAPE</strong></li>
+</ul>
+<p>Each one of our regressions contained a high value for mean absolute percentage error, which I attribute to the presence of extreme outliers in the target variable’s distribution. To correct for this down the line, I will try to remove these outliers before modeling</p>
+<ul>
+<li><strong>Strange Residual Plots</strong></li>
+</ul>
+<p>The residual plots for each of our regression results had a strange linear boundary, which I believe has to do with the scaling techniques applied to the target and features before modeling. In the future, I will try to correct for this by using different scaling techniques, such as [-1, 1] bounding our TF-IDF embeddings to reflect the bounds of the polarity score.</p>
 </section>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p><strong>Next Section: <a href="../../report/report.html">Report</a></strong></p>
+
+
+
 </section>
 </section>
 
