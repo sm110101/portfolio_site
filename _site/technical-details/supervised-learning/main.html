@@ -309,7 +309,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#model-selection-1" id="toc-model-selection-1" class="nav-link" data-scroll-target="#model-selection-1">Model Selection</a>
   <ul class="collapse">
-  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression">Linear Regression</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression">Regression</a></li>
   </ul></li>
   <li><a href="#regression-model-pipeline" id="toc-regression-model-pipeline" class="nav-link" data-scroll-target="#regression-model-pipeline">Regression Model Pipeline</a></li>
   <li><a href="#modeling-results" id="toc-modeling-results" class="nav-link" data-scroll-target="#modeling-results">Modeling Results</a>
@@ -326,7 +326,7 @@ window.Quarto = {
   <li><a href="#multi-class-classification-1" id="toc-multi-class-classification-1" class="nav-link" data-scroll-target="#multi-class-classification-1">Multi-class Classification</a></li>
   <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
   </ul></li>
-  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression">Regression</a>
+  <li><a href="#regression-1" id="toc-regression-1" class="nav-link" data-scroll-target="#regression-1">Regression</a>
   <ul class="collapse">
   <li><a href="#challenges-1" id="toc-challenges-1" class="nav-link" data-scroll-target="#challenges-1">Challenges</a></li>
   </ul></li>
@@ -1003,7 +1003,9 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="model-selection">Model Selection</h2>
 <section id="binary-classification" class="level3">
 <h3 class="anchored" data-anchor-id="binary-classification">Binary Classification</h3>
+<blockquote class="blockquote">
 <p><strong><em>Predicting sentiment value (positive or negative)</em></strong></p>
+</blockquote>
 <section id="logistic-regression" class="level4">
 <h4 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h4>
 <ul>
@@ -1031,7 +1033,9 @@ window.Quarto = {
 </section>
 <section id="multi-class-classification" class="level3">
 <h3 class="anchored" data-anchor-id="multi-class-classification">Multi-class Classification</h3>
+<blockquote class="blockquote">
 <p><strong><em>Predicting review rating (1-5)</em></strong></p>
+</blockquote>
 <section id="support-vector-machine-svm" class="level4">
 <h4 class="anchored" data-anchor-id="support-vector-machine-svm">Support Vector Machine (SVM)</h4>
 <ul>
@@ -1486,9 +1490,11 @@ Confusion Matrix:</code></pre>
 </section>
 <section id="model-selection-1" class="level2">
 <h2 class="anchored" data-anchor-id="model-selection-1">Model Selection</h2>
-<section id="linear-regression" class="level3">
-<h3 class="anchored" data-anchor-id="linear-regression">Linear Regression</h3>
+<section id="regression" class="level3">
+<h3 class="anchored" data-anchor-id="regression">Regression</h3>
+<blockquote class="blockquote">
 <p><strong><em>Predicting Review Polarity</em></strong></p>
+</blockquote>
 <section id="ridge-regression" class="level4">
 <h4 class="anchored" data-anchor-id="ridge-regression">Ridge Regression</h4>
 <ul>
@@ -1767,8 +1773,8 @@ Random Forest:
 <p><strong>Config 5:</strong> <code>SVC(kernel='rbf',C=0.5,gamma ='auto',tol=0.01,shrinking=False,max_iter=1000,cache_size=1000,probability=False) #with MinMaxScaled features</code> - At this point, I consulted OpenAI’s ChatGPT-4o model to help create the fastest SVM configuration.<span class="citation" data-cites="gpt4o_SVM"><sup><a href="#ref-gpt4o_SVM" role="doc-biblioref">11</a></sup></span> - This helped immensely with reducing my model’s execution time, reducing hours of runtime down to a few minutes - <em>Runtime: ~6 minutes</em></p>
 </section>
 </section>
-<section id="regression" class="level2">
-<h2 class="anchored" data-anchor-id="regression">Regression</h2>
+<section id="regression-1" class="level2">
+<h2 class="anchored" data-anchor-id="regression-1">Regression</h2>
 <section id="challenges-1" class="level3">
 <h3 class="anchored" data-anchor-id="challenges-1">Challenges</h3>
 <ul>
