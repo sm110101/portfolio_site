@@ -91,11 +91,11 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -360,8 +360,8 @@ window.Quarto = {
 <p><br> <br></p>
 <section id="overview" class="level1">
 <h1>Overview</h1>
-<p>In this section, I leverage several different supervised machine learning techniques to run predictions on three different target variables. As a refresher, supervised machine learning is a suite of algorithms that are trained on labeled datasets to classify or predict outcomes for specific target variables<span class="citation" data-cites="IBMsupervised"><sup><a href="#ref-IBMsupervised" role="doc-biblioref">1</a></sup></span>. In this section, I use three subcategories of supervised learning methods, including regression, binary classification, and multi-class classification. For training, I take advantage of <code>scikit-learn</code>’s train_test_split object to break up my data into a training and testing set. After running each model, I will look at each model’s respective error metrics to gauge their performance in prediction/classification tasks.</p>
-<p>Before beginning the modeling process, I carry out feature extraction on our text data. For this, I leverage the TF-IDF embedding method that has been used in multiple parts of this study. From there, I build out two custom modeling pipelines for classification and regression models. The piplines will be modular, allowing us to control which features are used in the modeling process. Each of the pipelines will apply a set of specific methods for their given goal, comparing results and outputing the highest performing model’s metrics.</p>
+<p>In this section, I leverage several different supervised machine learning techniques to run predictions on three different target variables. As a refresher, supervised machine learning is a suite of algorithms that are trained on labeled datasets to classify or predict outcomes for specific target variables<span class="citation" data-cites="IBMsupervised"><sup><a href="#ref-IBMsupervised" role="doc-biblioref">1</a></sup></span>. In this section, I use three subcategories of supervised learning methods, including regression, binary classification, and multi-class classification. For training, I take advantage of <code>scikit-learn</code>’s train_test_split object to break up my data into a training and testing set. After running each model, I will look at each model’s respective error metrics to gauge their performance in prediction and classification tasks.</p>
+<p>Before beginning the modeling process, I carry out feature extraction on our text data. For this, I leverage the TF-IDF embedding method that has been used in multiple parts of this study. From there, I build out two custom modeling pipelines for classification and regression models. The piplines will be modular and allow us to control which features are used in the modeling process. Each of the pipelines will apply a set of specific methods for their given goal, comparing results and outputting the highest performing model’s metrics.</p>
 <p>At the end of this section I will present my findings, including a summary of each model’s performance, and some visualizations to supplement said findings.</p>
 </section>
 <section id="section-1-setup" class="level1">
@@ -702,7 +702,7 @@ window.Quarto = {
 <li><code>binary_sentiment:</code> String-encoded sentiment column</li>
 <li><code>vote:</code> Non-encoded vote column</li>
 <li><code>productID:</code> Non-encoded product ID</li>
-<li><code>verified:</code> Non-encoded values for varified column</li>
+<li><code>verified:</code> Non-encoded values for verified column</li>
 <li><code>reviewTime:</code> Time of review, since we are not conducting any time series analysis here</li>
 <li><code>reviewerID:</code> ID of reviewer</li>
 <li><code>reviewerName:</code> Name of reviewer</li>
@@ -874,7 +874,7 @@ window.Quarto = {
 </section>
 <section id="tf-idf" class="level3">
 <h3 class="anchored" data-anchor-id="tf-idf">TF-IDF</h3>
-<p>Term frequency-inverse document freqeuncy (TF-IDF) is a process that measures the importance of a word (or pair of words in our case) by comparing its rate of appearance in a document to its rate of appearance in a whole collection of documents. In this approach, the weight of a given word or word-pair depends both on its frequency and rarity. The benefit of TF-IDF over a simple document term matrix is that TF-IDF will punish words/pairs that occur frequently across our corpus, and favor words that have importance in their respective documents, and are found less frequently across the corpus<span class="citation" data-cites="TFIDF"><sup><a href="#ref-TFIDF" role="doc-biblioref">2</a></sup></span>. Recall the formulaic representation of TF-IDF that I include on the home page:</p>
+<p>Term frequency-inverse document frequency (TF-IDF) is a process that measures the importance of a word (or pair of words in our case) by comparing its rate of appearance in a document to its rate of appearance in a whole collection of documents. In this approach, the weight of a given word or word-pair depends both on its frequency and rarity. The benefit of TF-IDF over a simple document term matrix is that TF-IDF will punish words/pairs that occur frequently across our corpus, and favor words that have importance in their respective documents, and are found less frequently across the corpus<span class="citation" data-cites="TFIDF"><sup><a href="#ref-TFIDF" role="doc-biblioref">2</a></sup></span>. Recall the formulaic representation of TF-IDF that I include on the home page:</p>
 <p>In equation form<span class="citation" data-cites="TFIDF"><sup><a href="#ref-TFIDF" role="doc-biblioref">2</a></sup></span>: <span class="math display">\[
 \text{TF}(t,d) = \frac{\text{Number of times term t appears in document d}}{\text{Total number of terms in document d}}
 \]</span> <span class="math display">\[
@@ -1244,7 +1244,7 @@ Confusion Matrix:</code></pre>
 </section>
 <section id="non-tf-idf-features" class="level3">
 <h3 class="anchored" data-anchor-id="non-tf-idf-features">Non TF-IDF Features</h3>
-<p>Now, lets try to run a prediction using only <code>vote</code>, <code>verified</code>, and <code>product_id</code> as our features:</p>
+<p>Now, let’s try to run a prediction using only <code>vote</code>, <code>verified</code>, and <code>product_id</code> as our features:</p>
 <div id="cell-36" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using 'vote','verified', and 'product_id' features for classification</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>bin_class_three_features <span class="op">=</span> classification(</span>
@@ -1327,7 +1327,7 @@ Confusion Matrix:</code></pre>
 </div>
 </div>
 <p><em>Runtime: 7m 9.5s</em></p>
-<p>Unfortunately, it looks like our multi-class model trained on only TF-IDF features does not perform as well as the binary classifier - with only 50% accuracy in correctly predicting ratings. When looking at the confusion matrix, it appears that the model did the best at correcly identifying 5-star reviews. This result should not be surprising, given the disproportionately large amount of 5 star reviews in the data.</p>
+<p>Unfortunately, it looks like our multi-class model trained on only TF-IDF features does not perform as well as the binary classifier - with only 50% accuracy in correctly predicting ratings. When looking at the confusion matrix, it appears that the model did the best at correctly identifying 5-star reviews. This result should not be surprising, given the disproportionately large amount of 5 star reviews in the data.</p>
 </section>
 <section id="non-tf-idf-features-1" class="level3">
 <h3 class="anchored" data-anchor-id="non-tf-idf-features-1">Non TF-IDF Features</h3>
@@ -1691,7 +1691,7 @@ Random Forest:
 </div>
 <p><em>Runtime: 21m 15.9s</em></p>
 <p>In our ridge and random forest regressions that predict polarity using only the TF-IDF embeddings, we get an <span class="math inline">\(R^2\)</span> value of 0.6386 for ridge and 0.6734 for RF, which indicates a moderately good fit. In case you are not familiar, <span class="math inline">\(R^2\)</span> measures the proportion of variance in the target variable that can be explained by our features. Given the complex nature of our text data, this is a pretty good result especially for our roughly tuned, out of the box ridge model. As for the error rates, both models have reasonable low MSE/RMSE values, where “mean squared error” represents the average disparity between predicted values and true values.</p>
-<p>However, these results are not all promising, as both models have a a very high mean absolute percentage error of around 200%. This is an indication that our models struggled with extreme outliers in the data. Furthermore, the residual plot displays a strange linear boundary - which potentially resulted from my choice to scale polarity before modeling.</p>
+<p>However, these results are not all promising, as both models have a very high mean absolute percentage error of around 200%. This is an indication that our models struggled with extreme outliers in the data. Furthermore, the residual plot displays a strange linear boundary - which potentially resulted from my choice to scale polarity before modeling.</p>
 </section>
 <section id="full-feature-model" class="level3">
 <h3 class="anchored" data-anchor-id="full-feature-model">Full Feature Model</h3>
@@ -1733,7 +1733,7 @@ Random Forest:
 </div>
 </div>
 <p><em>Runtime: 19m 55.1s</em></p>
-<p>Here, we see the results from our ridge and random forest regressions when predicting polarity using all features. In these results, we see about the same performance from ridge, along with a slight reduction in performance from the RF regression. In this case and in the case above, we observe abnormally high MAPE values - again hinting that extreme outliers may have impacted model performance. Further, we once again oberserve the abnormal linear boundary forming in residual plot for both models.</p>
+<p>Here, we see the results from our ridge and random forest regressions when predicting polarity using all features. In these results, we see about the same performance from ridge, along with a slight reduction in performance from the RF regression. In this case and in the case above, we observe abnormally high MAPE values - again hinting that extreme outliers may have impacted model performance. Further, we once again observe the abnormal linear boundary forming in residual plot for both models.</p>
 </section>
 </section>
 </section>
@@ -1784,9 +1784,9 @@ Random Forest:
 <ul>
 <li><strong>High MAPE</strong></li>
 </ul>
-<p>Each one of our regressions contained a high value for mean absolute percentage error, which I attribute to the presence of extreme outliers in the target variable’s distribution. To correct for this down the line, I will try to remove these outliers before modeling</p>
+<p>Each one of our regressions contained a high value for mean absolute percentage error, which I attribute to the presence of extreme outliers in the target variable’s distribution. To correct for this in the future, I will try to remove these outliers before modeling</p>
 <ul>
-<li><strong>Strange Residual Plots</strong></li>
+<li><strong>Residual Plot Behavior</strong></li>
 </ul>
 <p>The residual plots for each of our regression results had a strange linear boundary, which I believe has to do with the scaling techniques applied to the target and features before modeling. In the future, I will try to correct for this by using different scaling techniques, such as [-1, 1] bounding our TF-IDF embeddings to reflect the bounds of the polarity score.</p>
 </section>
@@ -1971,7 +1971,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = true;
+  const darkModeDefault = false;
   let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {

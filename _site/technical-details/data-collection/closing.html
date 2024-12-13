@@ -37,11 +37,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -191,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p>In this section, I loaded in raw data in JSON form containing a corppus of over 6 million Amazon product reviews under the ‘Electronics’ category. With the help of custom functions provided in the dataset’s source repository, I parsed the data and passed it into a pandas dataframe. As a final step, I zipped the file and moved it into the <code>data/raw-data/</code> directory.</p>
+<p>In this section, I loaded in raw data in JSON form containing a corpus of over 6 million Amazon product reviews under the ‘Electronics’ category. Using custom functions defined in the dataset’s source repository, I parsed the data and passed it into a pandas dataframe. As a final step, I zipped the file and moved it into the <code>data/raw-data/</code> directory.</p>
 <section id="challenges" class="level2">
 <h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
 <p><span style="text-decoration: underline;"><strong>Memory and Processing Bottlenecks</strong></span></p>
@@ -342,7 +342,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = true;
+  const darkModeDefault = false;
   let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {

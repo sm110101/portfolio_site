@@ -47,9 +47,9 @@ website:
 
 format:
   html:
-    theme: 
-      dark: cyborg
+    theme:
       light: minty
+      dark: cyborg
     bibliography:   ./assets/references.bib
     csl:  ./assets/nature.csl
     toc: true

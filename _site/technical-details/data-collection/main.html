@@ -91,11 +91,11 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -270,26 +270,26 @@ div.csl-indent {
 <p><br> <br></p>
 <section id="overview" class="level1">
 <h1>Overview</h1>
-<p>The data from this project is open source and available via a GitHub repository. A very big thank you to the repo owner, <a href="https://x.com/jianmo_ni">Jianmo Ni</a>, who is a former UCSD student that compiled over 233.1 million Amazon reviews for their paper on recommendation systems<span class="citation" data-cites="DataArticle"><sup><a href="#ref-DataArticle" role="doc-biblioref">1</a></sup></span>.</p>
+<p>The data from this project is open source and available via a GitHub repository. A very big thank you to the repo owner, <a href="https://x.com/jianmo_ni">Jianmo Ni</a>, who is a former UCSD student that compiled over 233.1 million Amazon reviews for their paper on recommendation systems.<span class="citation" data-cites="DataArticle"><sup><a href="#ref-DataArticle" role="doc-biblioref">1</a></sup></span></p>
 <p>The repo owner offers this data to the public under one condition - that anyone who uses it cites their original work, which I have included in the references section below. Alternatively, this <a href="https://cseweb.ucsd.edu/~jmcauley/pdfs/emnlp19a.pdf">link</a> will take you directly to the original paper that used this data. The raw data used in this report can be downloaded at the original <a href="https://nijianmo.github.io/amazon/index.html">repo</a>.</p>
-<p>Due to limited storage and computational capacity, I have elected to only conduct my analysis on the “5-core” version of Amazon Electronics reviews within the repository. The raw data is in json format, and therefore needs to be parsed and stored in a dataframe before any modeling or EDA can be done. For this process, I use the <code>parse()</code> and <code>getDF()</code> functions defined in the repository which is linked above.</p>
+<p>Due to limited storage and computational capacity, I have elected to only conduct my analysis on the “5-core” version of Amazon Electronics reviews within the repository. The raw data is in JSON format, and therefore needs to be parsed and stored in a dataframe before any modeling or EDA can be done. For this process, I use the <code>parse()</code> and <code>getDF()</code> functions defined in the repository which is linked above.</p>
 <p>In case you are not familiar, the term “5-core” is in reference to dense subsets, and in this case it means that the data below has been filtered such that the remaining users and items have 5 reviews each.</p>
 </section>
 <section id="data-structure-and-format" class="level1">
 <h1>Data Structure and Format</h1>
-<p>Before we begin collection and cleaning, here an example of a single JSON object contained in the raw data file:</p>
+<p>Before we begin collection and cleaning, here is an example of a single JSON object contained in the raw data file:</p>
 <p><br></p>
 <p><img src="../../xtra/multiclass-portfolio-website/images/raw_data_json.png" class="img-fluid" width="800"></p>
 <p>Source: <a href="https://cseweb.ucsd.edu/~jmcauley/datasets/amazon/links.html">The repo above</a></p>
 <p><br></p>
-<p>Within this dictionary, we observe the following characteristics: - <code>overall</code>: Rating - <code>vote</code>: Amount of community votes given to the review. Users will often vote when they find a review helpful - <code>verified</code>: Boolean variable that indicates whether an account is verified or not - <code>reviewTime</code>: Time of the review (raw) - <code>reviewerID</code>: ID of the reviewer - <code>asin</code>: Id of the product - <code>style</code>: Key-value object. In this case, describing product attributes - <code>reviewerName</code>: Name of the reviewer - <code>reviewText</code>: Raw, unprocessed text contents of the review - <code>summary</code>: The title of the user’s review - <code>unixReviewTime</code>: Time of the review in unix time (Measures time “based by the number of non-leap seconds that have elapsed since 00:00:00 UTC”)<span class="citation" data-cites="UnixTime"><sup><a href="#ref-UnixTime" role="doc-biblioref">2</a></sup></span>. - <code>image</code>: Image path (if any)</p>
+<p>Within this dictionary, we observe the following characteristics: - <code>overall</code>: Rating - <code>vote</code>: Amount of community votes given to the review. Users will often vote when they find a review helpful - <code>verified</code>: Boolean variable that indicates whether an account is verified or not - <code>reviewTime</code>: Timestamp of the review - <code>reviewerID</code>: ID of the reviewer - <code>asin</code>: Id of the product - <code>style</code>: Key-value object. In this case, describing product attributes - <code>reviewerName</code>: Name of the reviewer - <code>reviewText</code>: Raw, unprocessed text contents of the review - <code>summary</code>: The title of the user’s review - <code>unixReviewTime</code>: Time of the review in unix time (Measures time “based on the number of non-leap seconds that have elapsed since 00:00:00 UTC”)<span class="citation" data-cites="UnixTime"><sup><a href="#ref-UnixTime" role="doc-biblioref">2</a></sup></span>. - <code>image</code>: Image path (if any)</p>
 <p>The raw dataset contains a total of around 6.7 million of these entries (one for each review).</p>
 </section>
 <section id="code" class="level1">
 <h1>Code</h1>
 <section id="api-based-data-retrieval-using-requests-library" class="level2">
 <h2 class="anchored" data-anchor-id="api-based-data-retrieval-using-requests-library">API-Based Data Retrieval Using <code>requests</code> Library**</h2>
-<p>The following code uses an API-based retrieval method to download the data directly from the github repository. The pull code itself is provided by OpenAI’s GPT-4o Model<span class="citation" data-cites="gpt4o"><sup><a href="#ref-gpt4o" role="doc-biblioref">3</a></sup></span>. After numerous attempts at debugging and testing the code in another environment, the LLM added a tweak in the code to disable SSL verification. While this ended up working, this is an unsafe practice, and you should always use discretion before trying it in your own analysis.</p>
+<p>The following code uses an API-based retrieval method to download the data directly from the GitHub repository. The pull code itself is provided by OpenAI’s GPT-4o Model<span class="citation" data-cites="gpt4o"><sup><a href="#ref-gpt4o" role="doc-biblioref">3</a></sup></span>. After numerous attempts at debugging and testing the code in another environment, the LLM added a tweak in the code to disable SSL verification. While this ended up working, this is an unsafe practice, and you should always use discretion before trying it in your own analysis.</p>
 <div id="cell-5" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests <span class="co">#Importing requests library for  api-based retrieval</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
@@ -320,7 +320,7 @@ div.csl-indent {
 </section>
 <section id="importing-packages-and-loading-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-packages-and-loading-data">Importing Packages and Loading Data</h2>
-<p>Here, we begin the process by loading in our data. as stated above, The initial <code>parse()</code> and <code>getDF()</code> functions are borrowed from the link above as well. However, when initially trying to load and parse this data, I ran into serious memory issues that rendered my machine unable to successfully convert the data into a dataframe. Therefore, I elected to use the <code>orjson</code> library over the traditional <code>json</code>, which cut my import time dramatically. For reference to that repository, please head <a href="https://github.com/ijl/orjson">here</a>.</p>
+<p>Here, we begin the process by loading in our data. as stated above, the initial <code>parse()</code> and <code>getDF()</code> functions are borrowed from the link above as well. However, when initially trying to load and parse this data, I ran into serious memory issues that rendered my machine unable to successfully convert the data into a dataframe. Therefore, I elected to use the <code>orjson</code> library over the traditional <code>json</code>, which cut my import time dramatically. For reference to that repository, please refer to this <a href="https://github.com/ijl/orjson">link</a>.</p>
 <div id="cell-8" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing necessary packages</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -378,7 +378,7 @@ div.csl-indent {
 </section>
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p>In this section, I loaded in raw data in JSON form containing a corppus of over 6 million Amazon product reviews under the ‘Electronics’ category. With the help of custom functions provided in the dataset’s source repository, I parsed the data and passed it into a pandas dataframe. As a final step, I zipped the file and moved it into the <code>data/raw-data/</code> directory.</p>
+<p>In this section, I loaded in raw data in JSON form containing a corpus of over 6 million Amazon product reviews under the ‘Electronics’ category. Using custom functions defined in the dataset’s source repository, I parsed the data and passed it into a pandas dataframe. As a final step, I zipped the file and moved it into the <code>data/raw-data/</code> directory.</p>
 <section id="challenges" class="level2">
 <h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
 <p><span style="text-decoration: underline;"><strong>Memory and Processing Bottlenecks</strong></span></p>
@@ -540,7 +540,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = true;
+  const darkModeDefault = false;
   let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {

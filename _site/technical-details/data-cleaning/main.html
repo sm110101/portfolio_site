@@ -91,11 +91,11 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -307,7 +307,7 @@ window.Quarto = {
 <p><br> <br></p>
 <section id="overview" class="level1">
 <h1>Overview</h1>
-<p>In this section, I continue by cleaning the data gathered in the <a href="../../technical-details/data-collection/main.html">Data Collection</a> section. To begin, I load in the raw data file from the <code>data/raw-data/</code> directory. From there, I drop columns that are not relevant to my <a href="../../technical-details/eda/main.html">EDA</a> and modeling down the line. Throughout this section, I try to consistently reduce the number of NA values until none remain in the final version of the dataset. While cleaning, I also make sure to drop NA values from rows where their removal wouldn’t seriously impact the size of the dataset. The columns that ended up matching this criteria were <code>reviewerName</code> and <code>summary</code>. I also make sure to assign proper data types to the columns - changing number of community votes <code>vote</code> to an integer value, date of review posting <code>reviewTime</code> to datetime. Finally, I run the function <code>clean_review()</code> on the <code>reviewText</code> and <code>summary</code> columns. In the challenges section, I highlight the computational bottleneck faced when trying to run <code>clean_text()</code> on over 12 million entries, and how I improved its performance. The final result of this section yields a clean dataset, ripe for further exploration and modeling.</p>
+<p>In this section, I continue by cleaning the data gathered in the <a href="../../technical-details/data-collection/main.html">Data Collection</a> section. To begin, I load in the raw data file from the <code>data/raw-data/</code> directory. From there, I drop columns that are not relevant to my <a href="../../technical-details/eda/main.html">EDA</a> and modeling down the line. Throughout this section, I try to consistently reduce the number of NA values until none remain in the final version of the dataset. While cleaning, I also make sure to drop NA values from rows where their removal wouldn’t seriously impact the size of the dataset. The columns that ended up matching this criteria were <code>reviewerName</code> and <code>summary</code>. I also make sure to assign proper data types to the columns - changing the <code>vote</code> column to an integer value, and the date of the review <code>reviewTime</code> to datetime. Finally, I run the function <code>clean_review()</code> on the <code>reviewText</code> and <code>summary</code> columns. In the challenges section, I highlight the computational bottleneck faced when trying to run <code>clean_text()</code> on over 12 million entries, and how I improved its performance. The final result of this section yields a clean dataset, ripe for further exploration and modeling.</p>
 </section>
 <section id="code" class="level1">
 <h1>Code</h1>
@@ -403,7 +403,7 @@ window.Quarto = {
 </section>
 <section id="dropping-unnecessary-columns" class="level2">
 <h2 class="anchored" data-anchor-id="dropping-unnecessary-columns">Dropping Unnecessary Columns</h2>
-<p>First, let’s drop the <code>unixReviewTime</code>, <code>style</code> and <code>image</code> columns, since they will not be used in our analysis</p>
+<p>First, let’s drop the <code>unixReviewTime</code>, <code>style</code>, and <code>image</code> columns, since they will not be used in our analysis</p>
 <div id="cell-9" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list of columns to drop</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>drop_cols <span class="op">=</span> [<span class="st">'unixReviewTime'</span>, <span class="st">'image'</span>, <span class="st">'style'</span>]</span>
@@ -440,7 +440,7 @@ dtype: int64</code></pre>
 </div>
 <p>It looks like our most important column, <code>reviewText</code>, has 1640 null values, so let’s get rid of them.</p>
 <div id="cell-13" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking only rows or reviews_raw where reviewText is not null</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking only rows from reviews_raw where reviewText is not null</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>reviews_raw <span class="op">=</span> reviews_raw[reviews_raw[<span class="st">'reviewText'</span>].notna()]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's make sure this works</span></span>
@@ -452,7 +452,7 @@ dtype: int64</code></pre>
 </section>
 <section id="checking-data-types" class="level2">
 <h2 class="anchored" data-anchor-id="checking-data-types">Checking data types</h2>
-<p>Before moving forward, let’s ensure that each of our column data types are appropriate</p>
+<p>Before moving forward, let’s ensure that each column data type is appropriate</p>
 <div id="cell-15" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reviews_raw.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -499,7 +499,7 @@ summary          787
 dtype: int64</code></pre>
 </div>
 </div>
-<p>As a final step to getting rid of all Null values, let’s drop instances where <code>reviewerName</code> and <code>summary</code> are Null</p>
+<p>As a final step to getting rid of all Null values, let’s drop instances where <code>reviewerName</code> and <code>summary</code> are null</p>
 <div id="cell-21" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking only rows or reviewerName is not null</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>reviews_raw <span class="op">=</span> reviews_raw[reviews_raw[<span class="st">'reviewerName'</span>].notna()]</span>
@@ -587,7 +587,7 @@ dtype: int64</code></pre>
 </section>
 <section id="cleaning-and-processing-text-data" class="level2">
 <h2 class="anchored" data-anchor-id="cleaning-and-processing-text-data">Cleaning and Processing Text Data</h2>
-<p>In this section I will begin to process the text columns within this dataset. I will first remove digits from the text using python’s built-in <code>.isdigit()</code> function. Next, I will utilize python’s <code>string</code> library to create a list of punctuation marks that will be referenced when removing all punctuation from the text. Step three involves lowercasing the text using python’s built-in <code>.lower()</code> function. Finally I will remove stopwords in the text with the help of <code>nltk.corpus</code>. If you are not familiar, stopwords are terms that do not carry any semantic meaning - some examples include ‘i’, ‘me’, ‘my’, ‘myself’, ‘we’, ‘our’, ‘ours’, etc. From there. After all of this is complete, we will have a fully cleaned dataframe that is ready for analysis and modeling.</p>
+<p>In this section I will begin to process the text columns within this dataset. I will first remove digits from the text using Python’s built-in <code>.isdigit()</code> function. Next, I will utilize Python’s <code>string</code> library to create a list of punctuation marks that will be referenced when removing all punctuation from the text. Step three involves lowercasing the text using Python’s built-in <code>.lower()</code> function. Finally I will remove stopwords in the text with the help of <code>nltk.corpus</code>. If you are not familiar, stopwords are terms that do not carry any semantic meaning - some examples include ‘i’, ‘me’, ‘my’, ‘myself’, ‘we’, ‘our’, ‘ours’, etc. After all of this is complete, we will have a fully cleaned dataframe that is ready for analysis and modeling.</p>
 <div id="cell-28" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing stopwords </span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
@@ -619,7 +619,7 @@ dtype: int64</code></pre>
 <ol type="1">
 <li>Removes digits using <code>.isdigit()</code></li>
 <li>Removes punctuation marks by referencing the list object <code>punctuation_marks</code></li>
-<li>Lowercases the text using python’s built-in <code>.lower()</code></li>
+<li>Lowercases the text using Python’s built-in <code>.lower()</code></li>
 <li>Removes stopwords using list object <code>stop_words</code></li>
 </ol>
 <p><strong><em>Note</em></strong>: The function<span class="citation" data-cites="gpt4o_textfunc"><sup><a href="#ref-gpt4o_textfunc" role="doc-biblioref">2</a></sup></span> used below was provided to me by OpenAI’s GPT-4o model. The full citation can be found at the bottom of the page. Additionally, my original function will be included in the <strong>Challenges</strong> section.</p>
@@ -937,7 +937,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = true;
+  const darkModeDefault = false;
   let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
