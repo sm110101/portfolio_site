@@ -23,11 +23,12 @@ This page serves as a progress log for my DSAN5000 final project
 **12-12-2024**
 
 * [ ] Outline plan for report (build out structure, collect meaningful img/assets)
-* [ ] Finish first draft of supervised learning page 
+* [ ] Add L2-Norm based scaling to classification pipelines to see if it speeds up execution.
+* [X] Finish first draft of supervised learning page 
 
 **12-11-2024**
 
-* [ ] Ouline plan for structuring supervised learning
+* [X] Ouline plan for structuring supervised learning
 * [X] Finish first draft of unsupervised learning page
 
 **12-10-2024**

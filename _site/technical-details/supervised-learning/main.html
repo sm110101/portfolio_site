@@ -281,9 +281,12 @@ window.Quarto = {
   </ul></li>
   <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection">Model Selection</a>
   <ul class="collapse">
-  <li><a href="#pipeline-1-binary-classification" id="toc-pipeline-1-binary-classification" class="nav-link" data-scroll-target="#pipeline-1-binary-classification">Pipeline 1: Binary Classification</a></li>
-  <li><a href="#pipeline-2-multiclass-classification" id="toc-pipeline-2-multiclass-classification" class="nav-link" data-scroll-target="#pipeline-2-multiclass-classification">Pipeline 2: Multiclass Classification</a></li>
+  <li><a href="#binary-classification" id="toc-binary-classification" class="nav-link" data-scroll-target="#binary-classification">Binary Classification</a></li>
+  <li><a href="#multi-class-classification" id="toc-multi-class-classification" class="nav-link" data-scroll-target="#multi-class-classification">Multi-class Classification</a></li>
   </ul></li>
+  <li><a href="#classification-model-pipeline" id="toc-classification-model-pipeline" class="nav-link" data-scroll-target="#classification-model-pipeline">Classification Model Pipeline</a></li>
+  <li><a href="#binary-classification-1" id="toc-binary-classification-1" class="nav-link" data-scroll-target="#binary-classification-1">Binary Classification</a></li>
+  <li><a href="#multi-class-prediction" id="toc-multi-class-prediction" class="nav-link" data-scroll-target="#multi-class-prediction">Multi-Class Prediction</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -340,27 +343,32 @@ window.Quarto = {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Model training packages</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression, LinearRegression, Ridge, Lasso</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier, GradientBoostingClassifier</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Model evaluation packages</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    accuracy_score,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    precision_score,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    recall_score,</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    f1_score,</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    roc_auc_score,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    confusion_matrix,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    mean_squared_error,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    mean_absolute_error,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    r2_score,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    roc_curve,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    auc</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization packages</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> MultinomialNB</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Model evaluation packages</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    accuracy_score,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    precision_score,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    recall_score,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    f1_score,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    roc_auc_score,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    confusion_matrix,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    mean_squared_error,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    mean_absolute_error,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    r2_score,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    roc_curve,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    auc</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization packages</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignoring warnings </span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, we can load in our data:</p>
 <div id="cell-6" class="cell" data-execution_count="2">
@@ -591,12 +599,12 @@ window.Quarto = {
 <section id="encoding-binary-target" class="level3">
 <h3 class="anchored" data-anchor-id="encoding-binary-target">Encoding Binary Target</h3>
 <p>Here, I use binary encoding to create a new <code>binary_sentiment</code> column that adjusts values in the <code>binary_target</code> column. Specifically, I will change the value “positive” to 1, and “negative” to 0.</p>
-<div id="cell-16" class="cell" data-execution_count="9">
+<div id="cell-16" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating verified_binary column</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>reviews[<span class="st">'binary_sentiment'</span>] <span class="op">=</span> (reviews[<span class="st">'binary_target'</span>] <span class="op">==</span> <span class="st">"positive"</span>).astype(<span class="bu">int</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing result</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>reviews[[<span class="st">'binary_target'</span>, <span class="st">'binary_sentiment'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -654,14 +662,14 @@ window.Quarto = {
 <li><code>reviewerName:</code> Name of reviewer</li>
 </ul>
 <p>I choose to leave in the uncleaned versions of the review text and summary in case I want to use some all-in-one embedding tools down the line like <code>BERT</code>.</p>
-<div id="cell-18" class="cell" data-execution_count="10">
+<div id="cell-18" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting columns to drop </span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cols_to_drop <span class="op">=</span> [<span class="st">'binary_target'</span>, <span class="st">'verified'</span>, <span class="st">'vote'</span>,<span class="st">'productID'</span>, <span class="st">'reviewTime'</span>, <span class="st">'reviewerID'</span>, <span class="st">'reviewerName'</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Dropping</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>reviews <span class="op">=</span> reviews.drop(columns<span class="op">=</span>cols_to_drop)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing result</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>reviews.head(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
 
@@ -702,7 +710,7 @@ window.Quarto = {
 </section>
 <section id="renaming-and-reordering-columns-for-cleanliness" class="level3">
 <h3 class="anchored" data-anchor-id="renaming-and-reordering-columns-for-cleanliness">Renaming and Reordering Columns for Cleanliness</h3>
-<div id="cell-20" class="cell" data-execution_count="13">
+<div id="cell-20" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Renaming columns </span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>renamed_columns <span class="op">=</span> {</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'reviewRating'</span>: <span class="st">'rating'</span>,</span>
@@ -735,7 +743,7 @@ window.Quarto = {
 <span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing result</span></span>
 <span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>reviews.head(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
 
@@ -786,12 +794,12 @@ window.Quarto = {
 <section id="polarity" class="level3">
 <h3 class="anchored" data-anchor-id="polarity">Polarity</h3>
 <p>Before moving on to more advanced feature extraction, I am going to quickly add back the <code>polarity</code> column that we worked with in the EDA section to serve as a target variable in our regression models. If you need a refresher on polarity, please head over to the <a href="../../technical-details/eda/main.html">EDA</a> section where I provide an overview.</p>
-<div id="cell-23" class="cell" data-execution_count="15">
+<div id="cell-23" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TextBlob allows us to feed raw text into it for polarity extraction, so I will do that here</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>reviews[<span class="st">'polarity'</span>] <span class="op">=</span> reviews[<span class="st">'text'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: TextBlob(x).sentiment.polarity)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># printing result</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>reviews[[<span class="st">'text'</span>, <span class="st">'rating'</span>, <span class="st">'polarity'</span>]].head(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
 
@@ -833,7 +841,7 @@ window.Quarto = {
 <li><code>max_features</code>: Threshold for the number of features to be ranked by their term frequency across the corpus.</li>
 <li><code>ngram_range</code>: A tuple that controls the range of n-values for different n-grams to be extracted. In my case, I use (1,2) to include both unigrams and bigrams.</li>
 </ul>
-<div id="cell-25" class="cell" data-execution_count="16">
+<div id="cell-25" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tfidf_embedding(df, text_column, max_features<span class="op">=</span><span class="dv">1000</span>, ngram_range<span class="op">=</span>(<span class="dv">1</span>,<span class="dv">2</span>)):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function:</span></span>
@@ -856,18 +864,18 @@ window.Quarto = {
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df_tfidf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-26" class="cell" data-execution_count="17">
+<div id="cell-26" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Applying this function to our reviews data set</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>reviews_tfidf <span class="op">=</span> tfidf_embedding(reviews, text_column<span class="op">=</span><span class="st">'text_clean'</span>, max_features<span class="op">=</span><span class="dv">500</span>, ngram_range<span class="op">=</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing shape</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>reviews_tfidf.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>(100000, 510)</code></pre>
 </div>
 </div>
-<div id="cell-27" class="cell" data-execution_count="18">
+<div id="cell-27" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>reviews_tfidf.head(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
@@ -934,15 +942,16 @@ window.Quarto = {
 </section>
 <section id="model-selection" class="level2">
 <h2 class="anchored" data-anchor-id="model-selection">Model Selection</h2>
-<section id="pipeline-1-binary-classification" class="level3">
-<h3 class="anchored" data-anchor-id="pipeline-1-binary-classification">Pipeline 1: Binary Classification</h3>
+<section id="binary-classification" class="level3">
+<h3 class="anchored" data-anchor-id="binary-classification">Binary Classification</h3>
+<p><strong><em>Predicting sentiment value (positive or negative)</em></strong></p>
 <section id="logistic-regression" class="level4">
 <h4 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h4>
 <ul>
 <li><strong>Overview</strong></li>
 </ul>
 <p>Logistic regression is a type of supervised learning technique that is often used to predict a binary outcome (A or B). The model does this by taking in a set of independent variables for a given observation, and calculating the probability that they belong to a certain target class. Logistic regressions use a <a href="https://www.linkedin.com/pulse/understanding-sigmoid-function-logistic-regression-piduguralla/">sigmoid function</a> that maps the linear combination of inputs to a final probability in the range [0, 1].<span class="citation" data-cites="sigmoid"><sup><a href="#ref-sigmoid" role="doc-biblioref">4</a></sup></span> If the value returned by the sigmoid function is <span class="math inline">\(\geq 0.5\)</span>, then the model assigns the observation to the target class (in our case it assigns the value <span class="math inline">\(1\)</span> to reviews that it believes are positive)</p>
-<p><strong>Sigmoid Function:</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/sigmoid.png" class="img-fluid" width="500"> <br> Source: <a href="https://www.dailydoseofds.com/why-do-we-use-sigmoid-in-logistic-regression/">Daily Dose of Data Science</a></p>
+<p><strong>Sigmoid Function:</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/sigmoid.png" class="img-fluid" width="500"> <br> Source: <a href="https://www.dailydoseofds.com/why-do-we-use-sigmoid-in-logistic-regression/">Daily Dose of Data Science</a> <br></p>
 <ul>
 <li><strong>Model Rationale</strong></li>
 </ul>
@@ -953,80 +962,172 @@ window.Quarto = {
 <ul>
 <li><strong>Overview</strong></li>
 </ul>
-<p>Random forests are a <a href="https://en.wikipedia.org/wiki/Decision_tree">decision tree</a> based approach to machine learning. However, instead of constructing a</p>
+<p>Random forests are a <a href="https://en.wikipedia.org/wiki/Decision_tree">decision tree</a> based approach to machine learning. Decision trees are non-parametric models that can be used for both regression and classification. Their process begins by selecting a “root node”, or initial question about a feature in the data. From there they break off into different branches that ask more and more specific questions about the features. The end result, also called the “leaf node,” outputs the class that best fits the criteria defined in the upper nodes.<span class="citation" data-cites="decisiontrees"><sup><a href="#ref-decisiontrees" role="doc-biblioref">5</a></sup></span> Random forest models take this same approach, but instead of relying on a single tree, they build multiple decision trees during the training process, and aggregate their results to provide stronger prediction.</p>
+<p><strong>Decision Tree vs.&nbsp;Random Forest:</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/trees_v_forests.jpg" class="img-fluid" width="500"> <br> Source: <a href="https://towardsdatascience.com/10-decision-trees-are-better-than-1-719406680564">Towards Data Science</a> <br></p>
 <ul>
 <li><strong>Model Rationale</strong></li>
 </ul>
-<div id="cell-29" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> binary_classification(df, target<span class="op">=</span><span class="st">'sentiment'</span>, selected_features<span class="op">=</span><span class="va">None</span>, include_tfidf<span class="op">=</span><span class="va">False</span>, test_size <span class="op">=</span> <span class="fl">0.20</span>, random_state <span class="op">=</span> <span class="dv">5000</span>):</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 1: select which features we want to use</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 1(a) raise error if parameters are left blank</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> selected_features <span class="kw">is</span> <span class="va">None</span> <span class="kw">and</span> <span class="kw">not</span> include_tfidf:</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Please specify either `selected_features` or set `include_tfidf` to True"</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 1(b) combine features</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    features <span class="op">=</span> []</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> selected_features:</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        features <span class="op">+=</span> selected_features</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> include_tfidf:</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        features <span class="op">+=</span> [col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col.startswith(<span class="st">"tfidf_"</span>)]</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 1(c) Extract Features and Target variables</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> df[features]</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> df[target]</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 2: Train-Test Split</span></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span>test_size, random_state<span class="op">=</span>random_state)</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 3: Initialize Models</span></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    models <span class="op">=</span> {</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Logistic Regression"</span>: LogisticRegression(max_iter <span class="op">=</span> <span class="dv">1000</span>, random_state<span class="op">=</span>random_state),</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Random Forest"</span>: RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span>random_state)</span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 4: Train and evaluate the models</span></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> {}</span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> model_name, model <span class="kw">in</span> models.items():</span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>        model.fit(X_train, y_train)</span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> model.predict(X_test)</span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>        y_pred_prob <span class="op">=</span> model.predict_proba(X_test)[:, <span class="dv">1</span>]</span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate error metrics</span></span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>        metrics <span class="op">=</span> {</span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Accuracy"</span>: accuracy_score(y_test, y_pred),</span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Precision"</span>: precision_score(y_test, y_pred),</span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Recall"</span>: recall_score(y_test, y_pred),</span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>            <span class="st">"F1 Score"</span>: f1_score(y_test, y_pred),</span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ROC-AUC"</span>: roc_auc_score(y_test, y_pred)</span>
-<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add metrics to results dict</span></span>
-<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>        results[model_name] <span class="op">=</span> {</span>
-<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Model"</span>: model,</span>
-<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Metrics"</span>: metrics</span>
-<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 5: Return the best model based on F1 score</span></span>
-<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>    best_model <span class="op">=</span> <span class="bu">max</span>(results, key<span class="op">=</span><span class="kw">lambda</span> k: results[k][<span class="st">"Metrics"</span>][<span class="st">"F1 Score"</span>])</span>
-<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"BEST MODEL: </span><span class="sc">{</span>best_model<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"===========================</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Performance Metrics:"</span>)</span>
-<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric, value <span class="kw">in</span> results[best_model][<span class="st">"Metrics"</span>].items():</span>
-<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>metric<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results[best_model]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When brainstorming which models I wanted to use for binary classification, Random Forests stood out as a solid candidate for their ability to handle high dimensional data (like we see with our TF-IDF embeddings). Random Forests also come with the added benefit of being robust to potentially overfitting the data - as their ensemble structure requires different individual trees to be trained on subsets of the data.</p>
+</section>
+</section>
+<section id="multi-class-classification" class="level3">
+<h3 class="anchored" data-anchor-id="multi-class-classification">Multi-class Classification</h3>
+<p><strong><em>Predicting review rating (1-5)</em></strong></p>
+<section id="support-vector-machine-svm" class="level4">
+<h4 class="anchored" data-anchor-id="support-vector-machine-svm">Support Vector Machine (SVM)</h4>
+<ul>
+<li><strong>Overview</strong></li>
+</ul>
+<p>Support Vector Machines (SVMs) are supervised learning techniques that are commonly applied to classification problems. They assign classes by finding the optimal “hyperplane” in a high dimensional space that maximizes the distance between groups of data points.<span class="citation" data-cites="SVM"><sup><a href="#ref-SVM" role="doc-biblioref">6</a></sup></span> In simple english, SVMs are looking for the best line of boundary that creates the largest distance between groups of points, and then assigns the different groups to their own class.</p>
+<p><strong>SVM Overview:</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/svm.png" class="img-fluid" width="400"> <br> Source: <a href="https://medium.com/analytics-vidhya/support-vector-machine-svm-i-can-do-both-classification-and-regression-c90235e847df">Medium</a> <br></p>
+<ul>
+<li><strong>Model Rationale</strong></li>
+</ul>
+<p>For the task of classifying different review scores, I consider the use of SVM because it excels in separating points in high-dimensions. In the case of my my 500 dimensional TF-IDF feature space, SVM should be able to successfully separate groups of points into our desired ratings scores.</p>
+</section>
+<section id="multinomial-naive-bayes" class="level4">
+<h4 class="anchored" data-anchor-id="multinomial-naive-bayes">Multinomial Naive Bayes</h4>
+<ul>
+<li><strong>Overview</strong></li>
+</ul>
+<p>Multinomial Naive Bayes (MNB) takes a probabilistic approach to assigning different classes by first calculating the probabilities of different classes based on their frequency in the data. It assumes that all features are “conditionally independent” - meaning it treats each feature as being distinct and unrelated to the others.<span class="citation" data-cites="MNB"><sup><a href="#ref-MNB" role="doc-biblioref">7</a></sup></span> This assumption makes the model highly computationally efficient, as it only has to assign a single probability to each feature.</p>
+<ul>
+<li><strong>Model Rationale</strong></li>
+</ul>
+<p>For predicting the different review scores in my data set, I elect to use MNB for two reasons. Similar to SVM, MNB performs well with high-dimensional sparse data like our TF-IDF embeddings. The second reason why elect to use MNB here is because it is lightweight. Like I stated above, MNB’s core assumption of feature independence makes it computationally cheaper to run vs other models.</p>
+</section>
+</section>
+</section>
+<section id="classification-model-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="classification-model-pipeline">Classification Model Pipeline</h2>
+<p>Below, I define the function <code>classification()</code>, that takes in the following parameters:</p>
+<ul>
+<li><code>df</code>: A pandas dataframe containing all of our data, including features and the target variable</li>
+<li><code>target</code>: A string that allows us to define which variables in <code>df</code> that we want to use as the predictor (either ‘sentiment’ or ‘rating’)</li>
+<li><code>selected_features</code>: A list object that allows me to subset different features in the data when running predictions</li>
+<li><code>include_tfidf</code>: A boolean value that states whether or not we include the TF-IDF embeddings in our features</li>
+<li><code>test_size</code>: Determines the percent of observations that we want to test on</li>
+<li><code>random_state</code>: A random seed that we include for reproducibility</li>
+<li><code>show_confusion_mat</code>: Boolean value indicating whether we want the function to display a confusion matrix</li>
+</ul>
+<p>The function works by first extracting which variables we will use as features when running predictions. The function then splits the features and target into <code>X</code> and <code>y</code> dataframes, and uses scikit learn’s <code>train_test_split</code> function to further split the data into a training and testing set. From there, the function references which variable we want to predict. In cases where <code>target</code> is set to “sentiment”, we initialize <code>LogisticRegression</code> and <code>RandomForestClassifer</code> objects to perform binary classification. If <code>target</code> is defined as “rating”, we instead initialize <code>SVC</code> and <code>MultinomialNP</code> objects and continue forward with a multi-class prediction. In both cases, the function creates a dictionary called <code>models</code> that stores the name and configurations of our classifers.</p>
+<p>After that, the we create a <code>results</code> dictionary that stores the results of each model. To run the models, I use a for loop that runs through each item (or model) in the <code>models</code> dictionary. During each model iteration, I create a subdictionary called <code>metrics</code> that stores the following results from our predictions:</p>
+<p><strong>“Accuracy”:</strong> Meaures the proportion of correct predictions made</p>
+<p><span class="math inline">\(\frac{\text{True Positives + True Negatives}}{\text{Total Samples}}\)</span></p>
+<p><strong>“Precision”:</strong> Measures the proportion of true positives to all positive predictions made</p>
+<p><span class="math inline">\(\frac{\text{True Positives}}{\text{True Positives + False Positives}}\)</span></p>
+<p><strong>“Recall”:</strong> Measures the proportion of actual positives that our model(s) identified</p>
+<p><span class="math inline">\(\frac{\text{True Positives}}{\text{True Positives + False Negatives}}\)</span></p>
+<p><strong>“F1 Score”:</strong> Takes into consideration both Precision and Recall - focusing more on class-wise performance.<span class="citation" data-cites="F1Score"><sup><a href="#ref-F1Score" role="doc-biblioref">8</a></sup></span></p>
+<p><span class="math inline">\(\frac{\text{True Positives}}{\text{True Positives + False Negatives}}\)</span></p>
+<p>After we gather all of the results, I select the best model of the two by picking the one with the highest <strong>F1 Score</strong> value. I place the most emphasis on F1 Score here because our data set is heavily imbalanced. Specifically, there is an overwhelming amount of reviews (our multi-class target) with 5-star ratings, which also impacts our binary class (<code>sentiment</code>), as its value directly relates to <code>rating</code>.</p>
+<div id="cell-30" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline for running binary and multi-class predictions</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classification(df, target<span class="op">=</span><span class="st">'sentiment'</span>, selected_features<span class="op">=</span><span class="va">None</span>, include_tfidf<span class="op">=</span><span class="va">False</span>, test_size <span class="op">=</span> <span class="fl">0.20</span>, random_state <span class="op">=</span> <span class="dv">5000</span>, show_confusion_matrix<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 1: select which features we want to use</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1(a) raise error if parameters are left blank</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> selected_features <span class="kw">is</span> <span class="va">None</span> <span class="kw">and</span> <span class="kw">not</span> include_tfidf:</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Please specify either `selected_features` or set `include_tfidf` to True"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1(b) combine features</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    features <span class="op">=</span> []</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> selected_features:</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        features <span class="op">+=</span> selected_features</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> include_tfidf:</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        features <span class="op">+=</span> [col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col.startswith(<span class="st">"tfidf_"</span>)]</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1(c) Extract Features and Target variables</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> df[features]</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> df[target]</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 2: Train-Test Split</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span>test_size, random_state<span class="op">=</span>random_state)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 3: Initialize Models Based on our target variable</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> target <span class="op">==</span> <span class="st">'sentiment'</span>:</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>        models <span class="op">=</span> {</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Logistic Regression"</span>: LogisticRegression(max_iter <span class="op">=</span> <span class="dv">1000</span>, random_state<span class="op">=</span>random_state),</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Random Forest"</span>: RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span>random_state)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> target <span class="op">==</span> <span class="st">'rating'</span>:</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>        models <span class="op">=</span> {</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SVM"</span>: SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, probability<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span>random_state),</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Naive Bayes"</span>: MultinomialNB()</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: <span class="co"># Only rating and sentiment are legal target variables in our data</span></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Unsupported target var - please use either 'sentiment' or 'rating'."</span>)</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 4: Train and evaluate the models</span></span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> {}</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> model_name, model <span class="kw">in</span> models.items():</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>        model.fit(X_train, y_train)</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>        y_pred_prob <span class="op">=</span> model.predict_proba(X_test)[:, <span class="dv">1</span>]</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate error metrics</span></span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> target <span class="op">==</span> <span class="st">'sentiment'</span>: <span class="co"># Metrics for binary classification</span></span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>            metrics <span class="op">=</span> {</span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Accuracy"</span>: accuracy_score(y_test, y_pred),</span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Precision"</span>: precision_score(y_test, y_pred),</span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Recall"</span>: recall_score(y_test, y_pred),</span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>                <span class="st">"F1 Score"</span>: f1_score(y_test, y_pred),</span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> target <span class="op">==</span> <span class="st">'rating'</span>: <span class="co"># Multiclass metrics</span></span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>            metrics <span class="op">=</span> {</span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Accuracy"</span>: accuracy_score(y_test, y_pred),</span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Precision (Multi)"</span>: precision_score(y_test, y_pred, average<span class="op">=</span><span class="st">'macro'</span>),</span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Recall (Multi)"</span>: recall_score(y_test, y_pred, average<span class="op">=</span><span class="st">'macro'</span>),</span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>                <span class="st">"F1 Score (Multi)"</span>: f1_score(y_test, y_pred, average<span class="op">=</span><span class="st">'macro'</span>)</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add metrics to results dict</span></span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>        results[model_name] <span class="op">=</span> {</span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Model"</span>: model,</span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Metrics"</span>: metrics,</span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Predictions"</span>: y_pred</span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 5: Return the best model based on F1 score</span></span>
+<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a>    f1_key <span class="op">=</span> <span class="st">"F1 Score"</span> <span class="cf">if</span> target <span class="op">==</span> <span class="st">'sentiment'</span> <span class="cf">else</span> <span class="st">'F1 Score (Multi)'</span> <span class="co"># Ensure we are maximizing the correct F1 Score</span></span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a>    best_model <span class="op">=</span> <span class="bu">max</span>(results, key<span class="op">=</span><span class="kw">lambda</span> k: results[k][<span class="st">"Metrics"</span>][f1_key])</span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"BEST MODEL: </span><span class="sc">{</span>best_model<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"===========================</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Performance Metrics:"</span>)</span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric, value <span class="kw">in</span> results[best_model][<span class="st">"Metrics"</span>].items():</span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>metric<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 6: Display Confusion Matrix if prompted</span></span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> show_confusion_matrix:</span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Confusion Matrix:"</span>)</span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a>        c_mat <span class="op">=</span> confusion_matrix(y_test, results[best_model][<span class="st">"Model"</span>].predict(X_test))</span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>        sns.heatmap(c_mat, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">"d"</span>, cmap<span class="op">=</span><span class="st">"Blues"</span>, xticklabels<span class="op">=</span>np.unique(y), yticklabels<span class="op">=</span>np.unique(y))</span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(<span class="st">"Predicted"</span>)</span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(<span class="st">"Actual"</span>)</span>
+<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="ss">f"Confusion Matrix: </span><span class="sc">{</span>best_model<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results[best_model]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-30" class="cell" data-execution_count="22">
+</section>
+<section id="binary-classification-1" class="level2">
+<h2 class="anchored" data-anchor-id="binary-classification-1">Binary Classification</h2>
+<p>With our pipeline ready, let’s run a prediction of ‘sentiment’ using only our TF-IDF features:</p>
+<div id="cell-33" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using only TF-IDF values for classification</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>best_model_result <span class="op">=</span> binary_classification(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>bin_class_tfidf <span class="op">=</span> classification(</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    df<span class="op">=</span>reviews_tfidf, </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span><span class="st">"sentiment"</span>, </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    include_tfidf<span class="op">=</span><span class="va">True</span>  <span class="co"># Include all TF-IDF columns</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    include_tfidf<span class="op">=</span><span class="va">True</span>, <span class="co"># Include all TF-IDF columns</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    show_confusion_matrix<span class="op">=</span><span class="va">True</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>BEST MODEL: Logistic Regression
 ===========================
@@ -1036,35 +1137,80 @@ Accuracy: 0.8564
 Precision: 0.8730
 Recall: 0.9621
 F1 Score: 0.9154
-ROC-AUC: 0.6881</code></pre>
-</div>
-</div>
-<div id="cell-31" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[26], line 2</span>
-<span class="ansi-green-fg ansi-bold">      1</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> <span style="font-weight:bold;color:rgb(0,0,255)">pprint</span>
-<span class="ansi-green-fg">----&gt; 2</span> pprint(best_model_result)
 
-<span class="ansi-red-fg">TypeError</span>: 'module' object is not callable</pre>
+Confusion Matrix:</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="main_files/figure-html/cell-17-output-2.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
 </div>
+<p>In this case, the logistic regression performed the best, with around 85.6% accuracy in predicting review sentiment. It looks like most of our accuracy came from correctly identifying reviews with positive sentiment.</p>
+<p>Now, lets try to run a prediction using only <code>vote</code>, <code>verified</code>, and <code>product_id</code> as our features:</p>
+<div id="cell-35" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using 'vote','verified', and 'product_id' features for classification</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>bin_class_three_features <span class="op">=</span> classification(</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    df<span class="op">=</span>reviews_tfidf,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span><span class="st">"sentiment"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    selected_features<span class="op">=</span>[<span class="st">'vote'</span>,<span class="st">'verified'</span>,<span class="st">'product_id'</span>],</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    include_tfidf<span class="op">=</span><span class="va">False</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>BEST MODEL: Logistic Regression
+===========================
+
+Performance Metrics:
+Accuracy: 0.8071
+Precision: 0.8071
+Recall: 1.0000
+F1 Score: 0.8933</code></pre>
+</div>
+</div>
+<p>When using only ‘vote’, ‘verified’, and ‘product_id’, our model performance drops to around 80% prediction accuracy - meaning the inclusion of our TF-IDF embeddings is likely crucial to boosting model performance</p>
+<p>Next, I’ll test out the models using the three features above plus our TF-IDF values:</p>
+<div id="cell-37" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using all features</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>bin_class_all_features <span class="op">=</span> classification(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    df<span class="op">=</span>reviews_tfidf,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span><span class="st">"sentiment"</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    selected_features<span class="op">=</span>[<span class="st">'vote'</span>,<span class="st">'verified'</span>,<span class="st">'product_id'</span>],</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    include_tfidf<span class="op">=</span><span class="va">True</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>BEST MODEL: Logistic Regression
+===========================
+
+Performance Metrics:
+Accuracy: 0.8559
+Precision: 0.8724
+Recall: 0.9622
+F1 Score: 0.9151</code></pre>
+</div>
+</div>
+<p>Not much of an improvement compared to our prediction using only TF-IDF. In fact, it appears that the inclusion of our additional features slightly decreased our prediction accuracy.</p>
 </section>
-</section>
-<section id="pipeline-2-multiclass-classification" class="level3">
+<section id="multi-class-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="multi-class-prediction">Multi-Class Prediction</h2>
+<p>Let’s move forward now to predicting the rating for each review using our predefined pipeline. The only difference here is that I set the “target” parameter to <code>rating</code>, which tells our pipline to run multi-class predictions. Here we go!</p>
+<div id="cell-40" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using only TF-IDF values for classification</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>mult_class_tfidf <span class="op">=</span> classification(</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    df<span class="op">=</span>reviews_tfidf, </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span><span class="st">"rating"</span>, </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    include_tfidf<span class="op">=</span><span class="va">True</span>, <span class="co"># Include all TF-IDF columns</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    show_confusion_matrix<span class="op">=</span><span class="va">True</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 
-
-</section>
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Pipeline 2: Multiclass Classification</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-IBMsupervised" class="csl-entry" role="listitem">
 <div class="csl-left-margin">1. </div><div class="csl-right-inline"><a href="https://www.ibm.com/topics/supervised-learning">What is supervised learning?</a></div>
 </div>
@@ -1076,6 +1222,18 @@ Cell <span class="ansi-green-fg">In[26], line 2</span>
 </div>
 <div id="ref-sigmoid" class="csl-entry" role="listitem">
 <div class="csl-left-margin">4. </div><div class="csl-right-inline"><a href="https://www.linkedin.com/pulse/understanding-sigmoid-function-logistic-regression-piduguralla/">Understanding the sigmoid function in logistic regression: Mapping inputs to probabilities</a>.</div>
+</div>
+<div id="ref-decisiontrees" class="csl-entry" role="listitem">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline"><a href="https://www.ibm.com/topics/decision-trees">What is a decision tree?</a></div>
+</div>
+<div id="ref-SVM" class="csl-entry" role="listitem">
+<div class="csl-left-margin">6. </div><div class="csl-right-inline"><a href="https://www.ibm.com/topics/support-vector-machine">What are SVMs?</a></div>
+</div>
+<div id="ref-MNB" class="csl-entry" role="listitem">
+<div class="csl-left-margin">7. </div><div class="csl-right-inline"><a href="https://www.ibm.com/topics/naive-bayes#:~:text=Multinomial%20Na%C3%AFve%20Bayes%20(MultinomialNB)%3A,use%20cases%2C%20like%20spam%20classification.">What are naïve bayes classifiers?</a></div>
+</div>
+<div id="ref-F1Score" class="csl-entry" role="listitem">
+<div class="csl-left-margin">8. </div><div class="csl-right-inline"><a href="https://www.v7labs.com/blog/f1-score-guide">F1 score in machine learning: Intro &amp; calculation</a>.</div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
