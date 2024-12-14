@@ -175,32 +175,18 @@
     "text": "Unacceptable use cases\nDO NOT use ChatGPT or other LLM tools to write large portions of your text or code.\n\nEffect on grade\nIf it is clear that you have used LLM tools to write large portions of your code or text, your grade will reflect this, likely in the range of 0% to 50% of the total points, depending on the quality of the work. LLM outputs still require significant polishing to fit into a well-written, cohesive narrative. If it is evident that you simply inserted large portions of LLM-generated content into your assignment without taking the time to refine it into a high-quality submission, your grade will reflect this, even if the usage does not rise to the level of plagiarism.\n\n\nPlagiarism investigation\nIn extreme cases,the following actions will occur.\n\nOne-on-One Investigation: You will meet with department faculty for a thorough review of your project. You will be asked to explain your work in detail, including what specific chunks of code do, why you made certain decisions, and how you reached your conclusions.\nReferral to the Honor Council: If, during this meeting, it is determined that you do not have sufficient understanding of the content that you claimed to have created, the case will be documented and sent to the honor council. This can result in a permanent mark on your transcript and may even lead to expulsion from the university."
   },
   {
-    "objectID": "technical-details/llm-usage-log.html",
-    "href": "technical-details/llm-usage-log.html",
-    "title": "LLM usage log",
+    "objectID": "technical-details/progress-log.html",
+    "href": "technical-details/progress-log.html",
+    "title": "Progress log",
     "section": "",
-    "text": "This page can serve as a “catch-all” for LLM use cases that don’t involve content creation, such as reformatting your own ideas, commenting code that you wrote, or proofreading text, PDF summarization.\nLLM tools were used in the following way for the tasks below"
+    "text": "This page serves as a progress log for my DSAN5000 final project"
   },
   {
-    "objectID": "technical-details/llm-usage-log.html#brainstorming",
-    "href": "technical-details/llm-usage-log.html#brainstorming",
-    "title": "LLM usage log",
-    "section": "Brainstorming",
-    "text": "Brainstorming\n\nTo create the initial idea, LLM tools were used to brainstorm ideas and provide feedback and refine the project plan."
-  },
-  {
-    "objectID": "technical-details/llm-usage-log.html#writing",
-    "href": "technical-details/llm-usage-log.html#writing",
-    "title": "LLM usage log",
-    "section": "Writing:",
-    "text": "Writing:\n\nOn the pretty much every page, I used GPT-4o to help find typos, which I then corrected. My prompt was always the same: “[copied in webpage], can you just tell me what words are spelled wrong here.” From there, I just used command-f to find them all and replace them with the correct spelling\nFor the literature review on the homepage, I used GPT-4o to quickly summarize the text. I then took that summary and put it into my own words on the literature review.\nReformating text from bulleted lists into proses\nProofreading\nText summarization for literature review"
-  },
-  {
-    "objectID": "technical-details/llm-usage-log.html#code",
-    "href": "technical-details/llm-usage-log.html#code",
-    "title": "LLM usage log",
-    "section": "Code:",
-    "text": "Code:\n\nOn the Data Cleaning page, I leveraged the use of OpenAI’s GPT-4o model to help streamline the execution time of my clean_review() function. Below is the formal citation1.\nOn the EDA page, I use GPT-4o to help with formatting visualizations, including setting up a grid structure for my subplots2 and removing an unwanted blank plot in the bottom right-hand corner3\nOn the Unsupervised Learning page, I use GPT-4o to help me improve the ‘plot_embeddings()’ function by adding a table containing parameters that I assigned in the ‘reduce_and_visualize()’ function4\nOn the Supervised Learning page, I use GPT-4o to help provide me with the most efficient configuration for the SVM model that I used for multi-class prediction@ 5"
+    "objectID": "technical-details/progress-log.html#member-1-sean",
+    "href": "technical-details/progress-log.html#member-1-sean",
+    "title": "Progress log",
+    "section": "Member-1: Sean",
+    "text": "Member-1: Sean\nWeekly project contribution log:\n12-14-2024\n\nImprove website formatting\nCorrect typos/poor writing on all pages\n\n12-13-2024\n\nQuadruple check project guidelines to ensure proper adherence\nFinish first draft of report\nOutline plan for report (build out structure, collect meaningful img/assets)\n\n12-12-2024\n\nAdd scaling to classification pipelines to see if it speeds up execution.\nFinish first draft of supervised learning page\n\n12-11-2024\n\nOuline plan for structuring supervised learning\nFinish first draft of unsupervised learning page\n\n12-10-2024\n\nBegin unsupervised learning page (Write-ups on PCA t-SNE, Clustring techniques)\n\n12-9-2024\n\nadd a picture of review data in raw JSON format\nOutline a plan for structuring unsupervised model page\nFinish first draft of EDA page\n\n12-8-2024\n\nBegin brainstorming ideas for EDA page\n\n12-7-2024\n\nRe-download data using webscraping method via requests libary\nFinish first draft of Data Cleaning page\n\n12-6-2024\n\nFinish first draft of Data Collection page\nFinished literature reviews for articles\n\n12-5-2024\n\nFix problems with GU Domains publishing\n\n10-16-2024\n\nDownload Amazon reviews Corpus for initial look at the data\nExplore initial topics and brainstorm methods"
   },
   {
     "objectID": "technical-details/unsupervised-learning/instructions.html",
@@ -1022,6 +1008,34 @@
     "text": "Result Interpretation: Interpret the results obtained from the analysis.\nModel Performance Comparison: Compare the performance of different models.\nInsights Gained: Share insights learned from the analysis."
   },
   {
+    "objectID": "technical-details/llm-usage-log.html",
+    "href": "technical-details/llm-usage-log.html",
+    "title": "LLM usage log",
+    "section": "",
+    "text": "This page can serve as a “catch-all” for LLM use cases that don’t involve content creation, such as reformatting your own ideas, commenting code that you wrote, or proofreading text, PDF summarization.\nLLM tools were used in the following way for the tasks below"
+  },
+  {
+    "objectID": "technical-details/llm-usage-log.html#brainstorming",
+    "href": "technical-details/llm-usage-log.html#brainstorming",
+    "title": "LLM usage log",
+    "section": "Brainstorming",
+    "text": "Brainstorming\n\nTo create the initial idea, LLM tools were used to brainstorm ideas and provide feedback and refine the project plan."
+  },
+  {
+    "objectID": "technical-details/llm-usage-log.html#writing",
+    "href": "technical-details/llm-usage-log.html#writing",
+    "title": "LLM usage log",
+    "section": "Writing:",
+    "text": "Writing:\n\nOn the pretty much every page, I used GPT-4o to help find typos, which I then corrected. My prompt was always the same: “[copied in webpage], can you just tell me what words are spelled wrong here.” From there, I just used command-f to find them all and replace them with the correct spelling\nFor the literature review on the homepage, I used GPT-4o to quickly summarize the text. I then took that summary and put it into my own words on the literature review.\nReformating text from bulleted lists into proses\nProofreading\nText summarization for literature review"
+  },
+  {
+    "objectID": "technical-details/llm-usage-log.html#code",
+    "href": "technical-details/llm-usage-log.html#code",
+    "title": "LLM usage log",
+    "section": "Code:",
+    "text": "Code:\n\nOn the Data Cleaning page, I leveraged the use of OpenAI’s GPT-4o model to help streamline the execution time of my clean_review() function. Below is the formal citation1.\nOn the EDA page, I use GPT-4o to help with formatting visualizations, including setting up a grid structure for my subplots2 and removing an unwanted blank plot in the bottom right-hand corner3\nOn the Unsupervised Learning page, I use GPT-4o to help me improve the ‘plot_embeddings()’ function by adding a table containing parameters that I assigned in the ‘reduce_and_visualize()’ function4\nOn the Supervised Learning page, I use GPT-4o to help provide me with the most efficient configuration for the SVM model that I used for multi-class prediction@ 5"
+  },
+  {
     "objectID": "index.html#observing-and-predicting-the-relationship-between-customer-reviews-and-ratings-on-amazon",
     "href": "index.html#observing-and-predicting-the-relationship-between-customer-reviews-and-ratings-on-amazon",
     "title": "Welcome",
@@ -1033,20 +1047,6 @@
     "href": "index.html#literature-review",
     "title": "Welcome",
     "section": "Literature Review",
-    "text": "Literature Review\n\nA GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction\nMagdelano et al. take an intriguing angle in their approach to modeling sentiment analysis in text. In the study, they work with bakery reviews collected from Google Places data. In their approach, they construct a model that uses OpenAI’s GPT-3.5-Turbo model as a “linguistic component” that takes on the task of labeling sentiments for each text input.1 From there, the authors feed the outputs into a multilayer perceptron (in layman’s, “a model that spits out a numeric prediction”)2 used to offer a final star-based prediction on a given review. The authors use the popular 5-point Likert Scale (Excellent, Good, Neutral, Bad, Horrible) within the context of their assigned dataset categories: Flavor (F), Variety (V), Freshness of Bread (FoB), Customer Service (CS), and Price (P).1 The authors note their initial struggles with high polarity in the data. In other words, they encountered a disproportionate amount of five-star ratings in comparison to others. In order to account for these imbalances, the researchers used an approach called undersampling in which they selectively remove observations with the skewed characteristic before training and testing the model.1 In their conclusion, they do not cite any notable differences in model performance between the full and filtered samples. Finally the researchers consistently identified the computational costs of including both a LLM and MLP layer in their model.\n\n\nMachine learning-based new approach to films review\nIn this report, the authors set forth with the goal to develop a supervised learning model that accurately classifies the sentiment of a given set of movie reviews as either positive or negative. They source around 50,000 reviews from an IMDB dataset, where the amount of positive and negative sentiment-labelled records are approximately equal. For their feature extraction process, the authors elect use term frequency (TF) and term frequency-inverse document frequency (TF-IDF), where “term-frequency” refers to the number of appearances a given word or term has in a document and “inverse document frequency” is calculated by taking the log of the ratio between the total number of documents analyzed and the number of documents containing the given term. Finally, TF-IDF is the product of these two metrics.3\nIn equation form3: \\[\n\\text{TF}(t,d) = \\frac{\\text{Number of times term t appears in document d}}{\\text{Total number of terms in document d}}\n\\] \\[\n\\text{IDF}(t,D) = log_{e}\\frac{\\text{Total number of documents D in corpus}}{\\text{Number of documents containing term t}}\n\\] \\[\n\\text{TF-IDF} = TF(t,d) \\cdot IDF(t,D)\n\\]\nFrom there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accuracy (88.33%)4\n\n\nIncorporating Topic Membership in Review Rating Prediction from Unstructured Data: A Gradient Boosting Approach\nAuthors Yang et al. leverage a Bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat.5 This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predict Amazon customer review scores across six million reviews. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are extracting semantic information from a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as features in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores.5"
-  },
-  {
-    "objectID": "technical-details/progress-log.html",
-    "href": "technical-details/progress-log.html",
-    "title": "Progress log",
-    "section": "",
-    "text": "This page serves as a progress log for my DSAN5000 final project"
-  },
-  {
-    "objectID": "technical-details/progress-log.html#member-1-sean",
-    "href": "technical-details/progress-log.html#member-1-sean",
-    "title": "Progress log",
-    "section": "Member-1: Sean",
-    "text": "Member-1: Sean\nWeekly project contribution log:\n12-14-2024\n\nImprove website formatting\nCorrect typos/poor writing on all pages\n\n12-13-2024\n\nQuadruple check project guidelines to ensure proper adherence\nFinish first draft of report\nOutline plan for report (build out structure, collect meaningful img/assets)\n\n12-12-2024\n\nAdd scaling to classification pipelines to see if it speeds up execution.\nFinish first draft of supervised learning page\n\n12-11-2024\n\nOuline plan for structuring supervised learning\nFinish first draft of unsupervised learning page\n\n12-10-2024\n\nBegin unsupervised learning page (Write-ups on PCA t-SNE, Clustring techniques)\n\n12-9-2024\n\nadd a picture of review data in raw JSON format\nOutline a plan for structuring unsupervised model page\nFinish first draft of EDA page\n\n12-8-2024\n\nBegin brainstorming ideas for EDA page\n\n12-7-2024\n\nRe-download data using webscraping method via requests libary\nFinish first draft of Data Cleaning page\n\n12-6-2024\n\nFinish first draft of Data Collection page\nFinished literature reviews for articles\n\n12-5-2024\n\nFix problems with GU Domains publishing\n\n10-16-2024\n\nDownload Amazon reviews Corpus for initial look at the data\nExplore initial topics and brainstorm methods"
+    "text": "Literature Review\n\nA GPT-Based Approach for Sentiment Analysis and Bakery Rating Prediction\nMagdelano et al. take an intriguing angle in their approach to modeling sentiment analysis in text. In the study, they work with bakery reviews collected from Google Places data. In their approach, they construct a model that uses OpenAI’s GPT-3.5-Turbo model as a “linguistic component” that takes on the task of labeling sentiments for each text input.1 From there, the authors feed the outputs into a multilayer perceptron (in layman’s, “a model that spits out a numeric prediction”)2 used to offer a final star-based prediction on a given review. The authors use the popular 5-point Likert Scale (Excellent, Good, Neutral, Bad, Horrible) within the context of their assigned dataset categories: Flavor (F), Variety (V), Freshness of Bread (FoB), Customer Service (CS), and Price (P).1 The authors note their initial struggles with high polarity in the data. In other words, they encountered a disproportionate amount of five-star ratings in comparison to others. In order to account for these imbalances, the researchers used an approach called undersampling in which they selectively remove observations with the skewed characteristic before training and testing the model.1 In their conclusion, they do not cite any notable differences in model performance between the full and filtered samples. Finally the researchers consistently identified the computational costs of including both a LLM and MLP layer in their model.\n\n\nMachine learning-based new approach to films review\nIn this report, the authors set forth with the goal to develop a supervised learning model that accurately classifies the sentiment of a given set of movie reviews as either positive or negative. They source around 50,000 reviews from an IMDB dataset, where the amount of positive and negative sentiment-labelled records are approximately equal. For their feature extraction process, the authors elect use term frequency (TF) and term frequency-inverse document frequency (TF-IDF), where “term-frequency” refers to the number of appearances a given word or term has in a document and “inverse document frequency” is calculated by taking the log of the ratio between the total number of documents analyzed and the number of documents containing the given term. Finally, TF-IDF is the product of these two metrics.3\nIn equation form3: \\[\n\\text{TF}(t,d) = \\frac{\\text{Number of times term t appears in document d}}{\\text{Total number of terms in document d}}\n\\] \\[\n\\text{IDF}(t,D) = log_{e}\\frac{\\text{Total number of documents D in corpus}}{\\text{Number of documents containing term t}}\n\\] \\[\n\\text{TF-IDF} = TF(t,d) \\cdot IDF(t,D)\n\\]\nFrom there, the researchers test eleven different classification models including Support Vector Machines (SVM), Random Forests (RF), and K-Nearest Neighbors. In order to evaluate their results, the researchers turned to confusion matrices and F1-scores. In the end, the researchers identified the SVM with TF-IDF extracted features as having the highest overall accuracy (88.33%)4\n\n\nIncorporating Topic Membership in Review Rating Prediction from Unstructured Data: A Gradient Boosting Approach\nAuthors Yang et al. leverage a Bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat.5 This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predict Amazon customer review scores across six million reviews. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are extracting semantic information from a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as features in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores.5\n\nFor more details on my project, head to either of these two links:\n\nFull Study\nCondensed Report"
   }
 ]

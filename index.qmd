@@ -9,7 +9,7 @@ title: Welcome
 
 <br>
 
-# Purpose and Scope
+# 💡 Purpose and Scope
 
 This website is dedicated to all of the work I have accomplished in my first year as a graduate student at Georgetown University. For now, I place an emphasis on my final project for the DSAN5000 course (Data Science and Analytics) where I take a deep dive into a large-scale corpus of Amazon product reviews. For the full scope of that report, please start [here](./technical-details/data-collection/main.ipynb).
 
@@ -18,7 +18,7 @@ This website is dedicated to all of the work I have accomplished in my first yea
 
 ![](xtra/multiclass-portfolio-website/images/my_photo.png){width="400px"} 
 
-Hi, I’m Sean Morris — a data science graduate student at Georgetown University with a passion for blending analytics and creativity to solve complex problems. My background spans economics, software development and data science, and blockchain technology. I thrive at the intersection of technology and innovation, having developed tools like the Python packages and predictive models for Formula One races.
+Hi, I’m Sean Morris — a data science graduate student at Georgetown University with a passion for blending analytics and creativity to solve complex problems. My background spans economics, data science, and blockchain technology. I thrive at the intersection of technology and innovation, having developed tools like the Python packages and predictive models for Formula One races.
 
 Previously, I co-founded Georgetown Blockchain, revitalizing the organization into a vibrant hub for tech enthusiasts. Currently, I’m delving into natural language processing, probabilistic modeling, and novel ways to value blockchain ecosystems through the lens of economics.
 
@@ -107,5 +107,10 @@ From there, the researchers test eleven different classification models includin
 Authors Yang et al. leverage a Bayesian network called Latent Dirichlet Allocation (LDA), as well as classical sentiment analysis in order to predict the review score given by customers of a food delivery service called JustEat.[@yang2023] This paper stood out for its relevance to my topic as I intend to use a similar sentiment analysis-based approach to predict Amazon customer review scores across six million reviews. One of the most relevant overlaps between this article and my study comes in the nature of the relationship between the dependent variable and its features. In each case, we are extracting semantic information from a corpus of text and using it to predict a discrete ordinal variable (a 5-star review score). In their report, the authors use both sets of unstructured, topic assignment and sentiment score data as features in a regression to predict the review score. In the end, the authors are able to achieve both lower mean absolute error and root mean squared error, with 86% total accuracy in predicting review scores.[@yang2023]
 
 
+---
+**For more details on my project, head to either of these two links:**
+
+1. [Full Study](./technical-details/data-collection/main.ipynb)
+2. [Condensed Report](./report/report.qmd)
 
 

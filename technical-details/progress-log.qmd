@@ -12,14 +12,14 @@ This page serves as a progress log for my DSAN5000 final project
 
 **12-14-2024**
 
-* [ ] Improve website formatting
-* [ ] Correct typos/poor writing on all pages
+* [X] Improve website formatting
+* [X] Correct typos/poor writing on all pages
 
 **12-13-2024**
 
-* [ ] Quadruple check project guidelines to ensure proper adherence
-* [ ] Finish first draft of report
-* [ ] Outline plan for report (build out structure, collect meaningful img/assets)
+* [X] Quadruple check project guidelines to ensure proper adherence
+* [X] Finish first draft of report
+* [X] Outline plan for report (build out structure, collect meaningful img/assets)
 
 **12-12-2024**
 
