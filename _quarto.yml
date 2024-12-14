@@ -8,6 +8,8 @@ project:
     - "!xtra"
 
 website:
+  open-graph:
+    image: "assets/sm_logo.png"
   title: "Sean Morris"
   favicon: "assets/sm_logo.png"
   navbar:
