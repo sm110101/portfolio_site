@@ -2,23 +2,15 @@
 title: "LLM usage log"
 ---
 
-This page can serve as a "catch-all" for LLM use cases that don’t involve content creation, such as reformatting your own ideas, commenting code that you wrote, or proofreading text, PDF summarization.
 
 LLM tools were used in the following way for the tasks below
 
-## Brainstorming
-
-* To create the initial idea, LLM tools were used to brainstorm ideas and provide feedback and refine the project plan.
 
 ## Writing: 
 
 * On the pretty much every page, I used GPT-4o to help find typos, which I then corrected. My prompt was always the same: "[copied in webpage], can you just tell me what words are spelled wrong here." From there, I just used command-f to find them all and replace them with the correct spelling
 
 * For the literature review on the [homepage](../index.qmd), I used GPT-4o to quickly summarize the text. I then took that summary and put it into my own words on the literature review.
-
-* Reformating text from bulleted lists into proses 
-* Proofreading
-* Text summarization for literature review 
 
 ## Code: 
 
