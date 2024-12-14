@@ -1,15 +1,64 @@
-# Final Report
+# Exploring and Modeling Amazon Electronics Reviews
 
-**Audio instructions:** 
+---
 
-If you want, you can listen to the instructions:
+## Introduction
 
-<audio controls><source src="../audio/report-page.mp3" type="audio/mpeg"></audio>
+Every product review holds a story. These stories may span paragraphs of in-depth detail about the user's experience, or offer a simple "works great!" In either case, the user felt compelled to offer their own perspective, creating a snapshot of their interaction with the product. These stories, delivered from countless different voices and tones, hold a treasure trove of information. They reveal customer satisfaction, and provide clues on why certain products do well - or where they fall short. By analyzing these reviews, we can uncover trends that exist beyond individual opinions.
 
-<sup> **Source**: Text-to-speech conversion done with Amazon Polly on AWS </sup>
+In this study, I leverage natural language processing techniques and machine learning models to explore the hidden structure of Amazon customer reviews. For the [data](https://nijianmo.github.io/amazon/index.html), I gathered over 6 million individual reviews from an open-source GitHub repository. Due to computational bottlenecks, I conducted my analysis using 100,000 randomly sampled reviews from the main data set. 
 
-`Note`: These audio instructions should not be included in your final submission or repository, once you are done wiht them, please delete the files and remove them from the website. 
+As for the project goals, I first wanted to analyze which key terms appeared most frequently accross different Amazon review ratings (on a 5-star scale). Next, I used a technique called clustering which allowed me to extract the underlying patterns in the review text. For the final part of the project, I shifted my focus to predicting three different metrics associated with Amazon reviews. 
 
+## Data 
+
+Before diving into the main parts of this study, I'd like to provide you with a quick summary of my data. All of the Amazon reviews used in this study come from the source linked above. The creator of the GitHub repository, [Jianmo Ni](https://x.com/jianmo_ni), is a former UCSD student who created the repository to store over 200 million Amazon reviews to be used for their paper on recommendation systems.[@DataArticle] The raw data came in the form of JSON, which structures data in human-readable form by using key-value pairs. 
+
+**Here is an example of a review in JSON:**
+<br>
+![](../xtra/multiclass-portfolio-website/images/raw_data_json.png){width="600px"}
+<br>
+[Source](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon/links.html)
+<br>
+
+In the [data cleaning](../technical-details/data-cleaning/main.ipynb) section of this website, I cover the steps taken to convert this data into a tabular format - similar to what you see in an excel sheet where observations appear in rows with each column representing a different variable or characteristic.
+
+## Exploring the data
+
+To better understand the data, I began by looking at the different characteristics associated with reviews. A natural first step was to look at the frequency of different review ratings. "Rating" in this case refers to the score a user gives to a product - ranging from 1 to 5 stars. Most of the ratings for electronics were 5 stars, which ended up causing some issues down the line when I attempted to predict the rating of different reviews. In the next part of my exploration, I shifted my focus to the review text itself. For this, I relied on a tool called a "document term matrix" that takes in raw text as an input, and returns a table where each row was a review, and each column represented a word found across all of our reviews. From there, I sorted the top 10 most frequently occuring words for each review rating and plotted them on different bar graphs. When using only single terms, the results were lackluster, with meaningless words occupying the top spots across all review ratings. To try and correct this, I instead looked at the top word pairs for each review rating, which gave much better results:
+
+**Top Word Pairs by Rating**
+<br>
+![](../xtra/multiclass-portfolio-website/images/report_plots/top_word_pairs.png)
+<br>
+[Created by Author](../technical-details/eda/main.ipynb)
+<br>
+
+These plots provided much better context as to where certain words appear in different review scores, with pairs like “works great” and “highly recommend” appearing frequently in highly rated products, and pairs like “stopped working” and “waste money” appearing in lower rated reviews. 
+
+## Product Clusters
+
+To identify some deeper trends in our reviews data, I applied a suite of algorithms called "clustering" to group similar reviews together based on their context. In simple terms, clustering is a type of machine learning technique that groups together data points into "clusters" based on how close they are. This approach helped uncover some patterns that were impossible to recognize when looking only at the raw data.
+
+The clustering models yielded some interesting results - in which they were able to learn that different reviews applied to different products without me specifyinf exaclty what those products were. In one example, two of our models found clusters where each point had predoninant words like "camera", "lens", and "tripod", reflecting a focus on photography-related products. In another case, our models grouped together points that included emotional and descriptive terms like "awesome" and "highly recommend", capturing reviews with strong positive sentiment.
+
+**The Camera Cluster (Orange Points)**
+<br>
+![](../../xtra/multiclass-portfolio-website/images/kmeans_interactive/KMeans_camera.png){width="800px"}
+<br>
+[Created by Author](../technical-details/unsupervised-learning/main.ipynb)
+<br>
+
+In this section, two of the clustering models used performed well while the third fell short. Overall, the methods used in this section helped reveal hidden patterns in the data - specifically how customer feedback is organized around different product types and overall sentiment.
+
+## Running Predictions
+
+In the final stage of the analysis, I focus on predicting three specific outcomes based on the review data. For this, I leveraged techniques like binary classification (predicting outcome A or B), multi-class classification (predicting A, B, C, or D), and regression (predicting number $y$ based on input $x$). For the target variables, I aimed to predict the sentiment of reviews (positive or negative), review rating (1-5), and review "polarity". The term "polarity" is a proxy to our binary sentiment target, but instead of being a class like "positive" or "negative" it is a continuous value that falls in the range $(-1, 1)$. Values closer to $(-1)$ represent a more negative sentiment, while values closer to $(1)$ represent a more positive sentiment.
+
+
+---
+
+# Directions 
 
 This report is designed for a **non-technical audience** (e.g., the general public, executives, marketing teams, or clients), focusing on **high-level insights**, **actionable results**, and **visualizations** to convey the impact without requiring technical knowledge. The goal is to highlight how a model affects business strategy or revenue without diving into complex methods.
 

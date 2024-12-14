@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -70,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -175,7 +224,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#final-report" id="toc-final-report" class="nav-link active" data-scroll-target="#final-report">Final Report</a>
+  <li><a href="#exploring-and-modeling-amazon-electronics-reviews" id="toc-exploring-and-modeling-amazon-electronics-reviews" class="nav-link active" data-scroll-target="#exploring-and-modeling-amazon-electronics-reviews">Exploring and Modeling Amazon Electronics Reviews</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#exploring-the-data" id="toc-exploring-the-data" class="nav-link" data-scroll-target="#exploring-the-data">Exploring the data</a></li>
+  <li><a href="#product-clusters" id="toc-product-clusters" class="nav-link" data-scroll-target="#product-clusters">Product Clusters</a></li>
+  <li><a href="#running-predictions" id="toc-running-predictions" class="nav-link" data-scroll-target="#running-predictions">Running Predictions</a></li>
+  </ul></li>
+  <li><a href="#directions" id="toc-directions" class="nav-link" data-scroll-target="#directions">Directions</a>
   <ul class="collapse">
   <li><a href="#guidelines-for-creating-a-good-narrative" id="toc-guidelines-for-creating-a-good-narrative" class="nav-link" data-scroll-target="#guidelines-for-creating-a-good-narrative">Guidelines for Creating a Good Narrative</a></li>
   <li><a href="#report-content" id="toc-report-content" class="nav-link" data-scroll-target="#report-content">Report Content</a>
@@ -194,15 +251,42 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="final-report" class="level1">
-<h1>Final Report</h1>
-<p><strong>Audio instructions:</strong></p>
-<p>If you want, you can listen to the instructions:</p>
-<audio controls="">
-<source src="../audio/report-page.mp3" type="audio/mpeg">
-</audio>
-<p><sup> <strong>Source</strong>: Text-to-speech conversion done with Amazon Polly on AWS </sup></p>
-<p><code>Note</code>: These audio instructions should not be included in your final submission or repository, once you are done wiht them, please delete the files and remove them from the website.</p>
+<section id="exploring-and-modeling-amazon-electronics-reviews" class="level1">
+<h1>Exploring and Modeling Amazon Electronics Reviews</h1>
+<hr>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Every product review holds a story. These stories may span paragraphs of in-depth detail about the user’s experience, or offer a simple “works great!” In either case, the user felt compelled to offer their own perspective, creating a snapshot of their interaction with the product. These stories, delivered from countless different voices and tones, hold a treasure trove of information. They reveal customer satisfaction, and provide clues on why certain products do well - or where they fall short. By analyzing these reviews, we can uncover trends that exist beyond individual opinions.</p>
+<p>In this study, I leverage natural language processing techniques and machine learning models to explore the hidden structure of Amazon customer reviews. For the <a href="https://nijianmo.github.io/amazon/index.html">data</a>, I gathered over 6 million individual reviews from an open-source GitHub repository. Due to computational bottlenecks, I conducted my analysis using 100,000 randomly sampled reviews from the main data set.</p>
+<p>As for the project goals, I first wanted to analyze which key terms appeared most frequently accross different Amazon review ratings (on a 5-star scale). Next, I used a technique called clustering which allowed me to extract the underlying patterns in the review text. For the final part of the project, I shifted my focus to predicting three different metrics associated with Amazon reviews.</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>Before diving into the main parts of this study, I’d like to provide you with a quick summary of my data. All of the Amazon reviews used in this study come from the source linked above. The creator of the GitHub repository, <a href="https://x.com/jianmo_ni">Jianmo Ni</a>, is a former UCSD student who created the repository to store over 200 million Amazon reviews to be used for their paper on recommendation systems.<span class="citation" data-cites="DataArticle"><sup><a href="#ref-DataArticle" role="doc-biblioref">1</a></sup></span> The raw data came in the form of JSON, which structures data in human-readable form by using key-value pairs.</p>
+<p><strong>Here is an example of a review in JSON:</strong> <br> <img src="../xtra/multiclass-portfolio-website/images/raw_data_json.png" class="img-fluid" width="600"> <br> <a href="https://cseweb.ucsd.edu/~jmcauley/datasets/amazon/links.html">Source</a> <br></p>
+<p>In the <a href="../technical-details/data-cleaning/main.html">data cleaning</a> section of this website, I cover the steps taken to convert this data into a tabular format - similar to what you see in an excel sheet where observations appear in rows with each column representing a different variable or characteristic.</p>
+</section>
+<section id="exploring-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-the-data">Exploring the data</h2>
+<p>To better understand the data, I began by looking at the different characteristics associated with reviews. A natural first step was to look at the frequency of different review ratings. “Rating” in this case refers to the score a user gives to a product - ranging from 1 to 5 stars. Most of the ratings for electronics were 5 stars, which ended up causing some issues down the line when I attempted to predict the rating of different reviews. In the next part of my exploration, I shifted my focus to the review text itself. For this, I relied on a tool called a “document term matrix” that takes in raw text as an input, and returns a table where each row was a review, and each column represented a word found across all of our reviews. From there, I sorted the top 10 most frequently occuring words for each review rating and plotted them on different bar graphs. When using only single terms, the results were lackluster, with meaningless words occupying the top spots across all review ratings. To try and correct this, I instead looked at the top word pairs for each review rating, which gave much better results:</p>
+<p><strong>Top Word Pairs by Rating</strong> <br> <img src="../xtra/multiclass-portfolio-website/images/report_plots/top_word_pairs.png" class="img-fluid"> <br> <a href="../technical-details/eda/main.html">Created by Author</a> <br></p>
+<p>These plots provided much better context as to where certain words appear in different review scores, with pairs like “works great” and “highly recommend” appearing frequently in highly rated products, and pairs like “stopped working” and “waste money” appearing in lower rated reviews.</p>
+</section>
+<section id="product-clusters" class="level2">
+<h2 class="anchored" data-anchor-id="product-clusters">Product Clusters</h2>
+<p>To identify some deeper trends in our reviews data, I applied a suite of algorithms called “clustering” to group similar reviews together based on their context. In simple terms, clustering is a type of machine learning technique that groups together data points into “clusters” based on how close they are. This approach helped uncover some patterns that were impossible to recognize when looking only at the raw data.</p>
+<p>The clustering models yielded some interesting results - in which they were able to learn that different reviews applied to different products without me specifyinf exaclty what those products were. In one example, two of our models found clusters where each point had predoninant words like “camera”, “lens”, and “tripod”, reflecting a focus on photography-related products. In another case, our models grouped together points that included emotional and descriptive terms like “awesome” and “highly recommend”, capturing reviews with strong positive sentiment.</p>
+<p><strong>The Camera Cluster (Orange Points)</strong> <br> <img src="../../xtra/multiclass-portfolio-website/images/kmeans_interactive/KMeans_camera.png" class="img-fluid" width="800"> <br> <a href="../technical-details/unsupervised-learning/main.html">Created by Author</a> <br></p>
+<p>In this section, two of the clustering models used performed well while the third fell short. Overall, the methods used in this section helped reveal hidden patterns in the data - specifically how customer feedback is organized around different product types and overall sentiment.</p>
+</section>
+<section id="running-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="running-predictions">Running Predictions</h2>
+<p>In the final stage of the analysis, I focus on predicting three specific outcomes based on the review data. For this, I leveraged techniques like binary classification (predicting outcome A or B), multi-class classification (predicting A, B, C, or D), and regression (predicting number <span class="math inline">\(y\)</span> based on input <span class="math inline">\(x\)</span>). For the target variables, I aimed to predict the sentiment of reviews (positive or negative), review rating (1-5), and review “polarity”. The term “polarity” is a proxy to our binary sentiment target, but instead of being a class like “positive” or “negative” it is a continuous value that falls in the range <span class="math inline">\((-1, 1)\)</span>. Values closer to <span class="math inline">\((-1)\)</span> represent a more negative sentiment, while values closer to <span class="math inline">\((1)\)</span> represent a more positive sentiment.</p>
+<hr>
+</section>
+</section>
+<section id="directions" class="level1">
+<h1>Directions</h1>
 <p>This report is designed for a <strong>non-technical audience</strong> (e.g., the general public, executives, marketing teams, or clients), focusing on <strong>high-level insights</strong>, <strong>actionable results</strong>, and <strong>visualizations</strong> to convey the impact without requiring technical knowledge. The goal is to highlight how a model affects business strategy or revenue without diving into complex methods.</p>
 <section id="guidelines-for-creating-a-good-narrative" class="level2">
 <h2 class="anchored" data-anchor-id="guidelines-for-creating-a-good-narrative">Guidelines for Creating a Good Narrative</h2>
@@ -258,10 +342,15 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 
 
+
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-DataArticle" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Jianmo Ni, J. M., Jiacheng Li. Justifying recommendations using distantly-labeled reviews and fine-grained aspects. (2019).</div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
