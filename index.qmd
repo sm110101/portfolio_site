@@ -63,7 +63,17 @@ For the full scope of each of these topics, I link to the page where they get us
 * [Hierarchical Clustering](./technical-details/unsupervised-learning/main.ipynb)
 * [DBSCAN](./technical-details/unsupervised-learning/main.ipynb)
 
+**Classification**
 
+* [Logistic Regression](./technical-details/supervised-learning/main.ipynb)
+* [Random Forest Classifier](./technical-details/supervised-learning/main.ipynb)
+* [Support Vector Machine](./technical-details/supervised-learning/main.ipynb)
+* [Multinomial Naive Bayes](./technical-details/supervised-learning/main.ipynb)
+
+**Regression**
+
+* [Ridge Regression](./technical-details/supervised-learning/main.ipynb)
+* [Random Forest Regression](./technical-details/supervised-learning/main.ipynb)
 
 
 ## Literature Review

@@ -1759,13 +1759,9 @@ Random Forest:
 </section>
 <section id="challenges" class="level3">
 <h3 class="anchored" data-anchor-id="challenges">Challenges</h3>
-<ul>
-<li><strong>Confusion Matrix Redundancy</strong></li>
-</ul>
+<p><span style="text-decoration: underline;"><strong>Confusion Matrix Redundanc</strong></span></p>
 <p>The old confusion matrix code had me running the best model again to extract predictions, so I instead opted to use a <code>predictions</code> dictionary, that stores the results for each model allowing me to reference them down the line when building the confusion matrix (without running the best model twice).</p>
-<ul>
-<li><strong>SVM Execution Time</strong></li>
-</ul>
+<p><span style="text-decoration: underline;"><strong>SVM Execution Time</strong></span></p>
 <p>When running multi-class classification, my initial run-times were over 3 hours each. I was able to hone in on the problem being SVM, as it faced difficulties due to the large scale of our input data, especially when it tried to use non-linear transformations (like the <a href="https://medium.com/@eskandar.sahel/introduction-to-rbf-svm-a-powerful-machine-learning-algorithm-for-non-linear-data-1d1cfb55a1a">radius basis function</a>).</p>
 <p><strong>Config 1:</strong> <code>SVC(kernel="rbf", probability=True) #with Unscaled features</code> - In this configuration, I used the radial basis function (RBF) kernel for transformations - <em>Runtime: &gt; 3 hours</em></p>
 <p><strong>Config 2:</strong> <code>SVC(kernel="linear", probability=True) #with Unscaled features</code> - For the second config, I changed the kernel to “linear”, for <a href="https://scikit-learn.org/1.5/modules/svm.html">faster</a> performance - <em>Runtime: &gt; 3 hours</em></p>
@@ -1777,17 +1773,11 @@ Random Forest:
 <h2 class="anchored" data-anchor-id="regression-1">Regression</h2>
 <section id="challenges-1" class="level3">
 <h3 class="anchored" data-anchor-id="challenges-1">Challenges</h3>
-<ul>
-<li><strong>Runtime</strong></li>
-</ul>
+<p><span style="text-decoration: underline;"><strong>Runtime</strong></span></p>
 <p>In both cases when running our regression pipeline, I experienced moderately long execution times of around 20 minnutes each. These slow runtimes were likely due to the large scale of our feature space, as well as the intermediate step where we optimized the <code>alpha</code> parameter used in the ridge regression. In future implementations I will try to reconcile this by running a separate process to optimize the ridge regression parameters.</p>
-<ul>
-<li><strong>High MAPE</strong></li>
-</ul>
+<p><span style="text-decoration: underline;"><strong>High MAPE</strong></span></p>
 <p>Each one of our regressions contained a high value for mean absolute percentage error, which I attribute to the presence of extreme outliers in the target variable’s distribution. To correct for this in the future, I will try to remove these outliers before modeling</p>
-<ul>
-<li><strong>Residual Plot Behavior</strong></li>
-</ul>
+<p><span style="text-decoration: underline;"><strong>Residual Plot Behavior</strong></span></p>
 <p>The residual plots for each of our regression results had a strange linear boundary, which I believe has to do with the scaling techniques applied to the target and features before modeling. In the future, I will try to correct for this by using different scaling techniques, such as [-1, 1] bounding our TF-IDF embeddings to reflect the bounds of the polarity score.</p>
 </section>
 </section>
