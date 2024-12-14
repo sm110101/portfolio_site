@@ -1,6 +1,6 @@
 # Summary
 
-In this section, I loaded in raw data in JSON form containing a corpus of over 6 million Amazon product reviews under the 'Electronics' category. Using custom functions defined in the dataset's source repository, I parsed the data and passed it into a pandas dataframe. As a final step, I zipped the file and moved it into the `data/raw-data/` directory.
+In this section, I loaded in raw JSON data form containing a corpus of over 6 million Amazon product reviews under the 'Electronics' category. Using custom functions defined in the dataset's source repository, I parsed the data and passed it into a pandas dataframe. As a final step, I zipped the file and moved it into the `data/raw-data/` directory.
 
 ## Challenges
 
