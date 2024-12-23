@@ -8,6 +8,7 @@ project:
     - "!xtra"
 
 website:
+  google-analytics: "G-06PBVCH3LM"
   open-graph:
     image: "assets/sm_logo.png"
   title: "Sean Morris"
