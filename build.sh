@@ -55,3 +55,4 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 else
     echo NOT PUSHING TO GU DOMAINS!
 fi
+
