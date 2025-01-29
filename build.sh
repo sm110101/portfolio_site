@@ -3,7 +3,7 @@ git pull origin main || git branch --set-upstream-to=origin/main main
 dir1=${PWD}
 
 # START FRESH
-rm -rf _site;
+rm -rf _site/
 
 # BUILD WEBSITE
 quarto render
@@ -48,10 +48,11 @@ fi
 
 
 # PUSH WEBSITE TO GU DOMAINS 
-printf 'Would you like to push to GU domains? (y/n)? '
+printf 'Would you like to AWS Server? (y/n)? '
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then 
-    rsync -alvr --delete _site/* morrisge@morris.georgetown.domains:/home/morrisge/public_html/
+    # rsync -alvr --delete _site/* morrisge@morris.georgetown.domains:/home/morrisge/public_html/
+    rsync -azvr --delete -e "ssh -i ~/.ssh/LightsailSite.pem" _site/ ubuntu@54.147.115.58:/var/www/html/
 else
     echo NOT PUSHING TO GU DOMAINS!
 fi
