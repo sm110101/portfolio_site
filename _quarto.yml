@@ -8,7 +8,6 @@ project:
     - "!xtra"
 
 website:
-  google-analytics: "G-06PBVCH3LM"
   open-graph:
     image: "assets/sm_logo.png"
   title: "Sean Morris"
@@ -18,13 +17,15 @@ website:
     left:
       - href: index.qmd
         text: Home
-
-      - href: report/report.qmd
-        text: Report
-      - text: "Technical details"
-        menu: 
-          - text: Data-collection
-            href: technical-details/data-collection/main.ipynb 
+      
+      - text: "Amazon NLP Project"
+        menu:
+          - text: Home
+            href: index.qmd
+          - text: Report
+            href: report/report.qmd
+          - text: Data-Collection
+            href: technical-details/data-collection/main.ipynb
           - text: Data-cleaning
             href: technical-details/data-cleaning/main.ipynb 
           - text: Exploratory Data Analysis
@@ -37,6 +38,7 @@ website:
             href: technical-details/progress-log.qmd
           - text: LLM usage Log
             href: technical-details/llm-usage-log.qmd
+
     right:
       - icon: linkedin
         href: https://www.linkedin.com/in/spm122/
