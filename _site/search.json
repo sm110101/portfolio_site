@@ -1029,6 +1029,13 @@
     "text": "Code:\n\nOn the Data Collection page, used GPT-4o to help write code that would download the data using requests. My initial code looked the exact same, with the exception of the stream=True and verifiy=False arguments. GPT-4o also read the data by chunk, which helped to speed up the process.1\nOn the Data Cleaning page, I leveraged the use of OpenAI’s GPT-4o model to help streamline the execution time of my clean_review() function. Below is the formal citation2.\nOn the EDA page, I use GPT-4o to help with formatting visualizations, including setting up a grid structure for my subplots3 and removing an unwanted blank plot in the bottom right-hand corner4\nOn the Unsupervised Learning page, I use GPT-4o to help me improve the ‘plot_embeddings()’ function by adding a table containing parameters that I assigned in the ‘reduce_and_visualize()’ function5\nOn the Supervised Learning page, I use GPT-4o to help provide me with the most efficient configuration for the SVM model that I used for multi-class prediction@ 6"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome",
+    "section": "",
+    "text": "Testing Build,sh"
+  },
+  {
     "objectID": "index.html#observing-and-predicting-the-relationship-between-customer-reviews-and-ratings-on-amazon",
     "href": "index.html#observing-and-predicting-the-relationship-between-customer-reviews-and-ratings-on-amazon",
     "title": "Welcome",
