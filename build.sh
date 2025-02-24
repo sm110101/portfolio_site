@@ -21,7 +21,9 @@ git pull origin $BRANCH
 dir1=${PWD}
 
 # START FRESH
-rm -rf _site/
+if [ -d "_site/" ]; then
+    rm -rf _site/
+fi
 
 # BUILD WEBSITE
 quarto render
