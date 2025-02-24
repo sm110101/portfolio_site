@@ -76,6 +76,7 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
         DEPLOY_URL="http://54.147.115.58/"
     else
         DEPLOY_URL="http://54.147.115.58/html-test/"
+    fi
 
 
     echo "Deployed $BRANCH to $DEPLOY_URL!"
