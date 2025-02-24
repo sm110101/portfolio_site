@@ -1,4 +1,4 @@
-git pull origin main || git branch --set-upstream-to=origin/main main
+git pull origin main
 # DEFINE PATH
 dir1=${PWD}
 
@@ -54,6 +54,6 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
     # rsync -alvr --delete _site/* morrisge@morris.georgetown.domains:/home/morrisge/public_html/
     rsync -azvr --delete -e "ssh -i ~/.ssh/LightsailSite.pem" _site/ ubuntu@54.147.115.58:/var/www/html/
 else
-    echo NOT PUSHING TO GU DOMAINS!
+    echo NOT PUSHING TO AWS!
 fi
 
