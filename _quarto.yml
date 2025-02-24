@@ -18,26 +18,28 @@ website:
       - href: index.qmd
         text: Home
       
-      - text: "Amazon NLP Project"
+      - text: "Projects"
         menu:
-          - text: Home
-            href: index.qmd
-          - text: Report
-            href: report/report.qmd
-          - text: Data-Collection
-            href: technical-details/data-collection/main.ipynb
-          - text: Data-cleaning
-            href: technical-details/data-cleaning/main.ipynb 
-          - text: Exploratory Data Analysis
-            href: technical-details/eda/main.ipynb 
-          - text: Unsupervised Learning
-            href: technical-details/unsupervised-learning/main.ipynb 
-          - text: Supervised Learning
-            href: technical-details/supervised-learning/main.ipynb 
-          - text: Progress Log
-            href: technical-details/progress-log.qmd
-          - text: LLM usage Log
-            href: technical-details/llm-usage-log.qmd
+          - text: "Amazon NLP Project"
+            menu:
+              - text: Home
+                href: index.qmd
+              - text: Report
+                href: report/report.qmd
+              - text: Data-Collection
+                href: technical-details/data-collection/main.ipynb
+              - text: Data-cleaning
+                href: technical-details/data-cleaning/main.ipynb 
+              - text: Exploratory Data Analysis
+                href: technical-details/eda/main.ipynb 
+              - text: Unsupervised Learning
+                href: technical-details/unsupervised-learning/main.ipynb 
+              - text: Supervised Learning
+                href: technical-details/supervised-learning/main.ipynb 
+              - text: Progress Log
+                href: technical-details/progress-log.qmd
+              - text: LLM usage Log
+                href: technical-details/llm-usage-log.qmd
 
     right:
       - icon: linkedin

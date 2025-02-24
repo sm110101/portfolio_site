@@ -6,7 +6,7 @@ if [ "$deploy_target" = "1" ]; then
     TARGET_DIR="/var/www/html"
     BRANCH="main"
 elif [ "$deploy_target" = "2" ]; then
-    TARGET_DIR="/var/www/html-test"
+    TARGET_DIR="/var/www//html/html-test"
     BRANCH="testing"
 else
     echo "Invalid selection. Exiting."
@@ -70,8 +70,14 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
     # rsync -alvr --delete _site/* morrisge@morris.georgetown.domains:/home/morrisge/public_html/
     rsync -azvr --delete -e "ssh -i ~/.ssh/LightsailSite.pem" _site/ ubuntu@54.147.115.58:$TARGET_DIR/
 
-    echo "Deployed $BRANCH to $TARGET_DIR!"
+    if [ "$deploy_target" = "1" ]; then
+        DEPLOY_URL="http://54.147.115.58/"
+    else
+        DEPLOY_URL="http://54.147.115.58/html-test/"
+
+
+    echo "Deployed $BRANCH to $DEPLOY_URL!"
 else
-    echo NOT PUSHING TO AWS!
+    echo "NOT PUSHING TO AWS!"
 fi
 
