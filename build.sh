@@ -5,9 +5,11 @@ read deploy_target
 if [ "$deploy_target" = "1" ]; then
     TARGET_DIR="/var/www/html"
     BRANCH="main"
+    DEPLOY_URL="http://54.147.115.58/"
 elif [ "$deploy_target" = "2" ]; then
-    TARGET_DIR="/var/www//html/html-test"
+    TARGET_DIR="/var/www//html/html_testing"
     BRANCH="testing"
+    DEPLOY_URL="http://54.147.115.58:8080/"
 else
     echo "Invalid selection. Exiting."
     exit 1
@@ -29,11 +31,13 @@ fi
 quarto render
 
 # CLEAN UP 
-cd _site; for i in $(find  ./ -name .DS_Store); do rm $i; done; cd "$dir1"
+cd _site
+find . -name .DS_Store -delete
+cd "$dir1"
 
 # SET CORRECT PERMISSIONS FOR ALL FILES 
-for i in $(find _site -type f); do chmod 644 $i; done
-for i in $(find _site -type d); do chmod 755 $i; done
+find _site -type f -exec chmod 644 {} +
+find _site -type d -exec chmod 755 {} +
 
 # GITHUB SYNC
 printf 'Would you like to push to GITHUB? (y/n)? '
@@ -71,12 +75,6 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
     # Sync to the chosen directory
     # rsync -alvr --delete _site/* morrisge@morris.georgetown.domains:/home/morrisge/public_html/
     rsync -azvr --delete -e "ssh -i ~/.ssh/LightsailSite.pem" _site/ ubuntu@54.147.115.58:$TARGET_DIR/
-
-    if [ "$deploy_target" = "1" ]; then
-        DEPLOY_URL="http://54.147.115.58/"
-    else
-        DEPLOY_URL="http://54.147.115.58/html-test/"
-    fi
 
 
     echo "Deployed $BRANCH to $DEPLOY_URL!"
